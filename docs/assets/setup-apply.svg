@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="430" viewBox="0 0 1080 430" role="img">
+<title>Сохранить → применить → проверить</title>
+<desc>Схема действий; сохранение формы ещё не меняет работающую сеть. После потери HTTP-ответа сначала перечитайте статус. Не повторяйте применение вслепую.</desc>
+<rect width="1080" height="430" rx="18" fill="#14201c"/>
+<text x="40" y="55" font-family="sans-serif" font-size="27" font-weight="700" fill="#eef5ef">Сохранить → применить → проверить</text>
+<text x="40" y="87" font-family="sans-serif" font-size="16" fill="#b0c6b8">Схема действий; сохранение формы ещё не меняет работающую сеть.</text>
+<rect x="40" y="120" width="310" height="225" rx="12" fill="#22372d" stroke="#537864"/>
+<text x="60" y="157" font-family="sans-serif" font-size="21" font-weight="700" fill="#b8e3c5">Черновик</text>
+<text x="60" y="197" font-family="sans-serif" font-size="17" fill="#eef5ef">Сохранить подключение</text>
+<text x="60" y="228" font-family="sans-serif" font-size="17" fill="#eef5ef">Сохранить правило</text>
+<text x="60" y="259" font-family="sans-serif" font-size="17" fill="#eef5ef">Проверить весь пакет</text>
+<path d="M 355 225 h 23 l -7 -6 m 7 6 l -7 6" fill="none" stroke="#b8e3c5" stroke-width="2"/>
+<rect x="385" y="120" width="310" height="225" rx="12" fill="#22372d" stroke="#537864"/>
+<text x="405" y="157" font-family="sans-serif" font-size="21" font-weight="700" fill="#b8e3c5">Временное применение</text>
+<text x="405" y="197" font-family="sans-serif" font-size="17" fill="#eef5ef">Применить настройки</text>
+<text x="405" y="228" font-family="sans-serif" font-size="17" fill="#eef5ef">Проверить DNS и трафик</text>
+<text x="405" y="259" font-family="sans-serif" font-size="17" fill="#eef5ef">Следить за сроком</text>
+<path d="M 700 225 h 23 l -7 -6 m 7 6 l -7 6" fill="none" stroke="#b8e3c5" stroke-width="2"/>
+<rect x="730" y="120" width="310" height="225" rx="12" fill="#22372d" stroke="#537864"/>
+<text x="750" y="157" font-family="sans-serif" font-size="21" font-weight="700" fill="#b8e3c5">Результат</text>
+<text x="750" y="197" font-family="sans-serif" font-size="17" fill="#eef5ef">Успех → подтвердить</text>
+<text x="750" y="228" font-family="sans-serif" font-size="17" fill="#eef5ef">Ошибка → вернуть пакет</text>
+<text x="750" y="259" font-family="sans-serif" font-size="17" fill="#eef5ef">Без подтверждения: откат</text>
+<text x="40" y="388" font-family="sans-serif" font-size="16" fill="#b0c6b8">После потери HTTP-ответа сначала перечитайте статус. Не повторяйте применение вслепую.</text>
+</svg>

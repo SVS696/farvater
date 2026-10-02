@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="430" viewBox="0 0 1080 430" role="img">
+<title>Что заполнить в панели</title>
+<desc>Учебный макет полей, не скриншот интерфейса. 12081 — вход SSH-туннеля. 2081 — вход локального Фарватера. Не меняйте эти роли местами.</desc>
+<rect width="1080" height="430" rx="18" fill="#14201c"/>
+<text x="40" y="55" font-family="sans-serif" font-size="27" font-weight="700" fill="#eef5ef">Что заполнить в панели</text>
+<text x="40" y="87" font-family="sans-serif" font-size="16" fill="#b0c6b8">Учебный макет полей, не скриншот интерфейса.</text>
+<rect x="40" y="120" width="310" height="225" rx="12" fill="#22372d" stroke="#537864"/>
+<text x="60" y="157" font-family="sans-serif" font-size="21" font-weight="700" fill="#b8e3c5">Подключение</text>
+<text x="60" y="197" font-family="sans-serif" font-size="17" fill="#eef5ef">Название: Узел B</text>
+<text x="60" y="228" font-family="sans-serif" font-size="17" fill="#eef5ef">Тип: SOCKS · версия 5</text>
+<text x="60" y="259" font-family="sans-serif" font-size="17" fill="#eef5ef">IP: 127.0.0.1</text>
+<text x="60" y="290" font-family="sans-serif" font-size="17" fill="#eef5ef">Порт: 12081</text>
+<path d="M 355 225 h 23 l -7 -6 m 7 6 l -7 6" fill="none" stroke="#b8e3c5" stroke-width="2"/>
+<rect x="385" y="120" width="310" height="225" rx="12" fill="#22372d" stroke="#537864"/>
+<text x="405" y="157" font-family="sans-serif" font-size="21" font-weight="700" fill="#b8e3c5">Правило</text>
+<text x="405" y="197" font-family="sans-serif" font-size="17" fill="#eef5ef">Название: Тест через B</text>
+<text x="405" y="228" font-family="sans-serif" font-size="17" fill="#eef5ef">Домен: example.com</text>
+<text x="405" y="259" font-family="sans-serif" font-size="17" fill="#eef5ef">Выход: Узел B</text>
+<text x="405" y="290" font-family="sans-serif" font-size="17" fill="#eef5ef">DNS: Resolver</text>
+<path d="M 700 225 h 23 l -7 -6 m 7 6 l -7 6" fill="none" stroke="#b8e3c5" stroke-width="2"/>
+<rect x="730" y="120" width="310" height="225" rx="12" fill="#22372d" stroke="#537864"/>
+<text x="750" y="157" font-family="sans-serif" font-size="21" font-weight="700" fill="#b8e3c5">Приложение</text>
+<text x="750" y="197" font-family="sans-serif" font-size="17" fill="#eef5ef">Прокси: SOCKS5</text>
+<text x="750" y="228" font-family="sans-serif" font-size="17" fill="#eef5ef">IP: 127.0.0.1</text>
+<text x="750" y="259" font-family="sans-serif" font-size="17" fill="#eef5ef">Порт: 2081</text>
+<text x="750" y="290" font-family="sans-serif" font-size="17" fill="#eef5ef">DNS через SOCKS</text>
+<text x="40" y="388" font-family="sans-serif" font-size="16" fill="#b0c6b8">12081 — вход SSH-туннеля. 2081 — вход локального Фарватера. Не меняйте эти роли местами.</text>
+</svg>
