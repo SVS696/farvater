@@ -1,7 +1,7 @@
 # Перенос настроек, резервные копии и восстановление
 
 ```mermaid
-flowchart LR
+flowchart TD
     archive[Архив + age key + доверие] --> inspect[Предварительная проверка]
     inspect --> prepare[Подготовить журнал]
     prepare --> rescue[Независимый запуск]

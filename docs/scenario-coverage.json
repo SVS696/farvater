@@ -8,9 +8,9 @@
       "method": "ROUTE",
       "handler": "login",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -19,9 +19,9 @@
       "method": "POST",
       "handler": "logout",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -30,9 +30,9 @@
       "method": "GET",
       "handler": "index",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -41,9 +41,9 @@
       "method": "GET",
       "handler": "page",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -52,9 +52,9 @@
       "method": "GET",
       "handler": "server_access",
       "documentation": "panel-monitoring.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -63,9 +63,9 @@
       "method": "POST",
       "handler": "server_access_save",
       "documentation": "panel-monitoring.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -74,9 +74,9 @@
       "method": "POST",
       "handler": "backup_create",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -85,9 +85,9 @@
       "method": "POST",
       "handler": "backup_upload",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -96,9 +96,9 @@
       "method": "POST",
       "handler": "backup_download",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -107,9 +107,9 @@
       "method": "POST",
       "handler": "backup_delete",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -118,9 +118,9 @@
       "method": "GET",
       "handler": "policy_configuration",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -129,9 +129,9 @@
       "method": "POST",
       "handler": "policy_export",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -140,9 +140,9 @@
       "method": "POST",
       "handler": "policy_import",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -151,9 +151,9 @@
       "method": "POST",
       "handler": "policy_import_confirm",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -162,9 +162,9 @@
       "method": "GET",
       "handler": "entity_delete_preview",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -173,9 +173,9 @@
       "method": "POST",
       "handler": "entity_delete",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -184,9 +184,9 @@
       "method": "POST",
       "handler": "lan_save",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -195,9 +195,9 @@
       "method": "POST",
       "handler": "vpn_ingress_save",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -206,9 +206,9 @@
       "method": "POST",
       "handler": "filtering_save",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -217,9 +217,9 @@
       "method": "GET",
       "handler": "monitor_settings",
       "documentation": "panel-monitoring.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -228,9 +228,9 @@
       "method": "GET",
       "handler": "monitor_settings",
       "documentation": "panel-monitoring.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -239,9 +239,9 @@
       "method": "POST",
       "handler": "monitor_dashboard",
       "documentation": "panel-monitoring.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -250,9 +250,9 @@
       "method": "GET",
       "handler": "monitor_new",
       "documentation": "panel-monitoring.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -261,9 +261,9 @@
       "method": "POST",
       "handler": "monitor_add",
       "documentation": "panel-monitoring.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -272,9 +272,9 @@
       "method": "POST",
       "handler": "monitor_remove",
       "documentation": "panel-monitoring.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -283,9 +283,9 @@
       "method": "POST",
       "handler": "monitor_save",
       "documentation": "panel-monitoring.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -294,9 +294,9 @@
       "method": "GET",
       "handler": "routing_history",
       "documentation": "panel-monitoring.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -305,9 +305,9 @@
       "method": "POST",
       "handler": "routing_save",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -316,9 +316,9 @@
       "method": "POST",
       "handler": "probe_save",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -327,13 +327,13 @@
       "method": "POST",
       "handler": "candidate_action",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [
         "apply",
         "confirm",
         "rollback"
       ],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -342,9 +342,9 @@
       "method": "GET",
       "handler": "default_rule_form",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -353,9 +353,9 @@
       "method": "GET",
       "handler": "rule_form",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -364,9 +364,9 @@
       "method": "GET",
       "handler": "rule_form",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -375,9 +375,9 @@
       "method": "POST",
       "handler": "rule_save",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -386,9 +386,9 @@
       "method": "POST",
       "handler": "rule_reorder",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -397,9 +397,9 @@
       "method": "POST",
       "handler": "rule_move",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -408,9 +408,9 @@
       "method": "POST",
       "handler": "rule_delete",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -419,9 +419,9 @@
       "method": "POST",
       "handler": "failover_timing",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -430,9 +430,9 @@
       "method": "POST",
       "handler": "failover_save",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -441,9 +441,9 @@
       "method": "GET",
       "handler": "dns_form",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -452,9 +452,9 @@
       "method": "GET",
       "handler": "dns_form",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -463,9 +463,9 @@
       "method": "POST",
       "handler": "dns_hosts_export",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -474,9 +474,9 @@
       "method": "POST",
       "handler": "dns_save",
       "documentation": "panel-rules-dns.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -485,9 +485,9 @@
       "method": "GET",
       "handler": "connection_new",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -496,9 +496,9 @@
       "method": "GET",
       "handler": "tunnel_form",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -507,9 +507,9 @@
       "method": "GET",
       "handler": "tunnel_form",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -518,9 +518,9 @@
       "method": "GET",
       "handler": "trusttunnel_new",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -529,9 +529,9 @@
       "method": "POST",
       "handler": "trusttunnel_create",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -540,9 +540,9 @@
       "method": "POST",
       "handler": "trusttunnel_create",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -551,7 +551,7 @@
       "method": "POST",
       "handler": "trusttunnel_action",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [
         "apply",
         "check",
@@ -566,7 +566,7 @@
         "start",
         "stop"
       ],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -575,7 +575,7 @@
       "method": "POST",
       "handler": "openconnect_action",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [
         "apply",
         "check",
@@ -590,7 +590,7 @@
         "start",
         "stop"
       ],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -599,9 +599,9 @@
       "method": "GET",
       "handler": "openvpn_new",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -610,13 +610,13 @@
       "method": "POST",
       "handler": "openvpn_action",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [
         "export",
         "import",
         "save"
       ],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -625,9 +625,9 @@
       "method": "GET",
       "handler": "shadowsocks_import_form",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -636,9 +636,9 @@
       "method": "POST",
       "handler": "shadowsocks_import",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -647,9 +647,9 @@
       "method": "POST",
       "handler": "shadowsocks_export",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -658,9 +658,9 @@
       "method": "POST",
       "handler": "vless_import",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -669,9 +669,9 @@
       "method": "POST",
       "handler": "vless_export",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -680,9 +680,9 @@
       "method": "POST",
       "handler": "outbound_import_native",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -691,9 +691,9 @@
       "method": "POST",
       "handler": "embedded_openconnect_import",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -702,9 +702,9 @@
       "method": "POST",
       "handler": "outbound_export_native",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -713,9 +713,9 @@
       "method": "POST",
       "handler": "tunnel_save",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -724,9 +724,9 @@
       "method": "GET",
       "handler": "tt_clients_page",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -735,7 +735,7 @@
       "method": "POST",
       "handler": "tt_clients_action",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [
         "delete",
         "export",
@@ -744,7 +744,7 @@
         "save",
         "settings"
       ],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -753,9 +753,9 @@
       "method": "GET",
       "handler": "clients_page",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -764,9 +764,9 @@
       "method": "POST",
       "handler": "clients_add",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -775,12 +775,12 @@
       "method": "POST",
       "handler": "clients_toggle",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [
         "disable",
         "enable"
       ],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -789,9 +789,9 @@
       "method": "POST",
       "handler": "clients_finish",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -800,9 +800,9 @@
       "method": "POST",
       "handler": "clients_settings",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -811,9 +811,9 @@
       "method": "POST",
       "handler": "clients_rename",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -822,9 +822,9 @@
       "method": "POST",
       "handler": "clients_import",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -833,9 +833,9 @@
       "method": "POST",
       "handler": "clients_export",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -844,9 +844,9 @@
       "method": "GET",
       "handler": "amnezia_new",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -855,9 +855,9 @@
       "method": "POST",
       "handler": "amnezia_create",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -866,9 +866,9 @@
       "method": "POST",
       "handler": "amnezia_register",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -877,9 +877,9 @@
       "method": "GET",
       "handler": "wireguard_new",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -888,9 +888,9 @@
       "method": "POST",
       "handler": "wireguard_create",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -899,9 +899,9 @@
       "method": "GET",
       "handler": "wireguard_page",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -910,9 +910,9 @@
       "method": "GET",
       "handler": "wireguard_page",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -921,9 +921,9 @@
       "method": "GET",
       "handler": "wireguard_page",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -932,9 +932,9 @@
       "method": "GET",
       "handler": "wireguard_page",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -943,7 +943,7 @@
       "method": "POST",
       "handler": "wireguard_save",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [
         "abandon",
         "apply",
@@ -959,7 +959,7 @@
         "start",
         "stop"
       ],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/web.py",
@@ -968,7 +968,7 @@
       "method": "POST",
       "handler": "wireguard_save",
       "documentation": "panel-connections.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [
         "abandon",
         "apply",
@@ -984,7 +984,7 @@
         "start",
         "stop"
       ],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/incoming_web.py",
@@ -993,9 +993,9 @@
       "method": "GET",
       "handler": "incoming_page",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/incoming_web.py",
@@ -1004,9 +1004,9 @@
       "method": "GET",
       "handler": "incoming_edit",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/incoming_web.py",
@@ -1015,9 +1015,9 @@
       "method": "GET",
       "handler": "incoming_edit",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/incoming_web.py",
@@ -1026,9 +1026,9 @@
       "method": "POST",
       "handler": "incoming_save",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/incoming_web.py",
@@ -1037,9 +1037,9 @@
       "method": "POST",
       "handler": "incoming_delete",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/incoming_web.py",
@@ -1048,9 +1048,9 @@
       "method": "POST",
       "handler": "incoming_import",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/incoming_web.py",
@@ -1059,9 +1059,9 @@
       "method": "POST",
       "handler": "incoming_import_client",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/incoming_web.py",
@@ -1070,9 +1070,9 @@
       "method": "POST",
       "handler": "incoming_export",
       "documentation": "panel-devices.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/recovery_web.py",
@@ -1081,9 +1081,9 @@
       "method": "POST",
       "handler": "backup_trust_export",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/recovery_web.py",
@@ -1092,9 +1092,9 @@
       "method": "GET",
       "handler": "backup_restore_status",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/recovery_web.py",
@@ -1103,9 +1103,9 @@
       "method": "GET",
       "handler": "backup_restore_page",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/recovery_web.py",
@@ -1114,9 +1114,9 @@
       "method": "GET",
       "handler": "recovery_runbook",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/recovery_web.py",
@@ -1125,14 +1125,14 @@
       "method": "POST",
       "handler": "backup_restore_action",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [
         "confirm",
         "prepare",
         "rollback",
         "start"
       ],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/recovery_rescue_web.py",
@@ -1141,9 +1141,9 @@
       "method": "ROUTE",
       "handler": "recovery_login",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/recovery_rescue_web.py",
@@ -1152,9 +1152,9 @@
       "method": "GET",
       "handler": "recovery_access_check",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/recovery_rescue_web.py",
@@ -1163,9 +1163,9 @@
       "method": "GET",
       "handler": "recovery_state",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     },
     {
       "source": "src/recovery_rescue_web.py",
@@ -1174,13 +1174,13 @@
       "method": "POST",
       "handler": "recovery_action",
       "documentation": "panel-backups.md",
-      "verified": false,
+      "verified": true,
       "action_branches": [
         "confirm",
         "rollback",
         "start"
       ],
-      "verification": "Source mapped; final scenario-by-scenario editorial audit pending"
+      "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
     }
   ],
   "source_sha256": {
@@ -1188,5 +1188,13 @@
     "src/incoming_web.py": "509a40b6057bda1776ae78cc5f7cc986741d4d3cd0a5dc3bbf4a773f83a42229",
     "src/recovery_web.py": "bc5cf4632f958397bfcefb93385ca33f285a7a7e1e352227f7434052895c7d71",
     "src/recovery_rescue_web.py": "3c7226c2888048b8b03d2eda29796873c1b63e2c20a90a3dbef8be64adb6bd1b"
+  },
+  "editorial_audit": {
+    "scope": "All 100 registered route declarations, 71 action entries including route aliases, navigation pages and protocol-specific scenarios",
+    "limitations": [
+      "Source-based instructions; not a claim of physical gateway or protocol interoperability acceptance",
+      "Existing router templates without registered handlers are explicitly marked unavailable",
+      "Illustrations comprise one real demonstration screenshot and labeled workflow diagrams, not screenshots of every form"
+    ]
   }
 }

@@ -4,7 +4,7 @@
 VPN-ключа и включение серверного listener — разные действия.
 
 ```mermaid
-flowchart LR
+flowchart TD
     server[Входящий сервер] --> draft[Применить серверный черновик]
     draft --> issue[Выдать конфиг клиенту]
     issue --> client[Подключить устройство]
