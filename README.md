@@ -7,7 +7,7 @@
 и соедините несколько машин в туннельную цепочку. У каждого узла — собственная
 политика, входы и выходы.
 
-[Начать установку](docs/setup.md) · [Документация](docs/README.md) ·
+[Разобраться с панелью](docs/panel-overview.md) · [Начать установку](docs/setup.md) · [Документация](docs/README.md) ·
 [Релизы](https://github.com/SVS696/farvater/releases) · [Для разработчиков и агентов](CONTRIBUTING.md)
 
 ![Tests](https://github.com/SVS696/farvater/actions/workflows/tests.yml/badge.svg)

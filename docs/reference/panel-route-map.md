@@ -8,8 +8,8 @@
 | `POST /logout` | `logout` | [panel-rules-dns.md](../panel-rules-dns.md) |
 | `GET /` | `index` | [panel-rules-dns.md](../panel-rules-dns.md) |
 | `GET /<name>` | `page` | [panel-rules-dns.md](../panel-rules-dns.md) |
-| `GET /server/access` | `server_access` | [panel-monitoring.md](../panel-monitoring.md) |
-| `POST /server/access` | `server_access_save` | [panel-monitoring.md](../panel-monitoring.md) |
+| `GET /server/access` | `server_access` | [remote-access.md](../remote-access.md) |
+| `POST /server/access` | `server_access_save` | [remote-access.md](../remote-access.md) |
 | `POST /backups/create` | `backup_create` | [panel-backups.md](../panel-backups.md) |
 | `POST /backups/upload` | `backup_upload` | [panel-backups.md](../panel-backups.md) |
 | `POST /backups/<value>/download` | `backup_download` | [panel-backups.md](../panel-backups.md) |

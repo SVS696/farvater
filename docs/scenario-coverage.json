@@ -51,7 +51,7 @@
       "route": "/server/access",
       "method": "GET",
       "handler": "server_access",
-      "documentation": "panel-monitoring.md",
+      "documentation": "remote-access.md",
       "verified": true,
       "action_branches": [],
       "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
@@ -62,7 +62,7 @@
       "route": "/server/access",
       "method": "POST",
       "handler": "server_access_save",
-      "documentation": "panel-monitoring.md",
+      "documentation": "remote-access.md",
       "verified": true,
       "action_branches": [],
       "verification": "Documentation scope checked against handler and relevant form: preparation, action, effect, verification and failure/return guidance. Runtime acceptance is separate."
@@ -1195,6 +1195,27 @@
       "Source-based instructions; not a claim of physical gateway or protocol interoperability acceptance",
       "Existing router templates without registered handlers are explicitly marked unavailable",
       "Illustrations comprise one real demonstration screenshot and labeled workflow diagrams, not screenshots of every form"
-    ]
+    ],
+    "newcomer_review": {
+      "scope": "Independent reader used only user documentation, without code or route inventory; 15-document baseline, 18-document full recheck, 6-document affected-area recheck",
+      "initial_findings": 10,
+      "closed": 8,
+      "partial": [
+        {
+          "id": 3,
+          "reason": "No public from-scratch AWG engine preparation recipe; prerequisite and limitation now explained"
+        },
+        {
+          "id": 6,
+          "reason": "Incoming OpenVPN with a physical phone is not accepted for this alpha release"
+        }
+      ],
+      "additional_findings_closed": [
+        "TCP vs UDP DNS repeat check",
+        "SSH next-hop vs node A DNS policy",
+        "Home phone IP test ambiguity"
+      ],
+      "result": "Comprehensible within documented release boundaries; not full readiness of every platform/protocol scenario"
+    }
   }
 }
