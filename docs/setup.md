@@ -215,7 +215,7 @@ launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.farvater.loca
 ```
 
 Каталог состояния по умолчанию: `~/Library/Application Support/Farvater` на Mac,
-на Linux — путь, выбранный по XDG-настройкам (см. `tools/run_panel.py`).
+на Linux — `$XDG_STATE_HOME/farvater` либо `~/.local/state/farvater`, если XDG_STATE_HOME не задан.
 Если используете `--state-dir`, указывайте один абсолютный путь всем командам.
 Для переноса сохраняйте состояние приватно; в Git его не добавляйте.
 
