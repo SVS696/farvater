@@ -1270,7 +1270,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_amnezia_profile",
-      "community": 119,
+      "community": 120,
       "norm_label": "amnezia_profile.py"
     },
     {
@@ -1280,7 +1280,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_amnezia_profile_scalar",
-      "community": 119,
+      "community": 120,
       "norm_label": "scalar()"
     },
     {
@@ -1290,7 +1290,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_amnezia_profile_interval",
-      "community": 119,
+      "community": 120,
       "norm_label": "interval()"
     },
     {
@@ -1300,7 +1300,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "src_amnezia_profile_validate_extra",
-      "community": 119,
+      "community": 120,
       "norm_label": "validate_extra()"
     },
     {
@@ -1310,7 +1310,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "src_amnezia_profile_parse",
-      "community": 119,
+      "community": 120,
       "norm_label": "parse()"
     },
     {
@@ -1320,7 +1320,7 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "src_amnezia_profile_render",
-      "community": 119,
+      "community": 120,
       "norm_label": "render()"
     },
     {
@@ -1330,7 +1330,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "src_amnezia_profile_public_view",
-      "community": 119,
+      "community": 120,
       "norm_label": "public_view()"
     },
     {
@@ -1340,7 +1340,7 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "src_amnezia_profile_update",
-      "community": 119,
+      "community": 120,
       "norm_label": "update()"
     },
     {
@@ -1350,7 +1350,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_amnezia_profile_rationale_1",
-      "community": 119,
+      "community": 120,
       "norm_label": "amneziawg .conf codec, retaining dns and official 3.1 obfuscation fields.  wireg"
     },
     {
@@ -1580,7 +1580,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_backup_accounts_compare",
-      "community": 120,
+      "community": 121,
       "norm_label": "compare()"
     },
     {
@@ -1600,7 +1600,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_backup_accounts_rationale_29",
-      "community": 120,
+      "community": 121,
       "norm_label": "report required identity work without creating users or changing membership."
     },
     {
@@ -1770,7 +1770,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_backup_restore_tree_signed_manifest",
-      "community": 67,
+      "community": 66,
       "norm_label": "signed_manifest()"
     },
     {
@@ -1780,7 +1780,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_backup_restore_tree_copy_object",
-      "community": 67,
+      "community": 66,
       "norm_label": "copy_object()"
     },
     {
@@ -1790,7 +1790,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "src_backup_restore_tree_materialize",
-      "community": 67,
+      "community": 66,
       "norm_label": "materialize()"
     },
     {
@@ -1800,7 +1800,7 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "src_backup_restore_tree_main",
-      "community": 67,
+      "community": 66,
       "norm_label": "main()"
     },
     {
@@ -1820,7 +1820,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "src_backup_restore_tree_rationale_51",
-      "community": 67,
+      "community": 66,
       "norm_label": "use no-follow descriptors and verify the bytes that were actually copied."
     },
     {
@@ -1830,7 +1830,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "src_backup_restore_tree_rationale_71",
-      "community": 67,
+      "community": 66,
       "norm_label": "require an absent destination under a private parent; publish after validation."
     },
     {
@@ -2360,7 +2360,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_default_rule",
-      "community": 121,
+      "community": 122,
       "norm_label": "default_rule.py"
     },
     {
@@ -2370,7 +2370,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_default_rule_view",
-      "community": 121,
+      "community": 122,
       "norm_label": "view()"
     },
     {
@@ -2380,7 +2380,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_default_rule_save",
-      "community": 121,
+      "community": 122,
       "norm_label": "save()"
     },
     {
@@ -2390,7 +2390,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_default_rule_rationale_1",
-      "community": 121,
+      "community": 122,
       "norm_label": "one final rule editor over the existing paired default-route storage.  keep exis"
     },
     {
@@ -2590,7 +2590,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_failover_form",
-      "community": 68,
+      "community": 67,
       "norm_label": "failover_form.py"
     },
     {
@@ -2600,7 +2600,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_failover_form_parse_failover",
-      "community": 68,
+      "community": 67,
       "norm_label": "parse_failover()"
     },
     {
@@ -2610,7 +2610,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_failover_form_default_group",
-      "community": 68,
+      "community": 67,
       "norm_label": "default_group()"
     },
     {
@@ -2620,7 +2620,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_failover_form_primary_pair",
-      "community": 68,
+      "community": 67,
       "norm_label": "primary_pair()"
     },
     {
@@ -2630,7 +2630,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "src_failover_form_validate_failover",
-      "community": 68,
+      "community": 67,
       "norm_label": "validate_failover()"
     },
     {
@@ -2640,7 +2640,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_failover_form_rationale_1",
-      "community": 68,
+      "community": 67,
       "norm_label": "one ordered public failover group; each state owns both exit and dns."
     },
     {
@@ -2650,7 +2650,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_failover_form_rationale_26",
-      "community": 68,
+      "community": 67,
       "norm_label": "adapter to the tested paired dns/route mode compiler."
     },
     {
@@ -2740,7 +2740,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_health_collect_runtimenotready",
-      "community": 64,
+      "community": 113,
       "norm_label": "runtimenotready"
     },
     {
@@ -2750,7 +2750,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_health_collect_py_exception",
-      "community": 64,
+      "community": 113,
       "norm_label": "exception"
     },
     {
@@ -2760,7 +2760,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_health_collect_candidate_runtime_inputs",
-      "community": 64,
+      "community": 113,
       "norm_label": "candidate_runtime_inputs()"
     },
     {
@@ -2770,7 +2770,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "src_health_collect_atomic_json",
-      "community": 64,
+      "community": 113,
       "norm_label": "atomic_json()"
     },
     {
@@ -2780,7 +2780,7 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "src_health_collect_run",
-      "community": 64,
+      "community": 68,
       "norm_label": "run()"
     },
     {
@@ -2790,7 +2790,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "src_health_collect_http_failure",
-      "community": 64,
+      "community": 68,
       "norm_label": "http_failure()"
     },
     {
@@ -2800,7 +2800,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "src_health_collect_http_measurement",
-      "community": 64,
+      "community": 68,
       "norm_label": "http_measurement()"
     },
     {
@@ -2820,7 +2820,7 @@
       "source_location": "L127",
       "_origin": "ast",
       "id": "src_health_collect_probe",
-      "community": 64,
+      "community": 68,
       "norm_label": "probe()"
     },
     {
@@ -2830,7 +2830,7 @@
       "source_location": "L265",
       "_origin": "ast",
       "id": "src_health_collect_probe_dns_filter",
-      "community": 64,
+      "community": 68,
       "norm_label": "probe_dns_filter()"
     },
     {
@@ -2840,7 +2840,7 @@
       "source_location": "L314",
       "_origin": "ast",
       "id": "src_health_collect_probe_pair",
-      "community": 122,
+      "community": 68,
       "norm_label": "probe_pair()"
     },
     {
@@ -2850,7 +2850,7 @@
       "source_location": "L331",
       "_origin": "ast",
       "id": "src_health_collect_pair_checks",
-      "community": 64,
+      "community": 113,
       "norm_label": "pair_checks()"
     },
     {
@@ -2860,7 +2860,7 @@
       "source_location": "L339",
       "_origin": "ast",
       "id": "src_health_collect_checked",
-      "community": 64,
+      "community": 68,
       "norm_label": "checked()"
     },
     {
@@ -2880,7 +2880,7 @@
       "source_location": "L406",
       "_origin": "ast",
       "id": "src_health_collect_events_for",
-      "community": 64,
+      "community": 113,
       "norm_label": "events_for()"
     },
     {
@@ -2900,7 +2900,7 @@
       "source_location": "L434",
       "_origin": "ast",
       "id": "src_health_collect_main",
-      "community": 64,
+      "community": 113,
       "norm_label": "main()"
     },
     {
@@ -2920,7 +2920,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "src_health_collect_rationale_87",
-      "community": 64,
+      "community": 68,
       "norm_label": "only fixed code/numeric fields; no transport text, urls or body."
     },
     {
@@ -2930,7 +2930,7 @@
       "source_location": "L266",
       "_origin": "ast",
       "id": "src_health_collect_rationale_266",
-      "community": 64,
+      "community": 68,
       "norm_label": "differential dns check: a block alone cannot prove filtering works.      all thr"
     },
     {
@@ -3170,7 +3170,7 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "src_health_settings_fingerprint",
-      "community": 64,
+      "community": 113,
       "norm_label": "fingerprint()"
     },
     {
@@ -3180,7 +3180,7 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "src_health_settings_pending_row",
-      "community": 64,
+      "community": 113,
       "norm_label": "pending_row()"
     },
     {
@@ -3480,7 +3480,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_incoming_kernel",
-      "community": 113,
+      "community": 114,
       "norm_label": "incoming_kernel.py"
     },
     {
@@ -3500,7 +3500,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_incoming_kernel_validate",
-      "community": 113,
+      "community": 114,
       "norm_label": "validate()"
     },
     {
@@ -3520,7 +3520,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "src_incoming_kernel_ocserv_scope",
-      "community": 113,
+      "community": 114,
       "norm_label": "ocserv_scope()"
     },
     {
@@ -3530,7 +3530,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_incoming_kernel_sources",
-      "community": 113,
+      "community": 114,
       "norm_label": "sources()"
     },
     {
@@ -3540,7 +3540,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "src_incoming_kernel_inbounds",
-      "community": 113,
+      "community": 114,
       "norm_label": "inbounds()"
     },
     {
@@ -3550,7 +3550,7 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "src_incoming_kernel_route_prefix",
-      "community": 113,
+      "community": 114,
       "norm_label": "route_prefix()"
     },
     {
@@ -3560,7 +3560,7 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "src_incoming_kernel_nft_script",
-      "community": 113,
+      "community": 114,
       "norm_label": "nft_script()"
     },
     {
@@ -3570,7 +3570,7 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "src_incoming_kernel_entries",
-      "community": 113,
+      "community": 114,
       "norm_label": "entries()"
     },
     {
@@ -3580,7 +3580,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "src_incoming_kernel_scopes",
-      "community": 113,
+      "community": 114,
       "norm_label": "scopes()"
     },
     {
@@ -3600,7 +3600,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_incoming_kernel_rationale_1",
-      "community": 113,
+      "community": 114,
       "norm_label": "common policy ingress for authenticated vpn engines with kernel interfaces.  pur"
     },
     {
@@ -8312,7 +8312,7 @@
       },
       "_origin": "ast",
       "id": "src_router_monitor",
-      "community": 118,
+      "community": 119,
       "norm_label": "monitor.sh"
     },
     {
@@ -8326,7 +8326,7 @@
       },
       "_origin": "ast",
       "id": "src_router_monitor_sh__entry",
-      "community": 118,
+      "community": 119,
       "norm_label": "monitor.sh script"
     },
     {
@@ -8340,7 +8340,7 @@
       },
       "_origin": "ast",
       "id": "src_router_monitor_bb",
-      "community": 118,
+      "community": 119,
       "norm_label": "bb()"
     },
     {
@@ -8354,7 +8354,7 @@
       },
       "_origin": "ast",
       "id": "src_router_pair",
-      "community": 66,
+      "community": 65,
       "norm_label": "pair.sh"
     },
     {
@@ -8368,7 +8368,7 @@
       },
       "_origin": "ast",
       "id": "src_router_pair_sh__entry",
-      "community": 66,
+      "community": 65,
       "norm_label": "pair.sh script"
     },
     {
@@ -8382,7 +8382,7 @@
       },
       "_origin": "ast",
       "id": "src_router_pair_xtables_libdir",
-      "community": 66,
+      "community": 65,
       "norm_label": "xtables_libdir"
     },
     {
@@ -8396,7 +8396,7 @@
       },
       "_origin": "ast",
       "id": "src_router_pair_bb",
-      "community": 66,
+      "community": 65,
       "norm_label": "bb()"
     },
     {
@@ -8410,7 +8410,7 @@
       },
       "_origin": "ast",
       "id": "src_router_pair_ipt",
-      "community": 66,
+      "community": 65,
       "norm_label": "ipt()"
     },
     {
@@ -8424,7 +8424,7 @@
       },
       "_origin": "ast",
       "id": "src_router_pair_ip",
-      "community": 66,
+      "community": 65,
       "norm_label": "ip()"
     },
     {
@@ -8438,7 +8438,7 @@
       },
       "_origin": "ast",
       "id": "src_router_pair_ct",
-      "community": 66,
+      "community": 65,
       "norm_label": "ct()"
     },
     {
@@ -8452,7 +8452,7 @@
       },
       "_origin": "ast",
       "id": "src_router_pair_clear_dns",
-      "community": 66,
+      "community": 65,
       "norm_label": "clear_dns()"
     },
     {
@@ -8466,7 +8466,7 @@
       },
       "_origin": "ast",
       "id": "src_router_pair_rule",
-      "community": 66,
+      "community": 65,
       "norm_label": "rule()"
     },
     {
@@ -8480,7 +8480,7 @@
       },
       "_origin": "ast",
       "id": "src_router_pair_nat_rules",
-      "community": 66,
+      "community": 65,
       "norm_label": "nat_rules()"
     },
     {
@@ -8494,7 +8494,7 @@
       },
       "_origin": "ast",
       "id": "src_router_pair_hooks",
-      "community": 66,
+      "community": 65,
       "norm_label": "hooks()"
     },
     {
@@ -8508,7 +8508,7 @@
       },
       "_origin": "ast",
       "id": "src_router_pair_integrity",
-      "community": 66,
+      "community": 65,
       "norm_label": "integrity()"
     },
     {
@@ -8522,7 +8522,7 @@
       },
       "_origin": "ast",
       "id": "src_router_settings_control",
-      "community": 118,
+      "community": 119,
       "norm_label": "settings-control.sh"
     },
     {
@@ -8536,7 +8536,7 @@
       },
       "_origin": "ast",
       "id": "src_router_settings_control_sh__entry",
-      "community": 118,
+      "community": 119,
       "norm_label": "settings-control.sh script"
     },
     {
@@ -8550,7 +8550,7 @@
       },
       "_origin": "ast",
       "id": "src_router_settings_control_bb",
-      "community": 118,
+      "community": 119,
       "norm_label": "bb()"
     },
     {
@@ -8564,7 +8564,7 @@
       },
       "_origin": "ast",
       "id": "src_router_settings_control_error",
-      "community": 118,
+      "community": 119,
       "norm_label": "error()"
     },
     {
@@ -8578,7 +8578,7 @@
       },
       "_origin": "ast",
       "id": "src_router_settings_control_lock_settings",
-      "community": 118,
+      "community": 119,
       "norm_label": "lock_settings()"
     },
     {
@@ -8690,7 +8690,7 @@
       },
       "_origin": "ast",
       "id": "src_router_worker",
-      "community": 66,
+      "community": 65,
       "norm_label": "worker.sh"
     },
     {
@@ -8704,7 +8704,7 @@
       },
       "_origin": "ast",
       "id": "src_router_worker_sh__entry",
-      "community": 66,
+      "community": 65,
       "norm_label": "worker.sh script"
     },
     {
@@ -8718,7 +8718,7 @@
       },
       "_origin": "ast",
       "id": "src_router_worker_bb",
-      "community": 66,
+      "community": 65,
       "norm_label": "bb()"
     },
     {
@@ -8732,7 +8732,7 @@
       },
       "_origin": "ast",
       "id": "src_router_worker_pair",
-      "community": 66,
+      "community": 65,
       "norm_label": "pair()"
     },
     {
@@ -9622,7 +9622,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_rule_fallback",
-      "community": 121,
+      "community": 122,
       "norm_label": "rule_fallback.py"
     },
     {
@@ -9632,7 +9632,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_rule_fallback_validate_pairs",
-      "community": 121,
+      "community": 122,
       "norm_label": "validate_pairs()"
     },
     {
@@ -9642,7 +9642,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_rule_fallback_parse_pairs",
-      "community": 121,
+      "community": 122,
       "norm_label": "parse_pairs()"
     },
     {
@@ -9652,7 +9652,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_rule_fallback_rationale_1",
-      "community": 121,
+      "community": 122,
       "norm_label": "ordered resolver/exit pairs for an ordinary, work or special rule."
     },
     {
@@ -11452,7 +11452,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_test_backup_accounts_backupaccounttests",
-      "community": 120,
+      "community": 121,
       "norm_label": "backupaccounttests"
     },
     {
@@ -11462,7 +11462,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_test_backup_accounts_backupaccounttests_capture",
-      "community": 120,
+      "community": 121,
       "norm_label": ".capture()"
     },
     {
@@ -11472,7 +11472,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_test_backup_accounts_backupaccounttests_test_captures_owners_and_memberships_without_password_fields",
-      "community": 120,
+      "community": 121,
       "norm_label": ".test_captures_owners_and_memberships_without_password_fields()"
     },
     {
@@ -11482,7 +11482,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_test_backup_accounts_backupaccounttests_test_numeric_owner_collision_is_not_treated_as_compatible",
-      "community": 120,
+      "community": 121,
       "norm_label": ".test_numeric_owner_collision_is_not_treated_as_compatible()"
     },
     {
@@ -11492,7 +11492,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_test_backup_accounts_backupaccounttests_test_missing_metadata_missing_user_and_unmapped_owner_are_visible",
-      "community": 120,
+      "community": 121,
       "norm_label": ".test_missing_metadata_missing_user_and_unmapped_owner_are_visible()"
     },
     {
@@ -11502,7 +11502,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_test_backup_accounts_backupaccounttests_test_changed_privileges_are_not_silently_accepted",
-      "community": 120,
+      "community": 121,
       "norm_label": ".test_changed_privileges_are_not_silently_accepted()"
     },
     {
@@ -11512,7 +11512,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_test_backup_accounts_backupaccounttests_test_owner_not_found_during_capture_is_recorded_without_invention",
-      "community": 120,
+      "community": 121,
       "norm_label": ".test_owner_not_found_during_capture_is_recorded_without_invention()"
     },
     {
@@ -11772,7 +11772,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_test_backup_restore_tree_restoretreetests",
-      "community": 67,
+      "community": 66,
       "norm_label": "restoretreetests"
     },
     {
@@ -11782,7 +11782,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_test_backup_restore_tree_restoretreetests_setup",
-      "community": 67,
+      "community": 66,
       "norm_label": ".setup()"
     },
     {
@@ -11792,7 +11792,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_test_backup_restore_tree_restoretreetests_teardown",
-      "community": 67,
+      "community": 66,
       "norm_label": ".teardown()"
     },
     {
@@ -11802,7 +11802,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_test_backup_restore_tree_restoretreetests_restore",
-      "community": 67,
+      "community": 66,
       "norm_label": ".restore()"
     },
     {
@@ -11812,7 +11812,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_test_backup_restore_tree_restoretreetests_test_exact_files_owners_modes_and_absolute_links_without_execution",
-      "community": 67,
+      "community": 66,
       "norm_label": ".test_exact_files_owners_modes_and_absolute_links_without_execution()"
     },
     {
@@ -11822,7 +11822,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_test_backup_restore_tree_restoretreetests_test_existing_destination_and_live_root_are_never_overwritten",
-      "community": 67,
+      "community": 66,
       "norm_label": ".test_existing_destination_and_live_root_are_never_overwritten()"
     },
     {
@@ -11832,7 +11832,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_test_backup_restore_tree_restoretreetests_test_damaged_blob_never_publishes_partial_tree",
-      "community": 67,
+      "community": 66,
       "norm_label": ".test_damaged_blob_never_publishes_partial_tree()"
     },
     {
@@ -11842,7 +11842,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_test_backup_restore_tree_restoretreetests_test_blob_symlink_cannot_read_an_unrelated_file",
-      "community": 67,
+      "community": 66,
       "norm_label": ".test_blob_symlink_cannot_read_an_unrelated_file()"
     },
     {
@@ -11852,7 +11852,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_test_backup_restore_tree_restoretreetests_test_mutated_manifest_and_wrong_signing_key_fail",
-      "community": 67,
+      "community": 66,
       "norm_label": ".test_mutated_manifest_and_wrong_signing_key_fail()"
     },
     {
@@ -11862,7 +11862,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "src_test_backup_restore_tree_restoretreetests_test_signed_symlink_parent_and_traversal_still_rejected",
-      "community": 67,
+      "community": 66,
       "norm_label": ".test_signed_symlink_parent_and_traversal_still_rejected()"
     },
     {
@@ -11872,7 +11872,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "src_test_backup_restore_tree_restoretreetests_test_destination_under_symlink_or_shared_parent_rejected",
-      "community": 67,
+      "community": 66,
       "norm_label": ".test_destination_under_symlink_or_shared_parent_rejected()"
     },
     {
@@ -13322,7 +13322,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_test_contextual_help_helpmarkup",
-      "community": 117,
+      "community": 118,
       "norm_label": "helpmarkup"
     },
     {
@@ -13332,7 +13332,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "htmlparser",
-      "community": 117,
+      "community": 118,
       "norm_label": "htmlparser"
     },
     {
@@ -13342,7 +13342,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_test_contextual_help_helpmarkup_init",
-      "community": 117,
+      "community": 118,
       "norm_label": ".__init__()"
     },
     {
@@ -13352,7 +13352,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_test_contextual_help_helpmarkup_handle_starttag",
-      "community": 117,
+      "community": 118,
       "norm_label": ".handle_starttag()"
     },
     {
@@ -13362,7 +13362,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_test_contextual_help_contextualhelptests",
-      "community": 117,
+      "community": 118,
       "norm_label": "contextualhelptests"
     },
     {
@@ -13372,7 +13372,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_test_contextual_help_contextualhelptests_test_main_sections_have_distinct_read_only_help",
-      "community": 117,
+      "community": 118,
       "norm_label": ".test_main_sections_have_distinct_read_only_help()"
     },
     {
@@ -13382,7 +13382,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "src_test_contextual_help_contextualhelptests_test_editor_fields_keep_values_and_descriptions",
-      "community": 117,
+      "community": 118,
       "norm_label": ".test_editor_fields_keep_values_and_descriptions()"
     },
     {
@@ -13392,7 +13392,7 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "src_test_contextual_help_contextualhelptests_test_guest_sees_no_context_help",
-      "community": 117,
+      "community": 118,
       "norm_label": ".test_guest_sees_no_context_help()"
     },
     {
@@ -13402,7 +13402,7 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "src_test_contextual_help_contextualhelptests_test_client_and_service_help_does_not_conflate_operations",
-      "community": 117,
+      "community": 118,
       "norm_label": ".test_client_and_service_help_does_not_conflate_operations()"
     },
     {
@@ -13432,7 +13432,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_test_default_rule_defaultruletests",
-      "community": 114,
+      "community": 115,
       "norm_label": "defaultruletests"
     },
     {
@@ -13442,7 +13442,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_test_default_rule_defaultruletests_setup",
-      "community": 114,
+      "community": 115,
       "norm_label": ".setup()"
     },
     {
@@ -13452,7 +13452,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_test_default_rule_defaultruletests_form",
-      "community": 114,
+      "community": 115,
       "norm_label": ".form()"
     },
     {
@@ -13462,7 +13462,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_test_default_rule_defaultruletests_test_default_is_last_in_list_and_edits_shared_fields",
-      "community": 114,
+      "community": 115,
       "norm_label": ".test_default_is_last_in_list_and_edits_shared_fields()"
     },
     {
@@ -13472,7 +13472,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_test_default_rule_defaultruletests_test_noop_save_preserves_compiled_modes_and_specific_rules",
-      "community": 114,
+      "community": 115,
       "norm_label": ".test_noop_save_preserves_compiled_modes_and_specific_rules()"
     },
     {
@@ -13482,7 +13482,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_test_default_rule_defaultruletests_test_reorder_delete_and_zero_backups_preserve_primary_and_global_timing",
-      "community": 114,
+      "community": 115,
       "norm_label": ".test_reorder_delete_and_zero_backups_preserve_primary_and_global_timing()"
     },
     {
@@ -13492,7 +13492,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_test_default_rule_defaultruletests_test_incomplete_pair_stale_form_and_deleting_final_rule_are_rejected",
-      "community": 114,
+      "community": 115,
       "norm_label": ".test_incomplete_pair_stale_form_and_deleting_final_rule_are_rejected()"
     },
     {
@@ -13502,7 +13502,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_test_default_rule_defaultruletests_test_ordinary_rule_keeps_three_ordered_backups",
-      "community": 114,
+      "community": 115,
       "norm_label": ".test_ordinary_rule_keeps_three_ordered_backups()"
     },
     {
@@ -13512,7 +13512,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "src_test_default_rule_defaultruletests_test_drag_order_requires_exact_list_and_current_revision",
-      "community": 114,
+      "community": 115,
       "norm_label": ".test_drag_order_requires_exact_list_and_current_revision()"
     },
     {
@@ -13522,7 +13522,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "src_test_default_rule_defaultruletests_test_legacy_failover_redirects_without_duplicate_editor",
-      "community": 114,
+      "community": 115,
       "norm_label": ".test_legacy_failover_redirects_without_duplicate_editor()"
     },
     {
@@ -13972,7 +13972,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_test_failover_form_pairedfailovertests",
-      "community": 68,
+      "community": 67,
       "norm_label": "pairedfailovertests"
     },
     {
@@ -13982,7 +13982,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_test_failover_form_pairedfailovertests_setup",
-      "community": 68,
+      "community": 67,
       "norm_label": ".setup()"
     },
     {
@@ -13992,7 +13992,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_test_failover_form_pairedfailovertests_form",
-      "community": 68,
+      "community": 67,
       "norm_label": ".form()"
     },
     {
@@ -14002,7 +14002,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_test_failover_form_pairedfailovertests_test_ui_pairs_compile_to_matching_dns_and_exit_states",
-      "community": 68,
+      "community": 67,
       "norm_label": ".test_ui_pairs_compile_to_matching_dns_and_exit_states()"
     },
     {
@@ -14012,7 +14012,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_test_failover_form_pairedfailovertests_test_missing_half_pair_is_not_silently_inferred",
-      "community": 68,
+      "community": 67,
       "norm_label": ".test_missing_half_pair_is_not_silently_inferred()"
     },
     {
@@ -14022,7 +14022,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_test_failover_form_pairedfailovertests_test_reordering_moves_dns_with_its_explicit_exit",
-      "community": 68,
+      "community": 67,
       "norm_label": ".test_reordering_moves_dns_with_its_explicit_exit()"
     },
     {
@@ -14032,7 +14032,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "src_test_failover_form_pairedfailovertests_test_protected_resources_cannot_enter_public_failover",
-      "community": 68,
+      "community": 67,
       "norm_label": ".test_protected_resources_cannot_enter_public_failover()"
     },
     {
@@ -14042,7 +14042,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_test_failover_form_pairedfailovertests_test_duplicate_exit_and_empty_queue_are_rejected",
-      "community": 68,
+      "community": 67,
       "norm_label": ".test_duplicate_exit_and_empty_queue_are_rejected()"
     },
     {
@@ -14052,7 +14052,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "src_test_failover_form_pairedfailovertests_test_later_scope_change_is_reported_as_blocking_conflict",
-      "community": 68,
+      "community": 67,
       "norm_label": ".test_later_scope_change_is_reported_as_blocking_conflict()"
     },
     {
@@ -14062,7 +14062,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_test_failover_form_pairedfailovertests_test_legacy_exit_only_queue_cannot_compile",
-      "community": 68,
+      "community": 67,
       "norm_label": ".test_legacy_exit_only_queue_cannot_compile()"
     },
     {
@@ -14752,7 +14752,7 @@
       "source_location": "L234",
       "_origin": "ast",
       "id": "src_test_health_healthtests_test_runtime_snapshot_refuses_partial_package_and_busy_writer",
-      "community": 64,
+      "community": 113,
       "norm_label": ".test_runtime_snapshot_refuses_partial_package_and_busy_writer()"
     },
     {
@@ -17872,7 +17872,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_test_pair_health_pairhealthtests",
-      "community": 122,
+      "community": 68,
       "norm_label": "pairhealthtests"
     },
     {
@@ -17882,7 +17882,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_test_pair_health_pairhealthtests_record",
-      "community": 122,
+      "community": 68,
       "norm_label": ".record()"
     },
     {
@@ -17892,7 +17892,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_test_pair_health_pairhealthtests_test_both_dns_transports_and_all_urls_are_required",
-      "community": 122,
+      "community": 68,
       "norm_label": ".test_both_dns_transports_and_all_urls_are_required()"
     },
     {
@@ -17902,7 +17902,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_test_pair_health_pairhealthtests_test_success_does_not_claim_auto_switching",
-      "community": 122,
+      "community": 68,
       "norm_label": ".test_success_does_not_claim_auto_switching()"
     },
     {
@@ -17912,7 +17912,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_test_pair_health_pairhealthtests_test_resource_exhaustion_is_unknown_not_a_failed_channel",
-      "community": 122,
+      "community": 68,
       "norm_label": ".test_resource_exhaustion_is_unknown_not_a_failed_channel()"
     },
     {
@@ -17922,7 +17922,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_test_pair_health_pairhealthtests_test_identity_and_revision_are_bound_to_generated_manifest",
-      "community": 122,
+      "community": 68,
       "norm_label": ".test_identity_and_revision_are_bound_to_generated_manifest()"
     },
     {
@@ -17942,7 +17942,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_test_pair_health_pairhealthtests_test_wrapper_timeout_is_not_a_network_failure",
-      "community": 122,
+      "community": 68,
       "norm_label": ".test_wrapper_timeout_is_not_a_network_failure()"
     },
     {
@@ -17952,7 +17952,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "src_test_pair_health_pairhealthtests_test_network_io_releases_lock_and_same_hash_reapply_invalidates_sample",
-      "community": 122,
+      "community": 68,
       "norm_label": ".test_network_io_releases_lock_and_same_hash_reapply_invalidates_sample()"
     },
     {
@@ -18602,7 +18602,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "src_test_policy_modes_policymodetests_test_pair_form_requires_complete_rows_and_preserves_order",
-      "community": 121,
+      "community": 122,
       "norm_label": ".test_pair_form_requires_complete_rows_and_preserves_order()"
     },
     {
@@ -24752,7 +24752,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_test_udp_health_response",
-      "community": 115,
+      "community": 116,
       "norm_label": "response()"
     },
     {
@@ -24762,7 +24762,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_test_udp_health_udphealthtests",
-      "community": 115,
+      "community": 116,
       "norm_label": "udphealthtests"
     },
     {
@@ -24772,7 +24772,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_test_udp_health_udphealthtests_test_public_ipv4_and_ipv6_stun_values",
-      "community": 115,
+      "community": 116,
       "norm_label": ".test_public_ipv4_and_ipv6_stun_values()"
     },
     {
@@ -24782,7 +24782,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_test_udp_health_udphealthtests_test_wrong_transaction_truncation_private_and_conflicting_answers_fail",
-      "community": 115,
+      "community": 116,
       "norm_label": ".test_wrong_transaction_truncation_private_and_conflicting_answers_fail()"
     },
     {
@@ -24792,7 +24792,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_test_udp_health_udphealthtests_test_socks_fragments_wrong_port_and_truncated_frames_fail",
-      "community": 115,
+      "community": 116,
       "norm_label": ".test_socks_fragments_wrong_port_and_truncated_frames_fail()"
     },
     {
@@ -24802,7 +24802,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "src_test_udp_health_udphealthtests_test_real_socks_handshake_remote_domain_udp_and_control_lifetime",
-      "community": 115,
+      "community": 116,
       "norm_label": ".test_real_socks_handshake_remote_domain_udp_and_control_lifetime()"
     },
     {
@@ -24812,7 +24812,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "src_test_udp_health_udphealthtests_test_tcp_control_success_without_udp_reply_is_not_healthy",
-      "community": 115,
+      "community": 116,
       "norm_label": ".test_tcp_control_success_without_udp_reply_is_not_healthy()"
     },
     {
@@ -24822,7 +24822,7 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "src_test_udp_health_udphealthtests_test_single_deadline_prevents_slow_header_from_extending_budget",
-      "community": 115,
+      "community": 116,
       "norm_label": ".test_single_deadline_prevents_slow_header_from_extending_budget()"
     },
     {
@@ -24832,7 +24832,7 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "src_test_udp_health_udphealthtests_test_failure_has_no_direct_retry_and_does_not_disclose_exception",
-      "community": 115,
+      "community": 116,
       "norm_label": ".test_failure_has_no_direct_retry_and_does_not_disclose_exception()"
     },
     {
@@ -24852,7 +24852,7 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "src_test_udp_health_udphealthtests_test_exit_change_is_an_event_even_when_probe_remains_up",
-      "community": 115,
+      "community": 116,
       "norm_label": ".test_exit_change_is_an_event_even_when_probe_remains_up()"
     },
     {
@@ -27002,7 +27002,7 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "src_test_wireguard_lifecycle_lifecyclewebtests",
-      "community": 116,
+      "community": 117,
       "norm_label": "lifecyclewebtests"
     },
     {
@@ -27012,7 +27012,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "src_test_wireguard_lifecycle_lifecyclewebtests_lifecycle_fields",
-      "community": 116,
+      "community": 117,
       "norm_label": ".lifecycle_fields()"
     },
     {
@@ -27022,7 +27022,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "src_test_wireguard_lifecycle_lifecyclewebtests_test_web_stop_and_manual_restore_preserve_autostart",
-      "community": 116,
+      "community": 117,
       "norm_label": ".test_web_stop_and_manual_restore_preserve_autostart()"
     },
     {
@@ -27032,7 +27032,7 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "src_test_wireguard_lifecycle_lifecyclewebtests_test_autostart_disable_keeps_running_and_enable_requires_probe",
-      "community": 116,
+      "community": 117,
       "norm_label": ".test_autostart_disable_keeps_running_and_enable_requires_probe()"
     },
     {
@@ -27042,7 +27042,7 @@
       "source_location": "L141",
       "_origin": "ast",
       "id": "src_test_wireguard_lifecycle_lifecyclewebtests_test_autostart_enable_inactive_is_rejected_without_start",
-      "community": 116,
+      "community": 117,
       "norm_label": ".test_autostart_enable_inactive_is_rejected_without_start()"
     },
     {
@@ -27052,7 +27052,7 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "src_test_wireguard_lifecycle_lifecyclewebtests_test_runtime_start_rejects_pending_network_before_mutation",
-      "community": 116,
+      "community": 117,
       "norm_label": ".test_runtime_start_rejects_pending_network_before_mutation()"
     },
     {
@@ -27062,7 +27062,7 @@
       "source_location": "L152",
       "_origin": "ast",
       "id": "src_test_wireguard_lifecycle_lifecyclewebtests_test_lifecycle_posts_keep_csrf_origin_and_stale_state_guards",
-      "community": 116,
+      "community": 117,
       "norm_label": ".test_lifecycle_posts_keep_csrf_origin_and_stale_state_guards()"
     },
     {
@@ -27072,7 +27072,7 @@
       "source_location": "L159",
       "_origin": "ast",
       "id": "src_test_wireguard_lifecycle_lifecyclewebtests_test_status_after_reboot_is_readonly_and_explicit",
-      "community": 116,
+      "community": 117,
       "norm_label": ".test_status_after_reboot_is_readonly_and_explicit()"
     },
     {
@@ -27082,7 +27082,7 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "src_test_wireguard_lifecycle_lifecyclewebtests_test_web_can_close_failed_boot_without_false_recovery_claim_then_restart",
-      "community": 116,
+      "community": 117,
       "norm_label": ".test_web_can_close_failed_boot_without_false_recovery_claim_then_restart()"
     },
     {
@@ -27092,7 +27092,7 @@
       "source_location": "L175",
       "_origin": "ast",
       "id": "src_test_wireguard_lifecycle_lifecyclewebtests_test_enable_uncertain_postcheck_preserves_changed_setting_without_retry",
-      "community": 116,
+      "community": 117,
       "norm_label": ".test_enable_uncertain_postcheck_preserves_changed_setting_without_retry()"
     },
     {
@@ -30582,7 +30582,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_wireguard_control_profile_name",
-      "community": 65,
+      "community": 64,
       "norm_label": "profile_name()"
     },
     {
@@ -30602,7 +30602,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "src_wireguard_control_revision",
-      "community": 65,
+      "community": 64,
       "norm_label": "revision()"
     },
     {
@@ -30612,7 +30612,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "src_wireguard_control_visible",
-      "community": 65,
+      "community": 64,
       "norm_label": "visible()"
     },
     {
@@ -30632,7 +30632,7 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "src_wireguard_control_load",
-      "community": 65,
+      "community": 64,
       "norm_label": "load()"
     },
     {
@@ -30642,7 +30642,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "src_wireguard_control_control",
-      "community": 65,
+      "community": 64,
       "norm_label": "control()"
     },
     {
@@ -30682,7 +30682,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_wireguard_create",
-      "community": 65,
+      "community": 64,
       "norm_label": "wireguard_create.py"
     },
     {
@@ -30692,7 +30692,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_wireguard_create_generate_key",
-      "community": 65,
+      "community": 64,
       "norm_label": "generate_key()"
     },
     {
@@ -30702,7 +30702,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_wireguard_create_public_key",
-      "community": 65,
+      "community": 64,
       "norm_label": "public_key()"
     },
     {
@@ -30712,7 +30712,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_wireguard_create_create",
-      "community": 65,
+      "community": 64,
       "norm_label": "create()"
     },
     {
@@ -30722,7 +30722,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_wireguard_create_rationale_1",
-      "community": 65,
+      "community": 64,
       "norm_label": "create one inactive wg-quick file without replacing existing resources."
     },
     {
@@ -30772,7 +30772,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_wireguard_preflight_networks",
-      "community": 65,
+      "community": 64,
       "norm_label": "networks()"
     },
     {
@@ -30782,7 +30782,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_wireguard_preflight_table",
-      "community": 65,
+      "community": 64,
       "norm_label": "table()"
     },
     {
@@ -30792,7 +30792,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_wireguard_preflight_conflicts",
-      "community": 65,
+      "community": 64,
       "norm_label": "conflicts()"
     },
     {
@@ -30802,7 +30802,7 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "src_wireguard_preflight_run",
-      "community": 65,
+      "community": 64,
       "norm_label": "run()"
     },
     {
@@ -30812,7 +30812,7 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "src_wireguard_preflight_native",
-      "community": 65,
+      "community": 64,
       "norm_label": "native()"
     },
     {
@@ -30822,7 +30822,7 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "src_wireguard_preflight_check",
-      "community": 65,
+      "community": 64,
       "norm_label": "check()"
     },
     {
@@ -30842,7 +30842,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_wireguard_preflight_rationale_23",
-      "community": 65,
+      "community": 64,
       "norm_label": "others contains only profiles currently active or with a live interface."
     },
     {
@@ -30862,7 +30862,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_wireguard_profile_key",
-      "community": 65,
+      "community": 64,
       "norm_label": "key()"
     },
     {
@@ -32379,7 +32379,7 @@
       "label": ".test_input_restrictions_and_linux_only_policy()",
       "file_type": "code",
       "source_file": "tools/test_local_node.py",
-      "source_location": "L132",
+      "source_location": "L133",
       "_origin": "ast",
       "id": "tools_test_local_node_localnodetests_test_input_restrictions_and_linux_only_policy",
       "community": 63,
@@ -32389,7 +32389,7 @@
       "label": ".test_real_darwin_core_dns_socks_http_and_revision_guard()",
       "file_type": "code",
       "source_file": "tools/test_local_node.py",
-      "source_location": "L149",
+      "source_location": "L150",
       "_origin": "ast",
       "id": "tools_test_local_node_localnodetests_test_real_darwin_core_dns_socks_http_and_revision_guard",
       "community": 63,
@@ -32399,7 +32399,7 @@
       "label": ".check_panel()",
       "file_type": "code",
       "source_file": "tools/test_local_node.py",
-      "source_location": "L289",
+      "source_location": "L290",
       "_origin": "ast",
       "id": "tools_test_local_node_localnodetests_check_panel",
       "community": 63,
@@ -33664,7 +33664,7 @@
       "external_kind": "dynamic-shell-file",
       "_origin": "ast",
       "id": "root_settings_sh",
-      "community": 118,
+      "community": 119,
       "norm_label": "root.settings.sh · dynamic shell file"
     },
     {
@@ -33676,7 +33676,7 @@
       "external_kind": "dynamic-shell-file",
       "_origin": "ast",
       "id": "root_pair_settings_sh",
-      "community": 66,
+      "community": 65,
       "norm_label": "root.pair.settings.sh · dynamic shell file"
     },
     {
@@ -134426,7 +134426,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "tools/test_local_node.py",
-      "source_location": "L289",
+      "source_location": "L290",
       "weight": 1.0,
       "_origin": "ast",
       "confidence_score": 1.0,
@@ -134470,7 +134470,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "tools/test_local_node.py",
-      "source_location": "L132",
+      "source_location": "L133",
       "weight": 1.0,
       "_origin": "ast",
       "confidence_score": 1.0,
@@ -134492,7 +134492,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "tools/test_local_node.py",
-      "source_location": "L149",
+      "source_location": "L150",
       "weight": 1.0,
       "_origin": "ast",
       "confidence_score": 1.0,
@@ -134528,7 +134528,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tools/test_local_node.py",
-      "source_location": "L154",
+      "source_location": "L155",
       "weight": 1.0,
       "_origin": "ast",
       "confidence_score": 1.0,
@@ -134540,7 +134540,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tools/test_local_node.py",
-      "source_location": "L154",
+      "source_location": "L155",
       "weight": 1.0,
       "_origin": "ast",
       "confidence_score": 1.0,
@@ -134552,7 +134552,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tools/test_local_node.py",
-      "source_location": "L168",
+      "source_location": "L169",
       "weight": 1.0,
       "_origin": "ast",
       "confidence_score": 1.0,
@@ -134564,7 +134564,7 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "tools/test_local_node.py",
-      "source_location": "L155",
+      "source_location": "L156",
       "weight": 1.0,
       "_origin": "ast",
       "confidence_score": 0.75,
@@ -134576,7 +134576,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tools/test_local_node.py",
-      "source_location": "L204",
+      "source_location": "L205",
       "weight": 1.0,
       "_origin": "ast",
       "confidence_score": 1.0,
@@ -134588,7 +134588,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "tools/test_local_node.py",
-      "source_location": "L290",
+      "source_location": "L291",
       "weight": 1.0,
       "_origin": "ast",
       "confidence_score": 1.0,
@@ -137507,7 +137507,7 @@
       "path": "tools/test_download_core.py"
     },
     {
-      "sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670",
+      "sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f",
       "path": "tools/test_local_node.py"
     },
     {

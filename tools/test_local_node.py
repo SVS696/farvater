@@ -119,7 +119,8 @@ class LocalNodeTests(unittest.TestCase):
             home = Path(directory)
             state = home / "state"
             run_panel.private_directory(state)
-            with (patch("local_node.Supervisor"), patch("local_node.Path.home", return_value=home),
+            with (patch("local_node.sys.platform", "darwin"), patch("local_node.Supervisor"),
+                  patch("local_node.Path.home", return_value=home),
                   patch("local_node.subprocess.run", return_value=subprocess.CompletedProcess([], 0, b"", b"")) as command):
                 target = local_node.install_login_agent(state)
             document = plistlib.loads(target.read_bytes())

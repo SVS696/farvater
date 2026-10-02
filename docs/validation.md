@@ -1,4 +1,4 @@
-# Проверки v0.1.0-alpha.1
+# Проверки v0.1.0-alpha.2
 
 | Проверка | Среда | Результат |
 |---|---|---|
@@ -25,3 +25,7 @@ LAN-клиентом: TUN, системный DNS, TCP/UDP, scoped PF, отка�
 Они исправлены; повторный bounded review чистый. Это не заменяет actual gateway
 acceptance. Полный public tree/history secret scan и CI выполняются отдельно
 перед публикацией и после неё. Physical touch и полный screen reader не проверены.
+
+## Проверка CI
+
+В alpha.1 Linux-job выявил portability defect в тесте пользовательского macOS login-agent: fixture не имитировал Darwin. В alpha.2 test context явно задаёт Darwin; assertions сохранены, тест не пропускается. Это исправление тестового окружения, production code не менялся. macOS и secret scan alpha.1 прошли. Финальный статус Linux/macOS CI проверяется на новом commit до создания alpha.2.

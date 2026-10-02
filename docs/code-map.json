@@ -1,6 +1,6 @@
 {
   "schema": "farvater-file-graph-v1",
-  "generated_utc": "2026-10-02T16:34:45.071159+00:00",
+  "generated_utc": "2026-10-02T16:50:49.922496+00:00",
   "source_root": ".",
   "file_nodes": 354,
   "nodes": [
@@ -2817,7 +2817,7 @@
       "label": "tools/test_local_node.py",
       "kind": "file",
       "source_file": "tools/test_local_node.py",
-      "sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670",
+      "sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f",
       "provenance": "public source"
     },
     {
@@ -5669,7 +5669,7 @@
       "provenance": "external module; not in source corpus"
     },
     {
-      "id": "dynamic-process:tools/test_local_node.py:291",
+      "id": "dynamic-process:tools/test_local_node.py:292",
       "label": "dynamic process target",
       "kind": "ambiguous",
       "source_file": null,
@@ -5677,7 +5677,7 @@
       "provenance": null
     },
     {
-      "id": "dynamic-process:tools/test_local_node.py:175",
+      "id": "dynamic-process:tools/test_local_node.py:176",
       "label": "dynamic process target",
       "kind": "ambiguous",
       "source_file": null,
@@ -5685,7 +5685,7 @@
       "provenance": null
     },
     {
-      "id": "dynamic-process:tools/test_local_node.py:224",
+      "id": "dynamic-process:tools/test_local_node.py:225",
       "label": "dynamic process target",
       "kind": "ambiguous",
       "source_file": null,
@@ -5693,7 +5693,7 @@
       "provenance": null
     },
     {
-      "id": "dynamic-process:tools/test_local_node.py:250",
+      "id": "dynamic-process:tools/test_local_node.py:251",
       "label": "dynamic process target",
       "kind": "ambiguous",
       "source_file": null,
@@ -35112,7 +35112,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 22,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35122,7 +35122,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 23,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35132,7 +35132,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 88,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35142,7 +35142,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 3,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35152,7 +35152,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 4,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35162,7 +35162,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 5,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35172,7 +35172,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 6,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35182,7 +35182,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 7,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35192,7 +35192,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 8,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35202,7 +35202,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 9,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35212,7 +35212,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 10,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35222,7 +35222,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 11,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35232,7 +35232,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 12,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35242,7 +35242,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 13,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35252,7 +35252,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 14,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35262,7 +35262,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 15,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35272,7 +35272,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 16,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35282,7 +35282,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 17,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35292,7 +35292,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 18,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35302,7 +35302,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 19,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35312,7 +35312,7 @@
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
       "source_line": 20,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
@@ -35321,48 +35321,48 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/test_local_node.py",
-      "source_line": 164,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_line": 165,
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
-      "target": "dynamic-process:tools/test_local_node.py:291",
+      "target": "dynamic-process:tools/test_local_node.py:292",
       "relation": "may_invoke_process",
       "confidence": "AMBIGUOUS",
       "confidence_score": 0.25,
       "source_file": "tools/test_local_node.py",
-      "source_line": 291,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_line": 292,
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
-      "target": "dynamic-process:tools/test_local_node.py:175",
+      "target": "dynamic-process:tools/test_local_node.py:176",
       "relation": "may_invoke_process",
       "confidence": "AMBIGUOUS",
       "confidence_score": 0.25,
       "source_file": "tools/test_local_node.py",
-      "source_line": 175,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_line": 176,
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
-      "target": "dynamic-process:tools/test_local_node.py:224",
+      "target": "dynamic-process:tools/test_local_node.py:225",
       "relation": "may_invoke_process",
       "confidence": "AMBIGUOUS",
       "confidence_score": 0.25,
       "source_file": "tools/test_local_node.py",
-      "source_line": 224,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_line": 225,
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_local_node.py",
-      "target": "dynamic-process:tools/test_local_node.py:250",
+      "target": "dynamic-process:tools/test_local_node.py:251",
       "relation": "may_invoke_process",
       "confidence": "AMBIGUOUS",
       "confidence_score": 0.25,
       "source_file": "tools/test_local_node.py",
-      "source_line": 250,
-      "source_sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670"
+      "source_line": 251,
+      "source_sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f"
     },
     {
       "source": "file:tools/test_mac_gateway.py",
@@ -39982,7 +39982,7 @@
       "path": "tools/test_download_core.py"
     },
     {
-      "sha256": "742ca4ca0d0b5e789ef9dc9aea51486f0ba249811af07fae65d08f3a54e0d670",
+      "sha256": "b61ad3513f946be4348381d91acfc673b7518f2be71fdddb7ab2a3bf84bf913f",
       "path": "tools/test_local_node.py"
     },
     {
