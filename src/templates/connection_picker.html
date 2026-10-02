@@ -1,0 +1,8 @@
+{% set selected_protocol=request.args.get('protocol') or {'amnezia_new':'amnezia','trusttunnel_new':'trusttunnel','wireguard_new':'wireguard','openvpn_new':'openvpn','shadowsocks_import_form':'shadowsocks-import','tunnel_form':'socks'}.get(request.endpoint,'') %}
+<form class="protocol-picker" method="get" action="{{ url_for('connection_new') }}">
+<label>Протокол подключения<select name="protocol" required>
+<option value="" {% if not selected_protocol %}selected{% endif %} disabled>Выберите протокол</option>
+{% for value,label in outgoing_protocols + [('shadowsocks-import','Shadowsocks · импорт ss://'),('direct','Прямой выход'),('selector','Группа выходов')] %}<option value="{{ value }}" {% if selected_protocol==value %}selected{% endif %}>{{ label }}</option>{% endfor %}
+</select></label><button class="{{ 'secondary' if selected_protocol else '' }}">{{ 'Выбрать другой протокол' if selected_protocol else 'Продолжить' }}</button>
+</form>
+{% if selected_protocol %}<p class="muted">При смене протокола несохранённые поля формы будут очищены.</p>{% endif %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}{% from 'components.html' import button,status with context %}
+{% block content %}
+<section class="card">
+<h2>{{ outbound.get('name','Подключение') }}</h2>
+<p>Протокол: <strong>{{ outbound.protocol }}</strong></p>
+<p>Это подключение использует отдельную службу. Его назначение задаётся в правилах сети.</p>
+</section>
+{% if outbound.protocol=='WireGuard' %}
+<p>Параметры туннеля и импорт файла доступны в профилях WireGuard. Для подключения устройства к VPN откройте список устройств: там можно создать клиента, получить конфиг или QR-код, отключить и снова включить доступ.</p>
+<div class="actions">{{ button('Профили WireGuard',url_for('wireguard_page')) }}{{ button('Подключённые устройства',url_for('clients_page'),True) }}</div>
+{% else %}
+{{ status('Редактор параметров недоступен','Для этого подключения не настроено управление службой. Параметры входа и импорт доступны после подключения соответствующего адаптера.','fallback') }}
+{% endif %}
+<p>Правила использования подключения можно изменить в разделе «Правила».</p>
+<div class="actions">{{ button('К подключениям',url_for('page',name='tunnels'),True) }}{{ button('Правила',url_for('page',name='rules'),True) }}</div>
+{% endblock %}

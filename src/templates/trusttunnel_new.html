@@ -1,0 +1,24 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button,status with context %}
+{% block content %}
+{% include 'connection_picker.html' %}
+<p>Создайте исходящее подключение к VPN-серверу TrustTunnel. Оно сохранится выключенным, без автозапуска. Локальный порт и служба выбираются автоматически. Существующие подключения и правила не меняются.</p>
+{% if error %}{{ status('Список сервера недоступен',error,'unknown') }}{% endif %}
+{% for item in catalog if item.id not in policy.exits %}
+<section><h2>{{ item.outbound.name }}</h2><p>{{ 'Создание прервалось. Можно завершить его с уже сохранёнными параметрами.' if item.status!='complete' else 'Сохранено на сервере. Осталось добавить подключение в список панели.' }}</p>
+<form class="form" method="post" action="{{ url_for('trusttunnel_create',identifier=item.id) }}">{{ hidden(revision) }}{{ button('Завершить создание' if item.status!='complete' else 'Добавить в список панели') }}</form></section>
+{% endfor %}
+<h2>Ввести параметры</h2>
+<form class="form" method="post" action="{{ url_for('trusttunnel_create') }}">{{ hidden(revision) }}<input type="hidden" name="connection" value="{{ identifier }}"><input type="hidden" name="format" value="form">
+<label>Название<input name="name" required maxlength="120" placeholder="Например, резервный VPN"></label>
+<label>Назначение<select name="scope"><option value="public">Обычный интернет</option><option value="work">Рабочие ресурсы</option><option value="special">Специальные ресурсы</option></select></label>
+{% include 'trusttunnel_fields.html' %}
+{{ button('Создать выключенным',disabled=error) }}</form>
+<h2>Импортировать файл</h2>
+<p>Endpoint TOML содержит параметры сервера. Полный TOML клиента должен использовать локальный SOCKS; его локальный порт будет автоматически заменён свободным. TUN, собственные исключения и неизвестные поля не импортируются — при их наличии файл будет отклонён с объяснением.</p>
+<form class="form" method="post" enctype="multipart/form-data" action="{{ url_for('trusttunnel_create') }}">{{ hidden(revision) }}<input type="hidden" name="connection" value="{{ identifier }}">
+<label>Название<input name="name" required maxlength="120"></label>
+<label>Назначение<select name="scope"><option value="public">Обычный интернет</option><option value="work">Рабочие ресурсы</option><option value="special">Специальные ресурсы</option></select></label>
+<label>Формат<select name="format"><option value="endpoint">Параметры сервера · endpoint TOML</option><option value="client">Полный конфиг клиента · TOML</option><option value="deeplink">Ссылка tt://?</option></select></label>
+<p class="muted">Название из файла относится к приложению TrustTunnel; в панели используется название подключения, заданное в форме. Для ссылки выберите формат tt://? и вставьте её ниже либо загрузите .txt.</p><label>Ссылка TrustTunnel<textarea name="connection_text" rows="3" placeholder="tt://?" autocomplete="off" spellcheck="false"></textarea></label><label>Файл<input type="file" name="connection_file" accept=".toml,.txt"></label>{{ button('Импортировать и создать выключенным',disabled=error) }}</form>
+{{ button('К подключениям',url_for('page',name='tunnels'),True) }}
+{% endblock %}

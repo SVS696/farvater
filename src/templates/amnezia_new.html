@@ -1,0 +1,20 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button with context %}
+{% block content %}{% include 'connection_picker.html' %}
+<p>Импортируйте выданный файл AmneziaWG или задайте параметры вручную. Интерфейс и таблица маршрутов назначаются автоматически. Подключение создаётся выключенным; существующие правила не переключаются.</p>
+<form class="form" method="post" action="{{ url_for('amnezia_create') }}" enctype="multipart/form-data">{{ hidden(revision) }}
+<label>Название подключения<input name="name" required maxlength="120" placeholder="Например, личный VPN"></label>
+<label>Назначение<select name="scope"><option value="public">Обычный интернет</option><option value="work">Рабочие ресурсы</option><option value="special">Специальные ресурсы</option></select></label>
+<label>Импорт .conf<input type="file" name="connection_file" accept=".conf"><span class="muted">Если выбран файл, параметры ниже берутся из него. Команды запуска из файлов не выполняются. Таблица маршрутов из файла заменяется отдельной таблицей этого подключения.</span></label>
+<details><summary>Ввести параметры вручную</summary><div class="form"><input type="hidden" name="peer_count" value="0">
+<label>Адреса в туннеле<textarea name="interface_Address" rows="2" placeholder="10.50.0.2/32"></textarea><span class="muted">Адреса с префиксами из выданной конфигурации.</span></label>
+<label>Закрытый ключ<input type="password" name="interface_PrivateKey" maxlength="44" autocomplete="new-password"><span class="muted">Пусто — создать новый ключ. Его открытая часть будет показана после сохранения для настройки другой стороны.</span></label>
+<label>Открытый ключ сервера<input name="peer_0_PublicKey" maxlength="44"></label>
+<label>Адрес и порт сервера<input name="peer_0_Endpoint" placeholder="vpn.example.com:51820"></label>
+<label>Разрешённые сети<textarea name="peer_0_AllowedIPs" rows="2" placeholder="0.0.0.0/0, ::/0"></textarea><span class="muted">Сети из выданного профиля. Даже для всех адресов выход будет использоваться только выбранными в панели правилами.</span></label>
+<label>Дополнительный ключ PSK<input type="password" name="peer_0_PresharedKey" maxlength="44" autocomplete="new-password"></label>
+<label>Keepalive, секунд<input name="peer_0_PersistentKeepalive" placeholder="Число или диапазон"></label>
+<div class="columns"><label>Порт прослушивания<input type="number" name="interface_ListenPort" min="0" max="65535"><span class="muted">Пусто — выбрать свободный.</span></label><label>MTU<input type="number" name="interface_MTU" min="576" max="65535" placeholder="1280"></label></div>
+{% include 'amnezia_fields.html' %}</div></details>
+{{ button('Создать подключение') }}</form>
+{{ button('Все профили AmneziaWG',url_for('amnezia_page'),True) }}
+{% endblock %}

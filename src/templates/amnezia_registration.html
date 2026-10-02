@@ -1,0 +1,4 @@
+{% if awg_registered %}<p>Выход AmneziaWG доступен в <a href="{{ url_for('page',name='rules') }}">правилах</a>. Настройки DNS — в <a href="{{ url_for('page',name='dns') }}">общем списке DNS</a>.</p>
+{% else %}<section class="card"><h2>Добавить в правила</h2><p>Профиль существует на сервере, но ещё не зарегистрирован в черновике панели.</p>
+<form class="form" method="post" action="{{ url_for('amnezia_register',profile=profile) }}">{{ hidden(revision) }}
+<label>Название подключения<input name="name" required maxlength="120" value="{{ profile }}"></label><label>Назначение<select name="scope"><option value="public">Обычный интернет</option><option value="work">Рабочие ресурсы</option><option value="special">Специальные ресурсы</option></select></label>{{ button('Добавить выход и DNS') }}</form></section>{% endif %}

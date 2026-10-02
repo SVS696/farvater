@@ -1,0 +1,12 @@
+{% macro button(label, href=None, secondary=False, disabled=False) -%}
+{% if href %}<a class="button {{ 'secondary' if secondary }}" href="{{ href }}">{{ label }}</a>
+{% else %}<button class="{{ 'secondary' if secondary }}" {% if disabled %}disabled{% endif %}>{{ label }}</button>{% endif %}
+{%- endmacro %}
+{% macro status(title, detail, state='unknown') -%}
+<section class="status {{ state }}"><h2>{{ title }}</h2><p>{{ detail }}</p></section>
+{%- endmacro %}
+{% macro hidden(revision=None) -%}
+<input type="hidden" name="csrf" value="{{ csrf }}">{% if revision %}<input type="hidden" name="revision" value="{{ revision }}">{% endif %}
+{%- endmacro %}
+{% macro field_help(id, text) -%}<span class="field-help" id="{{ id }}">{{ text }}</span>{%- endmacro %}
+{% macro draft_stages() -%}<section class="edit-stages" aria-label="Состояния настройки"><p><strong>Форма</strong><span data-form-stage>Ввод остаётся на этой странице до сохранения.</span></p><p><strong>Черновик</strong><span>Кнопка «Сохранить» записывает выбранные параметры.</span></p><p><strong>Действует</strong><span>Работающую политику проверьте в разделе «Изменения».</span></p></section>{%- endmacro %}

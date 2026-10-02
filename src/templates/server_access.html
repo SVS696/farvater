@@ -1,0 +1,20 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button with context %}
+{% block content %}
+{% if not backend_enabled %}<p>Сетевое ядро не подключено. При установке выберите локальное управление или доступ по SSH.</p>
+{% elif not remote_mode %}
+<p>Панель использует локальное сетевое ядро. Команды и мониторинг выполняются локально, SSH-адрес и пароль для этого не нужны.</p>
+<p class="muted">Удалённое размещение панели выбирается при установке. На удалённой панели здесь можно менять адреса SSH и доступ к одному сетевому ядру.</p>
+{% else %}
+<p>Все адреса ниже должны вести к одному сетевому ядру. При недоступности первого адреса панель проверит следующий. Уже отправленная команда изменения автоматически не повторяется.</p>
+{% if error %}<p class="notice error" role="alert">{{ error }}</p>{% endif %}
+<form class="form" method="post" action="{{ url_for('server_access_save') }}" data-server-access>{{ hidden(revision) }}
+<div data-server-targets>{% for target in targets %}<fieldset data-server-target><legend>Адрес доступа</legend>{% include 'server_target.html' %}</fieldset>{% endfor %}</div>
+<button type="button" class="secondary" data-server-target-add>Добавить резервный адрес</button>
+<label>Пароль sudo<input type="password" name="sudo_password" autocomplete="new-password"><span class="muted">{{ 'Пароль сохранён. Пустое поле оставит прежнее значение.' if password_present else 'Не нужен, если администратор разрешил служебную команду через sudo без пароля.' }}</span></label>
+{% if password_present %}<label class="check"><input type="checkbox" name="clear_password">Удалить пароль и использовать sudo без пароля</label>{% endif %}
+<p class="muted">SSH использует ключи пользователя панели. Публичный ключ SSH должен быть заранее проверен и добавлен в его known_hosts. Эта форма не меняет SSH или sudo в системе сетевого ядра.</p>
+{{ button('Сохранить доступ') }}
+<template data-server-target-template><fieldset data-server-target><legend>Адрес доступа</legend>{% set target={'port':22} %}{% include 'server_target.html' %}</fieldset></template>
+</form>
+{% endif %}
+{% endblock %}

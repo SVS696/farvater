@@ -1,0 +1,24 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button with context %}
+{% block content %}
+{% include 'connection_picker.html' %}
+<p>Новый профиль сохраняется на сетевом ядре выключенным и без автозапуска. Существующие туннели продолжают работать. Перед включением профиль нужно проверить на конфликты.</p>
+<form class="form" method="post" action="{{ url_for('wireguard_create') }}">{{ hidden() }}
+<input type="hidden" name="peer_count" value="0">
+<fieldset><legend>Интерфейс</legend>
+<label>Имя профиля<input name="profile" required maxlength="15" pattern="[A-Za-z0-9][A-Za-z0-9_.-]{0,14}" placeholder="wg-office"><span class="muted">До 15 латинских букв, цифр, точек, дефисов или подчёркиваний. Имя должно быть свободно на сервере.</span></label>
+<label>Адреса интерфейса с префиксами<textarea name="interface_Address" rows="3" required placeholder="10.50.0.2/32"></textarea><span class="muted">По одному адресу в строке. Адреса задаёт администратор другой стороны; пример не подставляется автоматически.</span></label>
+<label>Закрытый ключ<input type="password" name="interface_PrivateKey" autocomplete="new-password" maxlength="44"><span class="muted">Если ключ уже выдан — вставьте его. Пусто — сервер создаст новый ключ. Закрытый ключ не возвращается в страницу; открытый будет показан после создания.</span></label>
+<div class="columns"><label>Порт прослушивания<input type="number" name="interface_ListenPort" min="0" max="65535"><span class="muted">Пусто — WireGuard выберет порт.</span></label><label>MTU<input type="number" name="interface_MTU" min="576" max="65535"><span class="muted">Пусто — автоматический выбор.</span></label></div>
+<label>Таблица маршрутов<input name="interface_Table" placeholder="auto"><span class="muted">auto — стандартные маршруты wg-quick; off — маршруты задаются отдельно; число — отдельная таблица. Общий маршрут интернета требует отдельной политики.</span></label>
+</fieldset>
+<fieldset><legend>Первый пир</legend>
+<p>Можно оставить пустым и добавить пиров в карточке созданного профиля.</p>
+<label>Открытый ключ пира<input name="peer_0_PublicKey" maxlength="44" autocomplete="off"></label>
+<label>Сети за пиром (AllowedIPs)<textarea name="peer_0_AllowedIPs" rows="3" placeholder="10.50.0.1/32"></textarea></label>
+<label>Адрес и порт пира<input name="peer_0_Endpoint" placeholder="vpn.example.com:51820"></label>
+<label>Keepalive, секунд<input type="number" name="peer_0_PersistentKeepalive" min="0" max="65535"></label>
+<label>Дополнительный ключ PSK<input type="password" name="peer_0_PresharedKey" autocomplete="new-password" maxlength="44"></label>
+</fieldset>
+{{ button('Создать выключенный профиль') }}{{ button('Отмена',url_for('wireguard_page'),True) }}
+</form>
+{% endblock %}

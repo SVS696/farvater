@@ -1,0 +1,31 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button with context %}
+{% block content %}
+<p>Когда домашний сервер доступен, он обрабатывает трафик и DNS. При отказе серверного пути Giga возвращает обычный интернет провайдера. Эта форма управляет IPv6; штатная IPv4-политика роутера настраивается отдельно.</p>
+{% if error %}<p class="notice">{{ error }}</p>{% endif %}
+{% if view %}
+{% set settings=view.settings %}{% set tx=view.transaction %}
+<section class="rule"><strong>Сейчас: {{ {'home':'путь через домашний сервер','provider':'путь через провайдера','unknown':'путь не подтверждён'}[view.path] }}</strong>
+<p>Контроллер: {{ {'running':'работает, состояние свежее','stopped':'остановлен','stale':'нет свежего подтверждения работы'}[view.controller] }}. {{ 'Настройки совпадают с сохранёнными на USB.' if view.persistent_matches else 'Рабочие настройки отличаются от USB либо USB недоступен.' }}</p>
+{% if tx and tx.status=='pending' %}<p><strong>Ожидается подтверждение: осталось {{ tx.remaining_seconds }} с на момент открытия страницы.</strong> Проверьте обычные и рабочие сайты. Если связь пропадёт или вы закроете панель, роутер сам вернёт прежние параметры.</p>
+<div class="actions">{% for action,label in [('confirm','Подтвердить и сохранить на USB'),('rollback','Вернуть прежние параметры')] %}<form method="post" action="{{ url_for('router_ipv6_action',router_id=router_id,action=action) }}">{{ hidden() }}<input type="hidden" name="transaction" value="{{ tx.id }}">{{ button(label) }}</form>{% endfor %}</div>
+{% elif tx and tx.status=='rollback_failed' %}<p class="notice">Автоматический возврат не завершён. Не применяйте новые настройки; повторите возврат и проверьте роутер.</p><form method="post" action="{{ url_for('router_ipv6_action',router_id=router_id,action='rollback') }}">{{ hidden() }}<input type="hidden" name="transaction" value="{{ tx.id }}">{{ button('Повторить возврат') }}</form>
+{% elif tx %}<p>{{ 'Последнее изменение сохранено.' if tx.status=='confirmed' else 'Прежние параметры восстановлены.' }}</p>{% endif %}
+{{ button('Обновить состояние',url_for('router_ipv6_page',router_id=router_id),True) }}</section>
+{% if not tx or tx.status in ['confirmed','rolled_back'] %}
+<form method="post" action="{{ url_for('router_ipv6_apply',router_id=router_id) }}" class="form">{{ hidden(view.revision) }}
+<fieldset><legend>Когда переключаться</legend>
+{% for key,label,low,high,help in [('failures','Неудачных проверок подряд',1,20,'Одиночный сбой не обязан отключать серверный путь.'),('interval_seconds','Интервал между проверками, с',1,5,'К этому времени добавляется длительность самой проверки.'),('probe_seconds','Время ожидания ответа, с',1,3,'После этого ожидание прекращается и считается отказом.'),('recovery_seconds','Стабильная работа перед возвратом, с',1,3600,'Защищает от постоянных переключений при нестабильном сервере.')] %}
+<label>{{ label }}<input name="{{ key }}" type="number" min="{{ low }}" max="{{ high }}" required value="{{ settings[key] }}"><span class="muted">{{ help }}</span></label>{% endfor %}</fieldset>
+<details><summary>Соединения и проверка сервера</summary>
+<p>Выберите существующие соединения по их названиям в роутере. Внутренние имена сетевых интерфейсов и номера таблиц вводить не нужно. Перед применением проверяется наличие резервных IPv6-маршрутов к провайдеру в выбранной политике.</p>
+{% for key,label,options in [('policy','Политика устройств',choices.policies),('server_connection','Соединение с домашним сервером',choices.interfaces),('provider_connection','Соединение провайдера',choices.interfaces)] %}
+<label>{{ label }}<select name="{{ key }}" required>{% if not options %}<option value="{{ settings[key] }}">{{ settings[key] }}</option>{% else %}{% for option in options %}<option value="{{ option.id }}" {% if settings[key]==option.id %}selected{% endif %}>{{ option.label }}</option>{% endfor %}{% endif %}</select></label>{% endfor %}
+<label>Адрес проверки домашнего сервера<input name="health_address" required value="{{ settings.health_address }}"><span class="muted">Служба на этом адресе должна отвечать только при рабочем DNS и передаче трафика. Обычный ping не заменяет эту проверку.</span></label>
+<label>Порт проверки<input name="health_port" type="number" min="1" max="65535" required value="{{ settings.health_port }}"></label>
+<label>Сети IPv6<textarea name="prefixes" required rows="3">{{ settings.prefixes|join('\n') }}</textarea><span class="muted">По одной сети в строке. Локальные подключённые сети сохраняют свои маршруты. Широкий ::/0 и перехват link-local/multicast не допускаются.</span></label>
+</details><p>Применение кратко переводит IPv6 на провайдера. Новые параметры сохранятся на USB только после подтверждения. Перезагрузка до подтверждения загрузит прежние сохранённые параметры.</p>{{ button('Применить с автоматическим возвратом') }}</form>
+<details><summary>Импорт настроек</summary><form method="post" action="{{ url_for('router_ipv6_apply',router_id=router_id) }}" class="form">{{ hidden(view.revision) }}<label>Содержимое router-ipv6.json<textarea name="import_json" required maxlength="16384" rows="8"></textarea></label><p>Импорт проходит ту же проверку и применяется временно, с подтверждением и автоматическим возвратом.</p>{{ button('Проверить и применить импорт') }}</form></details>
+{% endif %}
+<form method="post" action="{{ url_for('router_ipv6_action',router_id=router_id,action='export') }}">{{ hidden(view.revision) }}{{ button('Скачать действующие настройки JSON',secondary=True) }}</form>
+{% endif %}
+{% endblock %}

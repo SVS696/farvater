@@ -1,0 +1,34 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button,status,field_help,draft_stages with context %}
+{% block content %}
+{% set native=resolver.get('native',{}) %}
+{{ draft_stages() }}
+<p class="muted">Изменения сохраняются в черновик. DNS обновится после применения в разделе «Изменения». При смене типа прежние параметры заменяются.</p>
+<form class="form dns-settings" method="post" action="{{ url_for('dns_save') }}">{{ hidden(revision) }}
+{% if identifier %}<input type="hidden" name="id" value="{{ identifier }}">{% endif %}
+<div class="columns"><label>Название<input name="name" value="{{ resolver.get('name','') }}" maxlength="120" required></label><label>Назначение<select name="scope">{% for key,label in [('public','Обычный интернет'),('work','Рабочие ресурсы'),('special','Специальные ресурсы')] %}<option value="{{ key }}" {% if resolver.get('scope')==key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label></div>
+<label>Тип DNS<select name="type">{% for key,label in types.items() %}<option value="{{ key }}" {% if native.get('type')==key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+<fieldset class="dns-dhcp"><legend>DNS из DHCP</legend>
+<label>Сетевое подключение сервера<select name="dhcp_interface"><option value="">Автоматически · основное подключение</option>
+{% for item in interfaces %}<option value="{{ item.name }}" {% if native.get('interface')==item.name %}selected{% endif %}>{{ 'Основное · ' if item.default else '' }}{{ item.name }} · {{ item.addresses|join(', ') }}{{ ' · выключено' if not item.up else '' }}</option>{% endfor %}
+{% if native.get('interface') and native.interface not in interfaces|map(attribute='name')|list %}<option value="{{ native.interface }}" selected>{{ native.interface }} · сейчас недоступно</option>{% endif %}</select></label>
+{% if interface_error %}<p class="notice">Список подключений сейчас недоступен. Сохранённый выбор не изменён.</p>{% endif %}
+<p>Адреса DNS запрашиваются у DHCP-сервера выбранной сети и обновляются автоматически. Вручную переписывать IP-адреса не требуется. Здесь используется DHCP для IPv4.</p>
+<p class="muted">DHCP должен выдавать независимый DNS. Адрес этого же DNS-профиля создаст цикл запросов.</p></fieldset>
+<fieldset class="dns-hosts"><legend>Локальные DNS-записи</legend>
+<label>IP-адрес и имя, одна запись на строку<textarea name="hosts" rows="8" maxlength="131072" placeholder="192.168.1.10 nas.home.arpa">{{ hosts }}</textarea></label>
+<p>Можно вставить содержимое обычного hosts-файла: IPv4 или IPv6, пробел, одно или несколько имён. Комментарии после # допустимы. Здесь нет обращения к внешнему DNS.</p>
+<p>После сохранения выберите этот DNS в общем правиле для указанных имён. Не назначайте его DNS по умолчанию: неизвестные имена он не разрешает. Поля маршрута и область устройств задаются в правиле.</p></fieldset>
+<fieldset class="dns-openvpn"><legend>DNS от OpenVPN</legend>
+<label>Подключение<select name="endpoint"><option value="">Выберите OpenVPN</option>{% for key,value in policy.exits.items() if value.get('native',{}).get('type')=='openvpn-client' %}<option value="{{ key }}" {% if native.get('endpoint')==key %}selected{% endif %}>{{ value.name }}</option>{% endfor %}</select></label>
+<label class="check"><input type="checkbox" name="accept_default_resolvers" {% if native.get('accept_default_resolvers') %}checked{% endif %}>Принимать DNS без ограничения доменов от VPN-сервера</label>
+<label class="check"><input type="checkbox" name="accept_search_domain" {% if native.get('accept_search_domain') %}checked{% endif %}>Принимать поисковые домены VPN-сервера</label>
+<p>Работает после подключения VPN. Для разрешения имени самого VPN выберите независимый DNS: использовать этот же VPN нельзя.</p></fieldset>
+<fieldset class="dns-network"><legend>Сервер</legend><div class="columns"><label>IP-адрес или имя<input name="server" value="{{ native.get('server','') }}" placeholder="1.1.1.1"><span class="muted">Без протокола, пути и номера порта.</span></label><label>Порт<input name="server_port" type="number" min="1" max="65535" value="{{ native.get('server_port','') }}"><span class="muted">Пустое поле: 53, 443 для HTTPS, 853 для TLS/QUIC.</span></label></div>
+<label>Через какой выход отправлять DNS<select name="detour" aria-describedby="help-dns-detour"><option value="">Напрямую</option>{% for key,value in policy.exits.items() %}<option value="{{ key }}" {% if native.get('detour')==key %}selected{% endif %}>{{ value.name }}</option>{% endfor %}</select>{{ field_help('help-dns-detour','Путь для запросов к этому DNS-серверу. «Напрямую» использует прямой путь; выбранный VPN должен быть доступен до этих запросов.') }}</label>
+<label>Начальный DNS для имени сервера (bootstrap)<select name="bootstrap" aria-describedby="help-dns-bootstrap"><option value="">Не нужен: сервер задан IP-адресом</option>{% for key,value in policy.dns.items() %}<option value="{{ key }}" {% if resolver.get('bootstrap')==key %}selected{% endif %}>{{ value.name }}</option>{% endfor %}</select>{{ field_help('help-dns-bootstrap','Если сервер задан именем, например dns.example.com, выберите независимый DNS для его первого разрешения. IP-адресу bootstrap не нужен; циклическая зависимость выявляется при проверке изменений.') }}</label></fieldset>
+<fieldset class="dns-encrypted"><legend>Шифрованный DNS</legend><label>Имя сертификата (SNI)<input name="server_name" value="{{ native.get('tls',{}).get('server_name','') }}" placeholder="dns.example.com"><span class="muted">Пустое поле использует имя сервера.</span></label><label class="dns-doh">Путь запроса DoH<input name="path" value="{{ native.get('path','') }}" placeholder="/dns-query"></label></fieldset>
+<fieldset class="dns-fakeip"><legend>Диапазоны FakeIP</legend><div class="columns"><label>Диапазон IPv4<input name="inet4_range" value="{{ native.get('inet4_range','') }}" placeholder="198.18.0.0/15"></label><label>Диапазон IPv6<input name="inet6_range" value="{{ native.get('inet6_range','') }}" placeholder="fc00::/18"></label></div></fieldset>
+<p class="muted">Поля других типов не используются. Системный DNS берётся из настроек ОС сервера; его независимость проверяется отдельно.</p>
+<div class="actions">{{ button('Сохранить черновик') }}{{ button('Отмена',url_for('page',name='dns'),True) }}</div></form>
+{% if identifier and native.get('type')=='hosts' %}<form class="form" method="post" action="{{ url_for('dns_hosts_export',identifier=identifier) }}">{{ hidden(revision) }}{{ button('Скачать сохранённые записи (.hosts)',secondary=True) }}<p class="muted">Скачивается сохранённый черновик. Чтобы перенести записи, вставьте файл в такое же поле другой установки.</p></form>{% endif %}
+{% endblock %}

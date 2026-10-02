@@ -1,0 +1,2 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button with context %}
+{% block content %}<form class="form narrow" method="post">{{ hidden() }}<label>Логин<input name="username" autocomplete="username" required></label><label>Пароль<input name="password" type="password" autocomplete="current-password" required></label>{{ button('Войти') }}<p class="muted">Используйте учётную запись администратора, настроенную при установке панели.</p></form>{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}{% from 'components.html' import button,status with context %}
+{% block content %}
+<p>История выбора выходов и DNS. Настройки и приоритеты меняются в правилах.</p>
+<div class="actions">{{ button('К мониторингу',url_for('page',name='health'),True) }}{{ button('Настройки переключения',url_for('page',name='rules')+'#rule-automation',True) }}</div>
+<form class="inline" method="get"><label>Правило<select name="queue"><option value="">Все правила</option>{% for key,label in labels.items() %}<option value="{{ key }}" {% if key==queue %}selected{% endif %}>{{ label }}</option>{% endfor %}{% if queue and queue not in labels %}<option value="{{ queue }}" selected>Удалённое правило · {{ queue }}</option>{% endif %}</select></label>{{ button('Показать') }}</form>
+{% if error %}{{ status('Журнал недоступен',error,'unknown') }}
+{% elif routing %}<p class="muted">Снимок сервера: {{ routing.observed_at|utc_time }}. {% if not routing.controller_fresh %}Контроллер пока не подтвердил актуальность настроек.{% endif %}</p>
+{% set visible=namespace(count=0) %}
+{% for event in routing.get('events',[])|reverse %}
+{% if not queue or queue in event.get('reasons',{}) %}{% set visible.count=visible.count+1 %}
+<article class="card"><time>{{ event.at|utc_time }}</time>
+{% for key,reason in event.get('reasons',{}).items() if not queue or key==queue %}<p><strong>{{ labels.get(key,'Удалённое правило · '+key) }}</strong><br>{{ reason }}</p>{% endfor %}</article>
+{% endif %}{% endfor %}
+{% if visible.count==0 %}<p class="empty-state">Для выбранных правил в доступном журнале переключений пока нет.</p>{% endif %}
+{% endif %}
+{% endblock %}

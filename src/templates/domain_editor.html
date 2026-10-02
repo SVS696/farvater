@@ -1,0 +1,23 @@
+<section class="domain-editor" data-domain-editor>
+<h2>Домены и поддомены</h2>
+<p class="muted">Точное имя и все его поддомены — отдельные условия. Добавление и удаление ниже меняет только этот список в черновике.</p>
+<div data-domain-tools hidden>
+<div class="actions"><button type="button" data-domain-add>Добавить сайт</button><button type="button" class="secondary" data-domain-group-add>Добавить группу</button><button type="button" class="secondary" data-domain-expand>Развернуть всё</button><button type="button" class="secondary" data-domain-collapse>Свернуть всё</button></div>
+<label>Поиск по списку<input type="search" data-domain-search placeholder="Домен или название группы"></label>
+<div data-domain-list></div><p class="muted" data-domain-status role="status"></p>
+</div>
+<details class="domain-raw" open><summary>Редактировать текстом</summary>
+<label>Домены, маски и заголовки<textarea name="domains" aria-describedby="help-rule-domains" rows="14" data-domain-text spellcheck="false" placeholder="# Название группы&#10;example.com&#10;*.example.com">{{ profile|domain_text }}</textarea>{{ field_help('help-rule-domains','По одному условию в строке: example.com — только это имя, *.example.com — только его поддомены. Для обоих случаев укажите обе строки. # Заголовок начинает группу; комментарии не влияют на маршруты.') }}</label></details>
+<dialog data-domain-dialog aria-labelledby="domain-dialog-title">
+<h2 id="domain-dialog-title">Добавить сайт</h2>
+<label>Домен<input data-domain-name placeholder="example.com" autocomplete="off" spellcheck="false"></label>
+<label>Группа<select data-domain-target></select></label>
+<label class="check"><input type="checkbox" data-domain-exact checked>Сам домен <span data-domain-exact-name></span></label>
+<label class="check"><input type="checkbox" data-domain-suffix checked>Все поддомены <span data-domain-suffix-name></span></label>
+<p class="muted" data-domain-coverage></p>
+<p class="muted">Отдельно добавленные поддомены сохраняются при удалении домена или маски. Если имя покрывает другая маска, оно продолжит совпадать с правилом.</p>
+<p data-domain-error class="notice error" role="alert" hidden></p>
+<div class="actions"><button type="button" data-domain-save>Добавить</button><button type="button" class="secondary" data-domain-delete hidden>Удалить выбранное</button><button type="button" class="secondary" data-domain-cancel>Отмена</button></div>
+</dialog>
+<dialog data-group-dialog aria-labelledby="group-dialog-title"><h2 id="group-dialog-title">Добавить группу</h2><label>Название группы<input data-group-name maxlength="160" placeholder="Например, видеосервисы"></label><p data-group-error role="alert"></p><div class="actions"><button type="button" data-group-save>Добавить группу</button><button type="button" class="secondary" data-group-cancel>Отмена</button></div></dialog>
+</section>

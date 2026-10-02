@@ -1,0 +1,6 @@
+# Direct third-party imports in the current panel and privileged helpers.
+# Resolve transitive dependencies for Linux amd64 / Python 3.11.
+Flask==3.1.3
+waitress==3.0.2
+paramiko==5.0.0
+cryptography==50.0.1

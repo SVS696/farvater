@@ -1,0 +1,45 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button,status,field_help,draft_stages with context %}
+{% block content %}
+{{ draft_stages() }}
+
+{{ status('Подключение выбранных устройств','Входы используют общие правила, DNS и фильтрацию с исходным IP клиента. Сохранение меняет черновик; применение требует подтверждения и имеет независимый откат.') }}
+
+
+<p>Укажите интерфейс и источники, чей трафик нужно обрабатывать общими правилами. SOCKS5/HTTP доступен на порту 15458, DNS — 15454. Допуск по IP рассчитан на доверенную сеть.</p><form class="form" method="post" action="{{ url_for('lan_save') }}">{{ hidden(revision) }}
+<label class="check"><input type="checkbox" name="enabled" {% if lan.enabled %}checked{% endif %}>Включить LAN-вход</label>
+<label>Адрес входа<input name="listen" value="{{ lan.get('listen','') }}" placeholder="192.168.1.10"></label>
+<label>Сетевой интерфейс<input name="interface" value="{{ lan.get('interface','') }}" placeholder="enp0s25"></label>
+<label class="check"><input type="checkbox" name="return_via_gateway" {% if lan.get('return_via_gateway') %}checked{% endif %}>Обратный путь через шлюз</label>
+
+<label>LAN-шлюз<input name="gateway" value="{{ lan.get('gateway','') }}" placeholder="192.168.1.1"></label>
+<label>Допущенные устройства, по одному IPv4-адресу /32 в строке<textarea name="clients" aria-describedby="help-lan-clients" rows="5" placeholder="192.168.1.20/32">{{ lan.get('clients',[])|join('\n') }}</textarea>{{ field_help('help-lan-clients','Один доверенный адрес: 192.168.1.20/32. В отличие от сети /24, он допускает только это устройство. Отключение входа блокирует выбранные прозрачные назначения; для снятия перехвата очистите их список и примените изменения.') }}</label>
+
+<label>Прозрачные назначения, IPv4-сети по одной в строке<textarea name="transparent_targets" aria-describedby="help-lan-targets" rows="5" placeholder="Оставьте пустым для явного DNS/прокси">{{ lan.get('transparent_targets',[])|join('\n') }}</textarea>{{ field_help('help-lan-targets','Укажите адреса сайтов или удалённых сетей, а не адреса устройств. Формат одного адреса: 203.0.113.10/32 (пример). Не включайте сеть управления роутером и сервером. Пусто оставляет только явный DNS/прокси. При выключении входа эти назначения блокируются до очистки списка и применения.') }}</label>
+
+
+<label>Имена для проверок со шлюза, по одному в строке<textarea name="gateway_probe_domains" rows="3" placeholder="Пусто — проверки со шлюза выключены">{{ lan.get('gateway_probe_domains',[])|join('\n') }}</textarea></label>
+
+
+<p>Выключение входа блокирует выбранные прозрачные назначения. Для снятия перехвата очистите их список и примените изменения.</p>{{ button('Сохранить черновик') }} {{ button('Проверить и применить',url_for('page',name='changes'),True) }}
+</form>
+<h2>Сети через WireGuard</h2>
+
+<form class="form" method="post" action="{{ url_for('vpn_ingress_save') }}">{{ hidden(revision) }}
+<label class="check"><input type="checkbox" name="enabled" {% if vpn.enabled %}checked{% endif %}>Включить вход из WireGuard</label>
+<input type="hidden" name="dns_before_bypass_present" value="1">
+<label class="check"><input type="checkbox" name="dns_before_bypass" {% if vpn.get('dns_before_bypass') %}checked{% endif %}>Обслуживать все DNS-запросы клиентов по общей политике</label>
+
+<label>Интерфейс WireGuard<input name="interface" value="{{ vpn.get('interface','') }}" placeholder="wg0"></label>
+<label>Допущенные источники: IPv4 /32 или сеть WireGuard, по одному в строке<textarea name="clients" aria-describedby="help-vpn-clients" rows="4" placeholder="Адрес клиента /32 или вся сеть WG">{{ vpn.get('clients',[])|join('\n') }}</textarea>{{ field_help('help-vpn-clients','10.9.0.11/32 допускает одного клиента; 10.9.0.0/24 — всю сеть WireGuard. Допуск адреса не создаёт ключ клиента. Выключенный вход блокирует область перехвата.') }}</label>
+<label>Сети управления и другие сети обхода<textarea name="bypass" aria-describedby="help-vpn-bypass" rows="4" placeholder="Сети, которые должны проходить без обработки правилами">{{ vpn.get('bypass',[])|join('\n') }}</textarea>{{ field_help('help-vpn-bypass','Например, 192.168.1.0/24 останется вне обработки общими правилами. Указывайте здесь только сети, которым нужен прямой путь управления.') }}</label>
+
+<details><summary>IPv6 через WireGuard</summary>
+
+<label>Источники IPv6, по одной сети /64–/128 в строке<textarea name="clients_v6" aria-describedby="help-vpn-clients-v6" rows="4" placeholder="IPv6-адрес клиента /128, сеть WG или маршрутизируемая сеть /64">{{ vpn.get('clients_v6',[])|join('\n') }}</textarea>{{ field_help('help-vpn-clients-v6','Один адрес задаётся /128, маршрутизируемая сеть — например, fd00:9::/64. Допуск существующего адреса не создаёт клиентский ключ.') }}</label>
+<label>Сети управления и обхода IPv6<textarea name="bypass_v6" aria-describedby="help-vpn-bypass-v6" rows="4" placeholder="Сети, которые должны проходить мимо перехвата">{{ vpn.get('bypass_v6',[])|join('\n') }}</textarea>{{ field_help('help-vpn-bypass-v6','Например, fd00:1::/64 проходит мимо общих правил. Указывайте только сети управления и другие необходимые исключения.') }}</label>
+
+</details>
+
+<p>Допуск существующих адресов не создаёт ключи клиентов. Выключение входа блокирует его область перехвата; для полного удаления очистите источники и сохраните выключенный вход.</p>{{ button('Сохранить VPN-вход') }} {{ button('Проверить и применить',url_for('page',name='changes'),True) }}
+</form>
+{% endblock %}

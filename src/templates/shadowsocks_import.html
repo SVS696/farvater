@@ -1,0 +1,12 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button with context %}
+{% block content %}
+{% include 'connection_picker.html' %}
+<p>Импортируйте одну ссылку <code>ss://</code> по SIP002. Будет создан новый выход в черновике. Действующие маршруты и VPN не изменятся.</p>
+<p>Поддержаны методы, сервер, порт, пароль и название профиля. Плагины и дополнительные параметры пока отклоняются с объяснением. Для Shadowsocks 2022 используйте ссылку с открытым percent-кодированием ключа; оболочка Base64 для этого семейства не допускается стандартом.</p>
+<form class="form" method="post" enctype="multipart/form-data" action="{{ url_for('shadowsocks_import') }}">{{ hidden(revision) }}
+<label>Ссылка ss://<input name="uri" type="password" autocomplete="off" maxlength="65536" placeholder="ss://…"><span class="muted">Ссылка содержит пароль. Вставьте её сюда или выберите текстовый файл ниже.</span></label>
+<label>Файл со ссылкой<input type="file" name="connection_file" accept=".txt,.uri"></label>
+<label>Назначение<select name="scope"><option value="public">Обычный интернет</option><option value="work">Рабочие ресурсы</option><option value="special">Специальные ресурсы</option></select></label>
+{{ button('Импортировать в черновик') }}</form>
+{{ button('К подключениям',url_for('page',name='tunnels'),True) }}
+{% endblock %}

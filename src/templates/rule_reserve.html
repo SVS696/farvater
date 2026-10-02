@@ -1,0 +1,19 @@
+{% macro reserve_row(pair) %}
+<div class="reserve-row" data-reserve-row>
+<div class="reserve-heading"><div class="actions"><button type="button" class="drag-handle secondary small" draggable="true" data-drag-handle aria-label="Перетащить резерв" title="Перетащить резерв">⠿</button><strong data-reserve-title>Резерв</strong></div><div class="actions">
+<button type="button" class="secondary small" data-reserve-up>Выше</button><button type="button" class="secondary small" data-reserve-down>Ниже</button><button type="button" class="secondary small" data-reserve-remove>Удалить</button>
+</div></div>
+<div class="columns"><label>Выход<select name="fallback_exit" aria-describedby="help-rule-reserve"><option value="">Выберите выход</option>{% for key,value in policy.exits.items() if not is_default or value.scope=='public' %}<option value="{{ key }}" {% if pair.get('exit')==key %}selected{% endif %}>{{ value.name }}</option>{% endfor %}</select></label>
+<label>DNS<select name="fallback_dns" aria-describedby="help-rule-reserve"><option value="">Выберите DNS</option>{% for key,value in policy.dns.items() if not is_default or (value.scope=='public' and value.get('native',{}).get('type')!='fakeip') %}<option value="{{ key }}" {% if pair.get('dns')==key %}selected{% endif %}>{{ value.name }}</option>{% endfor %}</select></label></div>
+</div>
+{% endmacro %}
+{% if profile.get('fallback') %}<p class="notice">В прежнем черновике для резерва были указаны только выходы: {{ profile.fallback|join(', ') }}. Выберите для них пары ниже: без явно выбранного DNS такой резерв применять нельзя.</p><label class="check"><input type="checkbox" name="replace_legacy_fallback">Заменить прежний список выбранными парами (пустая очередь отключает резерв)</label>{% endif %}
+<fieldset data-reserve-editor><legend>Резерв этого правила</legend>
+<p class="muted" id="help-rule-reserve">Сначала используются выход и DNS, выбранные выше. При отказе — резервы сверху вниз. Выход и DNS переключаются вместе. Если все варианты недоступны, правило не пропускает трафик к следующему правилу.</p>
+<div class="reserve-list" data-reserve-list>{% for pair in profile.get('fallback_pairs',[]) %}{{ reserve_row(pair) }}{% endfor %}{{ reserve_row({}) if profile.get('fallback_pairs',[])|length<31 else '' }}</div>
+<template data-reserve-template>{{ reserve_row({}) }}</template>
+<button type="button" class="secondary" data-reserve-add>Добавить резерв</button>
+<p class="muted" data-reserve-status role="status" aria-live="polite"></p>
+<p class="muted">Добавляйте, удаляйте и меняйте порядок до сохранения. Можно указать до 31 резерва. Изменения вступят в силу после сохранения и применения черновика.</p>
+<noscript><p>Для кнопок добавления и перестановки включите JavaScript. Без него новая строка появляется после сохранения; для удаления очистите оба поля.</p></noscript>
+</fieldset>

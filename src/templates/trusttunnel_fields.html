@@ -1,0 +1,24 @@
+<fieldset><legend>VPN-сервер и вход</legend>
+<label>Имя сервера из профиля<input name="hostname" value="{{ model.hostname }}" required maxlength="253" placeholder="vpn.example.com"><span class="muted">Имя для TLS, выданное вместе с подключением. Оно может отличаться от адресов ниже.</span></label>
+<label>Адреса сервера<textarea name="addresses" rows="3" required>{{ model.addresses|join('\n') }}</textarea><span class="muted">По одному сервер:порт на строку. IPv6 — [адрес]:порт. Клиент выбирает доступный адрес.</span></label>
+<label>Логин<input name="username" value="{{ model.username }}" autocomplete="username" maxlength="512"></label>
+{% if creating %}<input type="hidden" name="password_action" value="replace">{% else %}<label>Пароль · действие<select name="password_action"><option value="keep">{{ 'Оставить сохранённый' if model.saved_secrets.password else 'Не задавать' }}</option><option value="replace">Заменить</option><option value="clear">Удалить</option></select></label>
+{% endif %}<label>{{ 'Пароль' if creating else 'Новый пароль' }}<input name="password" type="password" autocomplete="new-password" maxlength="16384">{% if not creating %}<span class="muted">Для нового значения выберите «Заменить».</span>{% endif %}</label>
+<label>Транспорт<select name="upstream_protocol"><option value="http2" {% if model.upstream_protocol=='http2' %}selected{% endif %}>HTTP/2 · TCP</option><option value="http3" {% if model.upstream_protocol=='http3' %}selected{% endif %}>HTTP/3 · QUIC</option></select></label>
+<label><input type="checkbox" name="has_ipv6" {% if model.has_ipv6 %}checked{% endif %}>VPN-сервер поддерживает IPv6</label>
+</fieldset>
+<details><summary>TLS и совместимость</summary>
+<label>Отдельное имя SNI<input name="custom_sni" value="{{ model.custom_sni }}" maxlength="253"><span class="muted">Оставьте пустым, если отдельное значение не выдано администратором.</span></label>
+<label>Доверенный сертификат сервера · PEM<textarea name="certificate" rows="4" maxlength="32768">{{ model.certificate }}</textarea><span class="muted">Пустое поле использует системные доверенные сертификаты.</span></label>
+<label><input type="checkbox" name="skip_verification" {% if model.skip_verification %}checked{% endif %}>Отключить проверку сертификата сервера</label><p class="muted">При отключённой проверке клиент не проверяет подлинность сервера. Предпочтительно указать доверенный PEM.</p>
+<label><input type="checkbox" name="anti_dpi" {% if model.anti_dpi %}checked{% endif %}>Меры обхода DPI</label>
+<label><input type="checkbox" name="post_quantum_group_enabled" {% if model.post_quantum_group_enabled %}checked{% endif %}>Постквантовый обмен ключами TLS</label>
+<label>Client random · действие<select name="client_random_action"><option value="keep">{{ 'Оставить сохранённый' if model.saved_secrets.client_random else 'Не задавать' }}</option><option value="replace">Заменить</option><option value="clear">Удалить</option></select></label>
+<label>Новый Client random<input name="client_random" type="password" autocomplete="new-password" maxlength="129"><span class="muted">HEX-префикс и необязательная маска через /. Используйте значение из профиля сервера.</span></label>
+</details>
+<details><summary>DNS и поведение клиента</summary>
+<label>DNS внутри VPN<textarea name="dns_upstreams" rows="3">{{ model.dns_upstreams|join('\n') }}</textarea><span class="muted">По одному адресу на строку: IP, сервер:порт, tls://, https://, quic:// или sdns://. Пустой список использует встроенный DNS клиента.</span></label>
+<label><input type="checkbox" name="killswitch_enabled" {% if model.killswitch_enabled %}checked{% endif %}>Запрещать клиенту обход VPN при потере соединения</label><p class="muted">Общий резерв между VPN и провайдером задаётся в разделе «Резервирование». Исключения и выбор пути задаются в «Правилах».</p>
+<label>Уровень журнала<select name="loglevel">{% for value in ['error','warn','info','debug','trace'] %}<option value="{{ value }}" {% if model.loglevel==value %}selected{% endif %}>{{ value }}</option>{% endfor %}</select></label>
+<p>Локальный вход клиента определяется сервером автоматически; сетевой интерфейс и порт вручную задавать не требуется.</p>
+</details>

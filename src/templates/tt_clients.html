@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% macro hidden(server) %}<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="revision" value="{{ server.revision }}">{% endmacro %}
+{% macro fields(client=none) %}
+<label>Логин устройства<input name="username" required maxlength="128" value="{{ client.username if client else '' }}" autocomplete="off" placeholder="Например, phone-vlad"></label>
+<label>Пароль<input type="password" name="password" maxlength="4096" autocomplete="new-password" placeholder="{{ 'Оставьте пустым, чтобы сохранить пароль' if client else 'Создадим автоматически, если оставить пустым' }}"></label>
+<details><summary>Лимиты соединений</summary><p class="muted">Пустое поле использует лимит сервера. Значения передаются в стандартные параметры TrustTunnel.</p>
+<label>HTTP/1 и HTTP/2<input type="number" name="max_http2_conns" min="0" max="65535" value="{{ client.get('max_http2_conns','') if client else '' }}"></label>
+<label>HTTP/3 (QUIC)<input type="number" name="max_http3_conns" min="0" max="65535" value="{{ client.get('max_http3_conns','') if client else '' }}"></label></details>
+{% endmacro %}
+{% macro confirmation() %}<label class="check"><input type="checkbox" name="confirm" required>Переподключить клиентов этого сервера для применения</label>{% endmacro %}
+{% block content %}
+<nav class="protocol-tabs" aria-label="Протокол устройств"><a href="{{ url_for('clients_page') }}">WireGuard</a><a href="{{ url_for('tt_clients_page') }}" aria-current="page">TrustTunnel</a><a href="{{ url_for('incoming_page') }}">Другие протоколы</a></nav>
+<p>Доступ телефонов и компьютеров к серверу через TrustTunnel. Конфиг, ссылка и QR содержат пароль — передавайте их только владельцу устройства.</p>
+{% if error %}<p class="notice error" role="alert">{{ error }}</p>{% endif %}
+{% if state %}
+{% for server in state.servers %}
+<section id="server-{{ server.id }}"><h2>{{ server.name }}</h2><p class="muted">{{ 'Сервер работает' if server.runtime.active else 'Сервер выключен' }} · клиентов: {{ server.clients|length }}</p>
+{% if state.operation.status in ('pending','recovery_required') %}
+<p class="notice error">Изменение клиентов не завершено. Таймер возвращает прежний список; при ошибке возврат можно повторить.</p>
+{% if state.operation.endpoint==server.id %}<form class="form" method="post" action="{{ url_for('tt_clients_action',server_id=server.id,action='recover') }}">{{ hidden(server) }}<input type="hidden" name="operation" value="{{ state.operation.id }}"><button>Восстановить прежний список</button></form>{% endif %}
+{% else %}
+<p class="notice">Добавление, изменение и удаление клиента кратко переподключают всех клиентов этого входящего сервера. Если панель открыта через него, связь с панелью тоже прервётся. WireGuard и исходящие VPN продолжают работать.</p>
+<details class="primary-disclosure"><summary>Добавить устройство</summary><form class="form" method="post" action="{{ url_for('tt_clients_action',server_id=server.id,action='save') }}">{{ hidden(server) }}<input type="hidden" name="id" value="">{{ fields() }}{{ confirmation() }}<button>Создать устройство</button></form></details>
+{% for client in server.clients %}<section class="card" id="client-{{ client.id }}"><h3>{{ client.username }}</h3>
+<div class="client-paths">{% for mode,title in [('local','Локальный адрес'),('external','Внешний адрес')] %}
+<section class="client-path"><h4>{{ title }}</h4><p class="muted">{{ server.local_address if mode=='local' else server.external_address }}</p>
+<form class="form" method="post" action="{{ url_for('tt_clients_action',server_id=server.id,action='export') }}" data-client-export="{{ client.username }} · {{ title }}">{{ hidden(server) }}<input type="hidden" name="id" value="{{ client.id }}"><input type="hidden" name="mode" value="{{ mode }}">
+<div class="actions"><button name="format" value="toml">Скачать TOML</button><button class="secondary" name="format" value="deeplink">Скачать ссылку</button><button class="secondary" name="format" value="qr" aria-expanded="false" aria-controls="tt-qr-{{ client.id }}-{{ mode }}">Показать QR</button></div>
+<div class="qr-output" data-qr-output id="tt-qr-{{ client.id }}-{{ mode }}" role="status" aria-live="polite"></div></form></section>
+{% endfor %}</div>
+<details><summary>Изменить логин, пароль или лимиты</summary><form class="form" method="post" action="{{ url_for('tt_clients_action',server_id=server.id,action='save') }}">{{ hidden(server) }}<input type="hidden" name="id" value="{{ client.id }}">{{ fields(client) }}<p>После смены логина или пароля загрузите новый конфиг на устройство. Старый перестанет работать.</p>{{ confirmation() }}<button>Сохранить клиента</button></form></details>
+<details><summary>Удалить и отозвать доступ</summary><p>Старые конфиги и QR перестанут работать. Последнюю учётную запись можно отозвать сменой пароля.</p><form class="form" method="post" action="{{ url_for('tt_clients_action',server_id=server.id,action='delete') }}">{{ hidden(server) }}<input type="hidden" name="id" value="{{ client.id }}">{{ confirmation() }}<button class="secondary">Удалить «{{ client.username }}»</button></form></details>
+</section>{% endfor %}
+<details><summary>Адреса подключения и DNS</summary><p>Используются в новых конфигурациях и QR. Уже выданные конфиги не меняются. Порты должны быть доступны клиентам; эта форма не меняет слушатель и проброс портов.</p>
+<form class="form" method="post" action="{{ url_for('tt_clients_action',server_id=server.id,action='settings') }}">{{ hidden(server) }}
+<label>Локальный адрес: адрес сервера и порт<input name="local_address" required value="{{ server.local_address }}" placeholder="192.168.1.10:443"></label>
+<label>Внешний адрес: адрес сервера и порт<input name="external_address" required value="{{ server.external_address }}" placeholder="vpn.example.org:443"></label>
+<label>DNS — по одному в строке<textarea name="dns_upstreams" rows="3">{{ server.dns_upstreams|join('\n') }}</textarea></label><p class="muted">IP-адреса или адреса защищённых DNS (HTTPS, TLS, QUIC). Пустой список сохраняет стандартное поведение клиента TrustTunnel.</p><button>Сохранить адреса</button></form></details>
+<details><summary>Импорт и экспорт списка клиентов</summary><p>Стандартный credentials.toml содержит логины, пароли и лимиты. Импорт заменяет весь список: отсутствующие в файле клиенты потеряют доступ.</p>
+<form class="form" method="post" action="{{ url_for('tt_clients_action',server_id=server.id,action='export') }}">{{ hidden(server) }}<input type="hidden" name="format" value="credentials"><button class="secondary">Скачать credentials.toml</button></form>
+<form class="form" method="post" enctype="multipart/form-data" action="{{ url_for('tt_clients_action',server_id=server.id,action='import') }}">{{ hidden(server) }}<label>Список клиентов<input type="file" name="credentials_file" accept=".toml" required></label>{{ confirmation() }}<button>Заменить список из файла</button></form></details>
+{% endif %}</section>
+{% else %}<p class="empty-state">Входящий сервер TrustTunnel ещё не зарегистрирован. Исходящие подключения находятся в разделе «Туннели».</p>{% endfor %}
+{% endif %}
+{% endblock %}

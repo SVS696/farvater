@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block content %}
+<nav class="protocol-tabs" aria-label="Входящие подключения"><a href="{{ url_for('clients_page') }}">WireGuard</a><a href="{{ url_for('tt_clients_page') }}">TrustTunnel</a><a href="{{ url_for('incoming_page') }}" aria-current="page">Другие протоколы</a></nav>
+<p>Серверы, к которым подключаются ваши устройства. Их трафик обрабатывают общие правила и DNS. Изменения вступают в силу после применения.</p>
+<form class="protocol-picker" action="{{ url_for('incoming_edit') }}" method="get"><label>Протокол<select name="protocol">{% for key in ['amneziawg','socks','http','shadowsocks','vless','openvpn-server','openconnect-server'] %}<option value="{{ key }}">{{ modules[key].name }}</option>{% endfor %}</select></label><button>Добавить подключение</button></form>
+{% for e in entries %}<section class="card"><h2>{{ e.name }}</h2><p>{{ modules[e.native.type].name }} · {{ e.native.get('listen','UDP') }}:{{ e.native.listen_port }} · {{ 'Включено в черновике' if e.enabled else 'Выключено в черновике' }}</p><a class="button" href="{{ url_for('incoming_edit',identifier=e.id) }}">Настройки и клиенты</a></section>{% else %}<p class="muted">Входящие подключения этих протоколов ещё не созданы.</p>{% endfor %}
+{% endblock %}

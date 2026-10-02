@@ -1,0 +1,14 @@
+{% extends 'base.html' %}{% from 'components.html' import button,status with context %}
+{% block content %}
+<section class="overview-health"><div class="section-heading"><h2>Состояние по датчикам</h2><a href="{{ url_for('page',name='health') }}">Все проверки →</a></div>
+{{ status(health.label,health.detail,health.style) }}
+{% if metadata_error %}<p class="notice error">Не удалось прочитать список датчиков. Полнота результатов не подтверждена. <a href="{{ url_for('page',name='health') }}">Подробнее</a></p>{% endif %}
+{% if health.generated_at %}<p class="muted">Обновлено {{ health.generated_at|utc_time }} · {{ health.age_seconds }} с назад</p>{% endif %}
+{% if health.problems %}<div class="problem-links">{% for check in health.problems[:5] %}<a href="{{ url_for('page',name='health') }}#check-{{ check.id }}">{{ check.name }} · {{ check.label }}</a>{% endfor %}</div>{% endif %}</section>
+<section><div class="section-heading"><h2>Настройки сети</h2><span class="muted">Сохранённый черновик</span></div><div class="overview-metrics">
+{% for key,label,count in [('rules','Правила',policy.profiles|length+1),('tunnels','Подключения',policy.exits|length),('dns','DNS-профили',policy.dns|length)] %}<a href="{{ url_for('page',name=key) }}" class="metric"><strong>{{ count }}</strong><span>{{ label }} →</span></a>{% endfor %}</div></section>
+{% set fo=policy.get('failover',{}) %}{% set priority=fo.get('priority',[]) %}{% set main=priority[0] if priority else policy.default_exit %}{% set resolver=fo.get('dns_by_exit',{}).get(main,policy.default_dns) %}
+<section class="card"><div class="section-heading"><h2>Маршрут по умолчанию</h2><a href="{{ url_for('default_rule_form') }}">Настроить</a></div><p class="muted">Для трафика, который не совпал с другими правилами. Показаны настройки черновика; действующий выход смотрите в журнале переключений.</p><div class="columns"><div><p class="muted">Основное подключение</p><strong>{{ policy.exits.get(main,{}).get('name',main) }}</strong></div><div><p class="muted">DNS</p><strong>{{ policy.dns.get(resolver,{}).get('name',resolver) }}</strong></div></div>{% if priority|length>1 %}<p class="muted">Резервы по порядку: {% for key in priority[1:] %}{{ policy.exits.get(key,{}).get('name',key) }}{{ ' → ' if not loop.last }}{% endfor %}</p>{% endif %}</section>
+<div class="actions">{{ button('Подключить устройство',url_for('clients_page')) }}{{ button('Проверить домен',url_for('page',name='rules'),True) }}{{ button('Проверить и применить',url_for('page',name='changes'),True) }}</div>
+<p class="muted">Подключения и DNS выбираются в правилах. Сохранение черновика не меняет действующую сеть: проверьте и примените его в разделе «Изменения».</p>
+{% endblock %}

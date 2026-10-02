@@ -1,0 +1,45 @@
+{% from 'components.html' import hidden,button,status with context %}
+
+<h2>Текущий выбор выхода</h2>
+<p>Эти настройки сразу меняют выбор выхода в сетевом ядре и могут повлиять на подключённые устройства. Ручное закрепление сохраняется при отказе канала и перезапуске службы.</p>
+{% if routing_error %}{{ status('Нет достоверного состояния',routing_error,'unknown') }}
+{% elif routing and routing.queues %}
+<p>Данные сервера: {{ routing.observed_at|utc_time }}. Автоматика {{ 'включена' if routing.preferences.enabled else 'выключена' }}.</p>
+{% if routing.runtime.checked_at %}<p>Последняя проверка управления: {{ routing.runtime.checked_at|utc_time }}.</p>{% endif %}
+{% if not routing.controller_fresh %}<p>Контроллер ещё не подтвердил актуальное состояние этих настроек. Обновите страницу; если состояние не обновляется, проверьте службу управления.</p>{% endif %}
+{% if routing.runtime.error %}{{ status('Управление приостановлено',routing.runtime.error,'blocked') }}{% endif %}
+<form class="form" method="post" action="{{ url_for('routing_save') }}">{{ hidden(revision) }}
+<input type="hidden" name="transaction_id" value="{{ routing.transaction_id }}"><input type="hidden" name="config_sha256" value="{{ routing.config_sha256 }}"><input type="hidden" name="preferences_revision" value="{{ routing.preferences.revision }}"><input type="hidden" name="mode" value="{{ routing.mode }}">
+<label class="check"><input type="checkbox" name="enabled" {% if routing.preferences.enabled %}checked{% endif %}>Автоматически выбирать исправную пару</label>
+{% if not routing.coverage_complete %}<p>Включение автоматики требует настроить и применить проверки всех пар.</p>{% endif %}
+{% for queue,pairs in routing.queues.items() %}
+<input type="hidden" name="queue" value="{{ queue }}">
+<label>{{ queue_labels.get(queue,queue) }}<select name="pin">
+<option value="auto" {% if not routing.preferences.pins.get(queue) %}selected{% endif %}>Без закрепления · по режиму автоматики</option>
+{% for pair in pairs %}<option value="{{ pair.id }}" {% if routing.preferences.pins.get(queue)==pair.id %}selected{% endif %}>Закрепить: {{ pair.exit }} / {{ pair.dns }}</option>{% endfor %}</select></label>
+<p>Сейчас: {% for pair in pairs if pair.index==routing.selection.get(queue) %}{{ pair.exit }} / {{ pair.dns }}{% endfor %}.</p>
+{% if routing.preferences.pins.get(queue) and routing.preferences.pins[queue] not in pairs|map(attribute='id')|list %}<p>Прежняя закреплённая пара удалена. Выберите новое закрепление или явно снимите его.</p>{% endif %}
+{% if routing.runtime.reasons %}<p>{{ routing.runtime.reasons.get(queue,'') }}</p>{% endif %}
+{% if routing.counters.get(queue) %}{% for pair in pairs %}{% set health=routing.counters[queue].health.get(pair.id) %}{% if health %}<p>{{ pair.exit }} / {{ pair.dns }}: отказов подряд — {{ health.failures }}{% if health.healthy_since is not none %}; исправные проверки с {{ health.healthy_since|utc_time }}{% endif %}.</p>{% endif %}{% endfor %}{% endif %}
+{% endfor %}
+<p>Без закрепления и с выключенной автоматикой сохраняется текущая пара. Закреплённая неисправная пара не заменяется автоматически.</p>
+{{ button('Обновить активный выбор') }}</form>
+{% else %}<p>Управление сервером недоступно. Правила и настройки черновика доступны ниже.</p>{% endif %}
+<p>Выходы и резерв задаются в <a href="{{ url_for('page',name='rules') }}">правилах</a>, включая последнее правило <a href="{{ url_for('default_rule_form') }}">«Весь остальной трафик»</a>.</p>
+<h2>Общие пороги переключения</h2>
+<p>Эти параметры действуют на все очереди резервирования.</p>
+<form class="form" method="post" action="{{ url_for('failover_timing') }}">{{ hidden(revision) }}
+<div class="columns"><label>Неудачных проверок подряд<input name="failures" type="number" min="1" max="20" value="{{ policy.failover.failures }}" required></label><label>Стабильная работа перед возвратом, секунд<input name="recovery" type="number" min="0" max="3600" value="{{ policy.failover.recovery_seconds }}" required></label></div>
+{{ button('Сохранить пороги в черновике') }}</form>
+<details><summary>Проверки резервных пар</summary>
+<p>Задайте тестовые адреса для каждой очереди. После применения проверочные входы используют DNS и выход каждой пары отдельно от текущего режима. Автоматическое переключение включается отдельно в блоке активного выбора выше.</p>
+<p>Можно проверять до восьми пар суммарно. Независимые проверки пар с FakeIP пока недоступны.</p>
+{% for key,label in probe_queues.items() %}{% set target=policy.get('health_probes',{}).get(key,{}) %}
+<form class="form" method="post" action="{{ url_for('probe_save') }}">{{ hidden(revision) }}<input type="hidden" name="queue" value="{{ key }}">
+<fieldset><legend>{{ label }}</legend><label class="check"><input type="checkbox" name="enabled" {% if target %}checked{% endif %}>Подготовить проверки для этой очереди</label>
+<label>DNS-имя для проверки<input name="dns_name" value="{{ target.get('dns_name','') }}" placeholder="api.ipify.org"></label>
+<label>Адреса HTTP/HTTPS, по одному в строке<textarea name="urls" rows="3" placeholder="https://example.com/">{{ target.get('urls',[])|join('\n') }}</textarea></label>
+<label>Ожидаемые HTTP-коды, через запятую<input name="codes" value="{{ target.get('codes',[200])|join(', ') }}"></label>
+<p>До трёх URL без паролей в адресе. Для публичной очереди запрещены рабочие и специальные имена. Проверочный вход пропускает только заданные домены и порты.</p>
+{{ button('Сохранить проверку') }}</fieldset></form>{% endfor %}
+</details>

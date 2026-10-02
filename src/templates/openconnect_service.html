@@ -1,0 +1,81 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button,status with context %}
+{% block content %}
+<p>OpenConnect · {{ outbound.name }}. Маршрутизация этого подключения задаётся в общих правилах.</p>
+{% if error %}{{ status('Настройки недоступны',error,'unknown') }}
+{% else %}
+{% set model=connection.model %}
+<p>Служба: <strong>{{ {'active':'запущена','inactive':'остановлена','failed':'ошибка'}.get(connection.runtime.active,connection.runtime.active) }}</strong>. Автозапуск: {{ {'enabled':'включён','disabled':'выключен'}.get(connection.runtime.boot,connection.runtime.boot) }}. Данные прочитаны {{ connection.observed_at|utc_time }}. Запущенная служба сама по себе не подтверждает доступность рабочих сайтов.</p>
+{% if connection.awaiting_confirmation %}<p><strong>Изменение ещё не подтверждено.</strong> Проверьте результат и подтвердите его до срока автоматического возврата.</p>{% elif connection.conflict %}{{ status('Действующие настройки изменились','Черновик создан до изменения службы. Удалите его и перечитайте текущие настройки.','blocked') }}{% elif connection.has_draft %}<p><strong>Открыт сохранённый черновик.</strong> Действующее подключение пока использует прежние параметры.</p>{% else %}<p>Показаны настройки действующей службы. Пароли и закрытые ключи в страницу не передаются.</p>{% endif %}
+<details><summary>Экспорт подключения</summary>
+<p>Скачивается сохранённая конфигурация, включая секреты. Изменения, ещё не сохранённые в форме, в файл не попадут. В ZIP лежат стандартный client.conf, файлы сертификатов и инструкция запуска OpenConnect. Дополнительный panel.json обеспечивает полный обратный импорт.</p>
+<form class="form" method="post" action="{{ url_for('openconnect_action',identifier=identifier,action='export') }}">{{ hidden() }}
+<input type="hidden" name="file_revision" value="{{ connection.file_revision }}"><input type="hidden" name="draft_revision" value="{{ connection.draft_revision }}">
+<label>Что выгрузить<select name="source"><option value="active">Действующие настройки</option>{% if connection.has_draft %}<option value="draft">Сохранённый черновик</option>{% endif %}</select></label>
+{{ button('Скачать OpenConnect (.conf и ключи, ZIP)',secondary=True,disabled=connection.conflict or connection.awaiting_confirmation) }}</form></details>
+<form class="form" method="post" action="{{ url_for('openconnect_action',identifier=identifier,action='save') }}">{{ hidden() }}
+<input type="hidden" name="file_revision" value="{{ connection.file_revision }}"><input type="hidden" name="draft_revision" value="{{ connection.draft_revision }}">
+<fieldset><legend>Подключение</legend>
+<label>Адрес VPN<input name="server" type="url" value="{{ model.server }}" required maxlength="4096" placeholder="https://vpn.example.com/group"><span class="muted">Вставьте полный адрес, выданный администратором. Путь и параметры после ? сохраняются.</span></label>
+<label>Протокол<select name="protocol">{% for value,label in [('anyconnect','Cisco AnyConnect / ocserv'),('nc','Juniper Network Connect'),('pulse','Pulse / Ivanti'),('gp','GlobalProtect'),('f5','F5 Big-IP'),('fortinet','Fortinet'),('array','Array Networks')] %}<option value="{{ value }}" {% if model.protocol==value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+<label>Способ входа<select name="auth_mode">{% for value,label in [('password','Логин и пароль'),('cookie','Готовая cookie сессии'),('certificate','Клиентский сертификат')] %}<option value="{{ value }}" {% if model.auth_mode==value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+<label>Логин<input name="username" value="{{ model.username }}" autocomplete="username" maxlength="512"></label>
+{% for key,label in [('password','Пароль VPN'),('cookie','Cookie сессии')] %}
+<label>{{ label }} · действие<select name="{{ key }}_action"><option value="keep">{{ 'Оставить сохранённое значение' if model.saved_secrets[key] else 'Не задавать' }}</option><option value="replace">Заменить</option><option value="clear">Удалить сохранённое значение</option></select></label>
+<label>Новое значение · {{ label }}<input type="password" name="{{ key }}" autocomplete="new-password" maxlength="16384"><span class="muted">Для нового значения выберите «Заменить». Cookie обычно действует ограниченное время.</span></label>
+{% endfor %}
+<label>Группа входа<input name="authgroup" value="{{ model.authgroup }}" maxlength="512"><span class="muted">Название из списка групп на странице входа. Оставьте пустым, если выбор группы не нужен.</span></label>
+<label>Путь группы<input name="usergroup" value="{{ model.usergroup }}" maxlength="512"><span class="muted">Параметр usergroup, если выдан отдельно от адреса. Он может заменять путь в URL.</span></label>
+<p>Интерактивные SSO/MFA и аппаратные ключи пока не перенесены в эту форму. Готовую cookie можно получить штатным клиентом.</p>
+</fieldset>
+<details><summary>Проверка сервера и клиентский сертификат</summary>
+<label>Отпечаток сервера<input name="servercert" value="{{ model.servercert }}" maxlength="256" placeholder="pin-sha256:…"><span class="muted">Только отпечаток, полученный по доверенному каналу. Без него используется проверка сертификата через CA.</span></label>
+<label>Дополнительные CA · PEM<textarea name="ca" rows="4" maxlength="32768">{{ model.ca }}</textarea></label>
+<label><input type="checkbox" name="no_system_trust" {% if model.no_system_trust %}checked{% endif %}>Использовать только заданные CA или отпечаток</label>
+<label>Клиентский сертификат · PEM<textarea name="certificate" rows="4" maxlength="32768">{{ model.certificate }}</textarea></label>
+{% for key,label in [('private_key','Закрытый ключ клиента'),('key_password','Пароль закрытого ключа')] %}
+<label>{{ label }} · действие<select name="{{ key }}_action"><option value="keep">{{ 'Оставить сохранённое значение' if model.saved_secrets[key] else 'Не задавать' }}</option><option value="replace">Заменить</option><option value="clear">Удалить сохранённое значение</option></select></label>
+<label>Новое значение · {{ label }}{% if key=='private_key' %}<textarea name="{{ key }}" rows="4" maxlength="32768" autocomplete="off" spellcheck="false"></textarea>{% else %}<input type="password" name="{{ key }}" autocomplete="new-password" maxlength="16384">{% endif %}</label>
+{% endfor %}
+<p>Сертификат и закрытый ключ задаются вместе. Пути к файлам сервера вводить не нужно.</p>
+</details>
+<details><summary>Параметры сети и совместимости</summary>
+{% for key,label in [('mtu','MTU туннеля'),('base_mtu','MTU внешнего пути'),('reconnect_timeout','Повторное подключение · секунд'),('force_dpd','Проверка живости · секунд'),('dtls_local_port','Локальный порт DTLS'),('tcp_keepalive','TCP keepalive · секунд')] %}<label>{{ label }}<input type="number" name="{{ key }}" value="{{ model[key] if model[key] is not none else '' }}" min="{{ number_limits[key][0] }}" max="{{ number_limits[key][1] }}"><span class="muted">Пустое поле оставляет значение по умолчанию клиента.</span></label>{% endfor %}
+{% for key,label in [('no_dtls','Использовать только TCP · отключить DTLS/ESP'),('disable_ipv6','Отключить IPv6 внутри VPN'),('no_http_keepalive','Отключить HTTP keepalive'),('pfs','Требовать Perfect Forward Secrecy')] %}<label><input type="checkbox" name="{{ key }}" {% if model[key] %}checked{% endif %}>{{ label }}</label>{% endfor %}
+<label>Сжатие<select name="compression">{% for value,label in [('stateless','Обычное'),('none','Выключено'),('all','Все методы')] %}<option value="{{ value }}" {% if model.compression==value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+<label>User-Agent<input name="useragent" value="{{ model.useragent }}" maxlength="512"></label>
+<label>Тип устройства<select name="os">{% for value in ['','linux','linux-64','win','mac-intel','android','apple-ios'] %}<option value="{{ value }}" {% if model.os==value %}selected{% endif %}>{{ value or 'По умолчанию' }}</option>{% endfor %}</select></label>
+<label>Имя устройства<input name="local_hostname" value="{{ model.local_hostname }}" maxlength="253"></label>
+<p>Интерфейс и настройка маршрутов берутся из существующей службы автоматически.</p>
+</details>
+{{ button('Сохранить черновик',disabled=connection.conflict) }}</form>
+<h2>Импорт файла подключения</h2>
+<p>Импорт сохраняет отдельный черновик и не запускает VPN. Параметры, которых нет в файле, сохраняются из открытого черновика или действующей службы. Для пароля используйте поле выше; ссылки на локальные файлы и команды не выполняются.</p>
+<form class="form" method="post" enctype="multipart/form-data" action="{{ url_for('openconnect_action',identifier=identifier,action='import') }}">{{ hidden() }}<input type="hidden" name="file_revision" value="{{ connection.file_revision }}"><input type="hidden" name="draft_revision" value="{{ connection.draft_revision }}">
+<label>Формат<select name="format"><option value="native-bundle">ZIP подключения, ранее выгруженный панелью</option><option value="openconnect">OpenConnect · конфигурация .conf</option><option value="anyconnect">Cisco AnyConnect · XML с одним сервером</option></select></label>
+<label>Файл<input type="file" name="connection_file" accept=".conf,.xml,.txt,.zip" required></label><p>До 128 КиБ. Неподдерживаемые настройки и неоднозначные XML-профили отклоняются с объяснением.</p>{{ button('Импортировать в черновик',disabled=connection.conflict) }}</form>
+<div class="actions">{% for action,label in [('check','Проверить параметры'),('discard','Удалить черновик')] %}<form class="form" method="post" action="{{ url_for('openconnect_action',identifier=identifier,action=action) }}">{{ hidden() }}<input type="hidden" name="file_revision" value="{{ connection.file_revision }}"><input type="hidden" name="draft_revision" value="{{ connection.draft_revision }}">{{ button(label,secondary=True,disabled=(action=='discard' and not connection.has_draft) or (action=='check' and connection.conflict)) }}</form>{% endfor %}</div>
+{% if connection.managed %}
+<details><summary>Запуск службы и автозапуск</summary>
+<p>Запуск и остановка используют действующие настройки. Сначала примените или удалите черновик. Без подтверждения за 180 секунд вернётся прежнее состояние. Автозапуск меняется сразу, не перезапускает VPN и определяет его запуск после включения сервера.</p>
+{% for action,label in [('start','Запустить VPN'),('stop','Остановить VPN'),('enable','Включить автозапуск'),('disable','Выключить автозапуск')] %}
+{% if (action=='start' and connection.runtime.active in ['inactive','failed']) or (action=='stop' and connection.runtime.active=='active') or (action=='enable' and connection.runtime.boot=='disabled') or (action=='disable' and connection.runtime.boot=='enabled') %}
+<form class="form" method="post" action="{{ url_for('openconnect_action',identifier=identifier,action=action) }}">{{ hidden() }}
+<input type="hidden" name="file_revision" value="{{ connection.file_revision }}"><input type="hidden" name="draft_revision" value="{{ connection.draft_revision }}"><input type="hidden" name="expected_active" value="{{ 'true' if connection.runtime.active=='active' else 'false' }}"><input type="hidden" name="expected_boot" value="{{ connection.runtime.boot }}">
+{% if action in ['start','enable'] %}<label>Рабочий HTTPS-сайт для проверки<input type="url" name="probe_url" required value="{{ connection.transaction.get('probe',{}).get('url','') if connection.transaction.get('probe') else '' }}" placeholder="https://internal.example.com/"></label><label>Ожидаемые коды ответа<input name="probe_codes" value="200,302" required></label>{% endif %}
+{{ button(label,secondary=True,disabled=connection.has_draft or connection.transaction.get('status') in ['prepared','pending','rollback_failed','recovery_required'] or (action=='enable' and connection.runtime.active!='active')) }}</form>
+{% endif %}{% endfor %}</details>
+<h2>Применить к подключению</h2>
+<p>VPN будет переподключён. Перед изменением и после него сервер проверит указанный сайт через интерфейс этого VPN. Остальные сетевые настройки не меняются. Без подтверждения сервер вернёт прежние параметры через 180 секунд от начала операции.</p>
+<form class="form" method="post" action="{{ url_for('openconnect_action',identifier=identifier,action='apply') }}">{{ hidden() }}<input type="hidden" name="file_revision" value="{{ connection.file_revision }}"><input type="hidden" name="draft_revision" value="{{ connection.draft_revision }}">
+<label>Доступный сайт внутри VPN<input type="url" name="probe_url" required value="{{ connection.transaction.get('probe',{}).get('url','') if connection.transaction.get('probe') else '' }}" placeholder="https://internal.example.com/"><span class="muted">HTTPS, порт 443, без логина, пароля и параметров в URL. Укажите знакомый рабочий сервис, который сейчас доступен через VPN.</span></label>
+<label>Ожидаемые коды ответа<input name="probe_codes" value="200,302" required><span class="muted">200 — страница открылась; 302 — переход, например на страницу входа.</span></label>
+{{ button('Применить и проверить',disabled=not connection.has_draft or connection.conflict or connection.transaction.get('status') in ['prepared','pending','rollback_failed','recovery_required']) }}</form>
+{% else %}{{ status('Подключение безопасного применения ещё не завершено','Черновики доступны; действующий VPN не меняется от сохранения и импорта.','fallback') }}{% endif %}
+{% endif %}
+{% if connection and connection.transaction %}{% set tx=connection.transaction %}
+<h2>Последняя операция</h2><p>{{ {'prepared':'Подготовка','pending':'Ожидает подтверждения','confirmed':'Подтверждено','rolled_back':'Прежние настройки восстановлены','recovered':'Прежние настройки восстановлены перед запуском','rollback_failed':'Возврат требует внимания','recovery_required':'Нужна проверка изменённых вне панели файлов','schedule_failed':'Применение не началось'}.get(tx.status,tx.status) }}</p>
+{% if tx.status in ['prepared','pending','rollback_failed','recovery_required'] %}<p>Срок автоматического возврата: {{ tx.deadline|utc_time }}. Возврат работает независимо от открытой страницы. Чужие изменения файлов не перезаписываются.</p>
+<div class="actions">{% for action,label in [('confirm','Подтвердить результат'),('rollback','Вернуть прежние настройки')] %}{% if action=='rollback' or (tx.status=='pending' and tx.runtime_ready) %}<form class="form" method="post" action="{{ url_for('openconnect_action',identifier=identifier,action=action) }}">{{ hidden() }}<input type="hidden" name="transaction" value="{{ tx.id }}">{{ button(label,secondary=action=='rollback') }}</form>{% endif %}{% endfor %}</div>{% endif %}
+{% endif %}
+<div class="actions">{{ button('К подключениям',url_for('page',name='tunnels'),True) }}{{ button('Правила',url_for('page',name='rules'),True) }}</div>
+{% endblock %}

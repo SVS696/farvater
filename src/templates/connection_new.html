@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<p>Выберите протокол подключения. Откроются его настройки и доступные способы импорта. Новое подключение сохраняется отдельно от работающей сети.</p>
+{% include 'connection_picker.html' %}
+<p class="muted">Чтобы подключить телефон или компьютер, <a href="{{ url_for('clients_page') }}">добавьте клиент WireGuard</a>. Здесь настраиваются выходящие подключения.</p>
+<details><summary>Импорт подключения из JSON sing-box</summary><form class="form" method="post" enctype="multipart/form-data" action="{{ url_for('outbound_import_native') }}"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="revision" value="{{ revision }}"><label>Название<input name="name" required maxlength="120"></label><label>Назначение<select name="scope"><option value="public">Обычный интернет</option><option value="work">Рабочие ресурсы</option><option value="special">Специальные ресурсы</option></select></label><label>Файл одного подключения (outbound или endpoint)<input type="file" name="connection_file" accept=".json" required></label><button>Импортировать</button></form></details>
+{% endblock %}

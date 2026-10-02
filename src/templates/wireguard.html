@@ -1,0 +1,129 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button,status with context %}
+{% macro versions(wg) %}{{ hidden() }}<input type="hidden" name="file_revision" value="{{ wg.file_revision }}"><input type="hidden" name="draft_revision" value="{{ wg.draft_revision }}">{% endmacro %}
+{% macro runtime_state(runtime) %}
+<p>Служба: <strong>{{ runtime.service }} / {{ runtime.substate }}</strong> · Автозапуск: {{ runtime.boot }} · Интерфейс: <strong>{{ 'есть' if runtime.interface is sameas true else 'отсутствует' if runtime.interface is sameas false else 'не проверен' }}</strong>.</p>
+{% endmacro %}
+{% macro expected_state(wg) %}{{ versions(wg) }}<input type="hidden" name="expected_active" value="{{ 'true' if wg.runtime.service=='active' else 'false' }}"><input type="hidden" name="expected_enabled" value="{{ wg.runtime.boot }}">{% endmacro %}
+{% macro probe_fields() %}
+<label>Контрольный IP за туннелем<input name="probe_address" required maxlength="45" placeholder="IP устройства за пиром"></label>
+<label>TCP-порт проверки<input name="probe_port" type="number" min="1" max="65535" value="443" required></label>
+{% if not is_amnezia %}<label>Марка маршрута (SO_MARK)<input name="probe_mark" type="number" min="0" max="4294967295" value="0" required><span class="muted">0 — без марки. Укажите марку, если она выбирает отдельную таблицу маршрутов.</span></label>{% else %}<input type="hidden" name="probe_mark" value="0">{% endif %}
+{% endmacro %}
+{% block content %}
+{% set tx=wg.transaction if wg and wg.transaction else {} %}
+{% set pending=tx.status in ('prepared','pending','rollback_failed','recovery_required') %}
+{% set locked=pending and tx.profile==profile %}
+{% if tx.id %}
+<section aria-label="Применение {{ wg_label }}">
+<h2>Изменение {{ tx.profile }}</h2>
+<p>Состояние: <strong>{{ {'prepared':'подготовка','pending':'ожидает подтверждения','rollback_failed':'возврат ещё не завершён','rolled_back':'прежнее состояние восстановлено','confirmed':'подтверждено','schedule_failed':'применение не началось','recovered':'прежний файл восстановлен','recovery_required':'требуется восстановление','closed_unrestored':'проверка закрыта без восстановления'}.get(tx.status,tx.status) }}</strong>.</p>
+{% if pending %}{% if tx.boot_changed %}<p>Сервер перезагрузился. Туннель следует сохранённой настройке автозапуска. Нажмите «Вернуть прежнее состояние WG», чтобы проверить результат и закрыть операцию; это не запускает туннель вопреки автозапуску.</p>{% elif tx.status=='recovery_required' %}<p>Автоматические попытки возврата остановлены. Причина: {{ {'backup_unavailable':'недоступна резервная версия','backup_or_live_file_unavailable':'не удалось безопасно прочитать исходный или текущий файл','runtime_profile_changed':'рабочий файл изменён вне панели','boot_state_mismatch':'состояние после загрузки не совпало с автозапуском','service_changed':'настройки systemd изменены вне панели','attempt_limit':'три попытки восстановления не завершились'}.get(tx.recovery_reason,'требуется проверка') }}. Исправьте причину по инструкции и повторите возврат. Новое применение заблокировано.</p>{% else %}<p>Без подтверждения сервер возвращает прежнее состояние после {{ tx.deadline|utc_time }}. Закрытие страницы не отменяет возврат.</p>{% endif %}
+<form class="form" method="post" action="{{ url_for(wg_save_endpoint,profile=tx.profile,action='confirm') }}">{{ hidden() }}<input type="hidden" name="transaction" value="{{ tx.id }}">{{ button(('Подтвердить включение' if tx.active else 'Подтвердить выключение') if tx.kind=='runtime' else ('Проверить трафик и подтвердить' if tx.active else 'Подтвердить файл выключенного профиля'),disabled=not tx.runtime_ready or tx.status!='pending' or tx.boot_changed) }}</form>
+<form class="form" method="post" action="{{ url_for(wg_save_endpoint,profile=tx.profile,action='rollback') }}">{{ hidden() }}<input type="hidden" name="transaction" value="{{ tx.id }}">{{ button('Вернуть прежнее состояние WG',secondary=True) }}</form>
+{% if tx.kind=='runtime' and (tx.status=='recovery_required' or tx.boot_changed) %}
+<p>Если восстановление требует изменения профиля или повторного запуска службы, можно закрыть эту проверку. Это отменит её таймер и разблокирует редактор; соединение останется в текущем состоянии.</p>
+<form class="form" method="post" action="{{ url_for(wg_save_endpoint,profile=tx.profile,action='abandon') }}">{{ hidden() }}<input type="hidden" name="transaction" value="{{ tx.id }}">{{ button('Закрыть проверку без восстановления',secondary=True) }}</form>
+{% endif %}
+{% endif %}
+{% if tx.last_probe %}<p>TCP через {{ tx.last_probe.interface }}: {{ "["+tx.last_probe.address+"]" if ":" in tx.last_probe.address else tx.last_probe.address }}:{{ tx.last_probe.port }}, {{ tx.last_probe.duration_ms }} мс. Это проверка соединения, а не TLS или всех приложений и пиров.</p>{% endif %}
+<details><summary>Идентификатор операции</summary><code>{{ tx.id }}</code></details>
+</section>
+{% endif %}
+
+<div class="actions">{{ button('Все туннели',url_for('page',name='tunnels'),True) }}{{ button('Проверить трафик в мониторинге',url_for('page',name='health'),True) }}{% if profile %}{{ button('Все профили '+wg_label,url_for(wg_page_endpoint),True) }}{% endif %}</div>
+{% if wg_error %}{{ status('Не удалось прочитать профиль',wg_error,'unknown') }}
+{% elif not profile %}
+<div class="actions">{{ button('Создать профиль '+wg_label,url_for(wg_new_endpoint)) }}</div>
+<p>Настроенные профили. Состояние службы и наличие интерфейса не подтверждают доступность сети за туннелем. Данные: {{ wg.observed_at|utc_time }}.</p>
+{% for item in wg.profiles %}<article class="rule simple"><div><h2>{{ item.name }}</h2>{{ runtime_state(item.runtime) }}
+{% if item.editable %}<p>Пиров в {{ 'черновике' if item.has_draft else 'файле' }}: {{ item.peers }}. {{ 'Есть неприменённый черновик.' if item.has_draft else 'Черновика нет.' }}</p>{% if item.conflict %}<p>Исходный файл изменился после создания черновика.</p>{% endif %}
+{% else %}<p>{{ item.error }}</p>{% endif %}</div>{% if item.editable or item.get('has_draft') %}<a href="{{ url_for(wg_page_endpoint,profile=item.name) }}">Открыть профиль</a>{% endif %}</article>{% else %}<p>Файлы {{ wg_label }} не найдены.</p>{% endfor %}
+{% else %}
+{{ runtime_state(wg.runtime) }}<p>Наблюдение: {{ wg.observed_at|utc_time }}. Проверка трафика доступна отдельно в мониторинге.</p>
+{% if is_amnezia and not wg.error %}{% include 'amnezia_registration.html' %}{% endif %}
+{% if not wg.error %}<details><summary>Импорт и экспорт .conf</summary>
+<p>Файлы содержат закрытые ключи. Импорт заменяет сохранённый черновик, действующий туннель меняется только после отдельного применения. Команды PostUp/PostDown и другие неподдерживаемые поля отклоняются с объяснением.</p>
+<form class="form" method="post" action="{{ url_for(wg_save_endpoint,profile=profile,action='export') }}">{{ hidden() }}<input type="hidden" name="file_revision" value="{{ wg.file_revision }}"><input type="hidden" name="draft_revision" value="{{ wg.draft_revision }}">
+<label>Что выгрузить<select name="source"><option value="active">Действующий профиль</option>{% if wg.has_draft %}<option value="draft">Сохранённый черновик</option>{% endif %}</select></label>{{ button('Скачать .conf',secondary=True,disabled=pending or wg.conflict) }}</form>
+<form class="form" method="post" enctype="multipart/form-data" action="{{ url_for(wg_save_endpoint,profile=profile,action='import') }}">{{ hidden() }}<input type="hidden" name="file_revision" value="{{ wg.file_revision }}"><input type="hidden" name="draft_revision" value="{{ wg.draft_revision }}"><label>Профиль {{ wg_label }}<input type="file" name="connection_file" accept=".conf" required></label>{{ button('Импортировать в черновик',disabled=pending or wg.conflict) }}</form></details>{% endif %}
+{% if wg.public_key %}<p>Открытый ключ {{ 'черновика' if wg.has_draft else 'профиля' }} для настройки другой стороны:</p><code>{{ wg.public_key }}</code>{% endif %}
+{% if not wg.error and not wg.has_draft and wg.runtime.service in ('active','inactive','failed') and wg.runtime.boot in ('enabled','disabled') %}
+<section aria-label="Состояние туннеля"><h2>Соединение сейчас</h2>
+<p>Изменение действует временно: подтвердите доступ в течение трёх минут. Без подтверждения сервер вернёт прежнее состояние. При перезагрузке действует сохранённый автозапуск.</p>
+<p>Включение использует сохранённый профиль. Доступность удалённой сети проверяется отдельно в мониторинге.</p>
+<form class="form" method="post" action="{{ url_for(wg_save_endpoint,profile=profile,action='stop' if wg.runtime.service=='active' else 'start') }}">{{ expected_state(wg) }}
+{{ button('Выключить сейчас' if wg.runtime.service=='active' else 'Включить сейчас',disabled=pending) }}</form>
+<h2>После перезагрузки</h2><p>Настройка сохраняется сразу. Она не включает и не выключает текущее соединение и не возвращается по таймеру. Для включения автозапуска сначала проверьте работающий туннель.</p>
+<form class="form" method="post" action="{{ url_for(wg_save_endpoint,profile=profile,action='disable' if wg.runtime.boot=='enabled' else 'enable') }}">{{ expected_state(wg) }}
+{% if wg.runtime.boot=='disabled' and wg.runtime.service=='active' %}{{ probe_fields() }}{% endif %}
+{{ button('Отключить автозапуск' if wg.runtime.boot=='enabled' else 'Включить автозапуск',secondary=True,disabled=pending or (wg.runtime.boot=='disabled' and wg.runtime.service!='active')) }}</form>
+</section>
+{% endif %}
+{% if wg.error %}{{ status('Настройки не разобраны',wg.error,'blocked') }}
+{% else %}
+{{ status('Черновик на сервере' if wg.has_draft else 'Настройки из рабочего файла','Сохранение создаёт отдельный черновик. Отдельное применение временно заменяет рабочий файл; работающий туннель перезапускается с независимым откатом.','fallback') }}
+{% if wg.has_draft %}<p>Черновик сохранён {{ wg.saved_at|utc_time }}.</p>{% endif %}
+{% if wg.conflict and not locked %}{{ status('Исходный файл изменился','Сохранять этот черновик нельзя. Удалите его, чтобы перечитать рабочий файл.','blocked') }}{% endif %}
+<details><summary>Файл и ревизии</summary><p><code>{{ "/etc/amnezia/amneziawg/" if is_amnezia else "/etc/wireguard/" }}{{ wg.name }}.conf</code></p><p>Файл: <code>{{ wg.file_revision }}</code></p>{% if wg.has_draft %}<p>Черновик: <code>{{ wg.draft_revision }}</code></p>{% endif %}</details>
+{% if wg.preflight %}
+<section aria-label="Результат проверки {{ wg_label }}">
+{{ status('Включение блокируют конфликты' if wg.preflight.blockers else 'Проверка конфигурации пройдена',wg.preflight.note,'blocked' if wg.preflight.blockers else 'ready') }}
+<p>Проверено {{ wg.preflight.checked_at|utc_time }}. Состояние сети могло измениться после проверки; перед применением нужна повторная проверка.</p>
+{% if wg.preflight.blockers %}<ol>{% for item in wg.preflight.blockers %}<li>{{ item.message }}</li>{% endfor %}</ol>{% endif %}
+{% for warning in wg.preflight.warnings %}<p>{{ warning }}</p>{% endfor %}
+</section>
+{% endif %}
+<form class="form" method="post" action="{{ url_for(wg_save_endpoint,profile=profile,action='check') }}">{{ versions(wg) }}{{ button('Проверить '+('черновик' if wg.has_draft else 'профиль')+' перед включением',secondary=True,disabled=wg.conflict or locked) }}</form>
+{% set interface=wg.model.interface %}
+<form class="form" data-peer-editor method="post" action="{{ url_for(wg_save_endpoint,profile=profile,action='save') }}">{{ versions(wg) }}
+<input type="hidden" name="peer_count" value="{{ wg.model.peers|length }}">
+<fieldset><legend>Адреса и ключи {{ wg.name }}</legend>
+<label>Адреса интерфейса с префиксами<textarea name="interface_Address" rows="3" required>{{ interface.Address|join('\n') }}</textarea><span class="muted">По одному адресу в строке, например 10.77.0.1/24.</span></label>
+<label>Новый закрытый ключ<input type="password" name="interface_PrivateKey" autocomplete="new-password" maxlength="44"><span class="muted">Ключ задан. Пустое поле сохраняет его на сервере.</span></label>
+<div class="columns"><label>Порт прослушивания<input type="number" name="interface_ListenPort" min="0" max="65535" value="{{ interface.get('ListenPort','') }}"><span class="muted">Пусто или 0 — порт назначает {{ wg_label }}.</span></label><label>MTU<input type="number" name="interface_MTU" min="576" max="65535" value="{{ interface.get('MTU','') }}"><span class="muted">{{ "Пусто — 1280;" if is_amnezia else "Пусто — автоматический выбор;" }} для IPv6 не меньше 1280.</span></label></div>
+{% if is_amnezia %}<p class="muted">Интерфейс и отдельная таблица маршрутов назначены автоматически. AWG используется только выбранными правилами.</p>{% else %}<label>Таблица маршрутизации<input name="interface_Table" value="{{ interface.get('Table','') }}" placeholder="auto"><span class="muted">auto или пусто — wg-quick управляет маршрутами; off — маршруты задаются отдельно; число — номер таблицы.</span></label>{% endif %}
+</fieldset>
+{% if is_amnezia %}{% include 'amnezia_fields.html' %}{% endif %}
+{% macro peer_row(peer, index, new=false) %}
+<section class="wg-peer" data-wg-peer>
+<div class="section-heading"><h3 data-peer-title>Пир {{ index + 1 if index is number else 'новый' }}</h3><button type="button" class="secondary" data-peer-remove>Удалить</button></div>
+<input type="hidden" name="peer_{{ index }}_remove" data-peer-removed value="">
+<p data-peer-notice hidden>Пир будет удалён после сохранения и применения настроек. <button type="button" class="secondary" data-peer-undo>Отменить удаление</button></p>
+<fieldset data-peer-fields>
+<label>Открытый ключ пира<input name="peer_{{ index }}_PublicKey" value="{{ peer.get('PublicKey','') }}" maxlength="44" autocomplete="off"></label>
+<label>Сети за пиром (AllowedIPs)<textarea name="peer_{{ index }}_AllowedIPs" rows="3">{{ peer.get('AllowedIPs',[])|join('\n') }}</textarea><span class="muted">По одной сети с префиксом в строке.</span></label>
+<div class="columns"><label>Адрес и порт пира (Endpoint)<input name="peer_{{ index }}_Endpoint" value="{{ peer.get('Endpoint','') }}" placeholder="vpn.example.com:51820"><span class="muted">Для IPv6: [адрес]:порт. Пусто — ждать входящего подключения.</span></label><label>Keepalive, секунд<input type="{{ 'text' if is_amnezia else 'number' }}" name="peer_{{ index }}_PersistentKeepalive" min="0" max="65535" value="{{ peer.get('PersistentKeepalive','') }}"><span class="muted">Пусто или 0 — выключен.</span></label></div>
+<label>Новый дополнительный ключ (PSK)<input type="password" name="peer_{{ index }}_PresharedKey" maxlength="44" autocomplete="new-password"><span class="muted">{{ 'PSK задан; пустое поле сохраняет его при прежнем открытом ключе пира.' if peer.get('preshared_key_present') else 'PSK не задан.' }}</span></label>
+{% if is_amnezia and peer.get("AdvancedSecurity") %}<input type="hidden" name="peer_{{ index }}_AdvancedSecurity" value="{{ peer.AdvancedSecurity }}"><p>AdvancedSecurity из импортированного файла сохранён. Этот параметр требует модуля ядра AWG и не поддерживается установленным клиентом; импортируйте совместимый профиль перед включением.</p>{% endif %}
+{% if not new %}<label class="check"><input type="checkbox" name="peer_{{ index }}_clear_preshared_key">Удалить PSK из черновика</label>{% endif %}
+</fieldset>
+</section>
+{% endmacro %}
+<div data-wg-peers>
+{% for peer in wg.model.peers %}{{ peer_row(peer, loop.index0) }}{% endfor %}
+</div>
+<template data-peer-template>{{ peer_row({}, '__INDEX__', true) }}</template>
+<button type="button" class="secondary" data-peer-add>Добавить пира</button>
+<p class="muted" role="status" data-peer-status></p>
+<noscript><p>Для добавления и удаления пиров включите JavaScript в браузере.</p></noscript>
+<p>Замена открытого ключа создаёт другую идентичность пира: прежний PSK к ней не переносится. При сохранении сохраняются все заполненные пиры, кроме явно отмеченных для удаления.</p>
+<p>Комментарии исходного файла и оформление строк в черновик не переносятся. Рабочий файл остаётся прежним.</p>
+{{ button('Сохранить черновик WG',disabled=wg.conflict or locked) }}</form>
+{% endif %}
+{% if wg.has_draft and not locked and not wg.error %}
+<section aria-label="Применить сохранённый черновик WG">
+<h2>Применить сохранённый черновик</h2>
+<p>Применяются настройки, уже сохранённые на сервере. Поля формы выше сначала нужно сохранить. Автозапуск и включённое/выключенное состояние сохраняются.</p>
+<form class="form" method="post" action="{{ url_for(wg_save_endpoint,profile=profile,action='apply') }}">{{ versions(wg) }}
+{% if wg.runtime.service=='active' %}
+<p>Работающий туннель будет кратковременно перезапущен. Укажите доступный TCP-адрес за пиром: он проверяется через этот интерфейс до изменения и при подтверждении.</p>
+<label>Контрольный IP за туннелем<input name="probe_address" required maxlength="45" placeholder="IP без имени домена"></label>
+<label>Контрольный TCP-порт<input name="probe_port" type="number" min="1" max="65535" value="443" required></label>
+{% if not is_amnezia %}<label>Марка маршрута (SO_MARK)<input name="probe_mark" type="number" min="0" max="4294967295" value="0" required><span class="muted">0 — без марки. Нужна, если отдельная таблица выбирается по марке пакета; один номер Table её не задаёт.</span></label>{% else %}<input type="hidden" name="probe_mark" value="0">{% endif %}
+{% else %}<p>Профиль сейчас выключен. Будет изменён только рабочий файл; служба останется выключенной, проверка трафика не проводится.</p>{% endif %}
+{{ button('Временно применить WG',disabled=wg.conflict or pending) }}</form>
+</section>
+{% endif %}
+{% if wg.has_draft and not locked %}<form class="form" method="post" action="{{ url_for(wg_save_endpoint,profile=profile,action='discard') }}">{{ versions(wg) }}{{ button('Удалить черновик и перечитать файл',secondary=True) }}</form>{% endif %}
+{% endif %}
+{% endblock %}

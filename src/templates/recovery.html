@@ -1,0 +1,29 @@
+{% extends 'base.html' %}{% from 'components.html' import button with context %}
+{% block content %}
+<p><a href="{{ url_for('page',name='backups') }}">← Резервные копии</a> · <a href="{{ url_for('recovery_runbook') }}">Порядок восстановления</a></p>
+{% if recovery_error %}<p class="notice error" role="alert">{{ recovery_error }}. Состояние восстановления неизвестно; повторно применять копию нельзя.</p>
+{% elif not backup %}<p class="notice error">Проверенная копия недоступна. Вернитесь к списку и обновите состояние.</p>
+{% else %}
+<p>Копия от {{ backup.created_at|utc_time }}. Проверка архива и временное применение — отдельные действия. Подготовка не меняет рабочие файлы.</p>
+{% if backup.summary %}<p>Совпадает: {{ backup.summary.same }} · изменено: {{ backup.summary.changed }} · отсутствует: {{ backup.summary.missing }} · вне состава: {{ backup.summary.unsupported }}.</p>{% endif %}
+{% if backup.summary and backup.summary.accounts and not backup.summary.accounts.ready %}<p class="notice error">Учётные записи и владельцы файлов ещё не готовы. Применение запрещено.</p>{% endif %}
+{% if recovery %}<p role="status">Состояние: <strong>{{ {'not_prepared':'не подготовлено','prepared':'подготовлено','start_scheduled':'запуск запланирован','recovery_required':'нужен независимый возврат','applying':'заменяются файлы','starting_services':'запускаются службы','awaiting_confirmation':'ожидает подтверждения','rolling_back':'идёт возврат','rolled_back':'прежняя установка восстановлена','confirmed':'восстановление подтверждено'}.get(recovery.status,recovery.status) }}</strong>.</p>
+{% if recovery.seconds_left is defined and recovery.status not in ('confirmed','rolled_back') %}<p>До независимого возврата: {{ recovery.seconds_left }} секунд. Закрытие страницы не отменяет timer.</p>{% endif %}
+{% if recovery.boot_guard %}<p>Загрузочная защита: {{ recovery.boot_guard }}.</p>{% endif %}
+{% endif %}
+{% if backup_view and backup_view.restore_application_available and backup.status=='checked' and backup.summary and backup.summary.unsupported==0 and backup.summary.accounts and backup.summary.accounts.ready and recovery %}
+{% if recovery.status=='not_prepared' and backup.manifest_sha256 %}
+<form class="form" method="post" action="{{ url_for('backup_restore_action',value=backup.id,action='prepare') }}"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="manifest_sha256" value="{{ backup.manifest_sha256 }}"><label class="check"><input type="checkbox" name="confirm" required>Подготовить независимый журнал и защиту; рабочие файлы пока не менять</label>{{ button('Подготовить восстановление') }}</form>
+{% elif recovery.status=='prepared' and recovery.boot_guard=='installed' %}
+<p>Для временного применения откройте независимую страницу. Войдите под сохранённой учётной записью администратора и подтвердите запуск там; она останется доступной после остановки этой панели.</p><p><a href="/recovery/{{ backup.id }}">Открыть независимое восстановление</a></p>
+{% endif %}
+{% if recovery.status=='awaiting_confirmation' and recovery.seconds_left|default(0)>0 %}
+<form class="form" method="post" action="{{ url_for('backup_restore_action',value=backup.id,action='confirm') }}"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="transaction" value="{{ recovery.id }}"><label class="check"><input type="checkbox" name="confirm" required>Я проверил доступ и состояние служб; завершить восстановление до истечения срока</label>{{ button('Проверить и подтвердить') }}</form>
+{% endif %}
+{% if recovery.status in ('prepared','start_scheduled','recovery_required','applying','starting_services','awaiting_confirmation') %}
+<form class="form" method="post" action="{{ url_for('backup_restore_action',value=backup.id,action='rollback') }}"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="transaction" value="{{ recovery.id }}"><label class="check"><input type="checkbox" name="confirm" required>Вернуть прежние файлы и службы по тому же журналу</label>{{ button('Вернуть прежнюю установку',secondary=True) }}</form>
+{% endif %}
+{% else %}<p class="notice">Временное применение пока недоступно. Проверьте состав, владельцев и установленный recovery controller.</p>{% endif %}
+<p><a href="{{ url_for('backup_restore_page',job_id=backup.id) }}">Обновить состояние</a>. Если основная панель пропала после временного применения, используйте независимый recovery доступ, установленный вне снимка; порядок указан в инструкции выше.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,13 @@
+<label>DNS из профиля<textarea name="interface_DNS" rows="2" placeholder="Например, 10.50.0.1">{{ interface.get('DNS',[])|join('\n') }}</textarea><span class="muted">IP-адреса через запятую или по одному в строке. При создании подключения они добавляются в общий список DNS с выходом через этот туннель. Последующие изменения DNS в файле не перезаписывают отдельные настройки DNS в панели.</span></label>
+<details><summary>Параметры AmneziaWG</summary>
+<p class="muted">Перенесите значения из выданного профиля. Набор должен соответствовать другой стороне соединения; случайные значения здесь не создадут совместимое подключение.</p>
+<div class="form">
+<div class="columns">{% for key in ['Jc','Jmin','Jmax','S1','S2','S3','S4'] %}<label>{{ key }}<input type="number" name="interface_{{ key }}" min="0" max="65535" value="{{ interface.get(key,'') }}"></label>{% endfor %}</div>
+<div class="columns">{% for key in ['H1','H2','H3','H4'] %}<label>{{ key }}<input name="interface_{{ key }}" value="{{ interface.get(key,'') }}" placeholder="Число или диапазон"></label>{% endfor %}</div>
+{% for key in ['I1','I2','I3','I4','I5'] %}<label>{{ key }} · цепочка пакетов<input name="interface_{{ key }}" value="{{ interface.get(key,'') }}" maxlength="8192"></label>{% endfor %}
+<details><summary>Дополнительные параметры AWG 3.1</summary><div class="form">
+<label>Ключ защиты заголовков<input type="password" name="interface_HeaderProtectionKey" maxlength="44" autocomplete="new-password"><span class="muted">{{ 'Ключ задан; пустое поле сохраняет его.' if interface.get('header_protection_key_present') else '32 байта в Base64, если выданы другой стороной.' }} При включённой защите S1–S4 должны быть не меньше 12.</span></label>
+{% if interface.get('header_protection_key_present') %}<label class="check"><input type="checkbox" name="clear_header_protection_key">Удалить ключ защиты заголовков</label>{% endif %}
+{% for key in ['ContentPaddingAddition','RekeyAfterTime','RekeyTimeout','RejectAfterTime','KeepaliveTimeout','MaxHandshakeAttempts'] %}<label>{{ key }}<input name="interface_{{ key }}" value="{{ interface.get(key,'') }}" placeholder="Число или диапазон"></label>{% endfor %}
+{% for key in ['RandomTrailers','DisableCookies'] %}<label>{{ key }}<select name="interface_{{ key }}">{% for option,label in [('','По умолчанию'),('on','Включено'),('off','Выключено')] %}<option value="{{ option }}" {{ 'selected' if interface.get(key,'')==option else '' }}>{{ label }}</option>{% endfor %}</select></label>{% endfor %}
+</div></details></div></details>

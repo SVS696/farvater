@@ -1,0 +1,2 @@
+# Pinned dependencies with hashes for the panel on macOS and Linux.
+-r install/requirements-linux-amd64-py311.lock

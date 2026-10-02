@@ -1,0 +1,2 @@
+#!/bin/sh
+/opt/bin/sh /opt/okopy-router-monitor/bootstrap.sh "$1"

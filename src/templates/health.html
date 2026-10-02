@@ -1,0 +1,19 @@
+{% extends 'base.html' %}{% from 'components.html' import status,button with context %}
+{% block head %}<meta http-equiv="refresh" content="30">{% endblock %}
+{% block content %}
+<div class="actions">{% if monitor_enabled %}{{ button('Управление датчиками',url_for('monitor_settings')) }}{% endif %}{{ button('Журнал переключений',url_for('routing_history'),True) }}{{ button('Обновить',url_for('page',name='health'),True) }}</div>
+{{ status(health.label,health.detail,health.style) }}
+{% if health.problems %}<div class="actions">{% for check in health.problems %}{% if check.id in visible_checks|map(attribute='id')|list %}<a href="#check-{{ check.id }}">{{ check.name }}</a>{% elif check.id in editable_ids %}<a href="{{ url_for('monitor_settings',identifier='server:'+check.id) }}">{{ check.name }} · скрыт</a>{% endif %}{% endfor %}</div>{% endif %}
+{% if transport %}{{ status('Связь со сборщиком',transport,'fallback') }}{% endif %}
+{% if metadata_error %}{{ status('Настройки датчиков недоступны',metadata_error,'fallback') }}{% endif %}
+{% if health.generated_at %}<p class="muted">Обновлено {{ health.generated_at|utc_time }} · {{ health.age_seconds }} с назад. Страница обновляется каждые 30 секунд.</p>{% endif %}
+{% if hidden_count %}<p>Скрыто карточек: {{ hidden_count }}. Общее состояние учитывает и эти проверки. <a href="{{ url_for('monitor_settings') }}">Настроить видимость</a></p>{% endif %}
+{% for group,checks in check_groups %}<section class="health-group"><h2>{{ group }}</h2><div class="health-dashboard">
+{% for check in checks %}<article id="check-{{ check.id }}" class="status {{ check.style }} health-card">
+<div class="health-heading"><strong>{{ check.name }}</strong><span class="health-badge {{ check.style }}">{{ check.label }}</span></div>
+<p>{{ check.detail }}</p><p class="muted">{{ check.observed_at|utc_time }} · {{ check.age_seconds }} с назад · {{ check.duration_ms }} мс</p>
+{% if check.status=='stale' %}<p>Нет свежего измерения. Проверьте сборщик; прежний результат не подтверждает текущее состояние.</p>{% elif check.status!='up' %}<p>{{ check.action }}</p>{% endif %}
+{% if check.id in editable_ids %}<a href="{{ url_for('monitor_settings',identifier='server:'+check.id) }}">Настроить датчик</a>{% endif %}
+</article>{% endfor %}</div></section>{% else %}<p>Нет видимых карточек. Добавьте датчик или включите его отображение в настройках.</p>{% endfor %}
+{% if health.events %}<details><summary>Последние события · {{ health.events|length }}</summary><ol>{% for event in health.events %}<li><time>{{ event.at|utc_time }}</time> · <strong>{{ event.name }}</strong><p>{{ event.detail }}</p></li>{% endfor %}</ol></details>{% endif %}
+{% endblock %}

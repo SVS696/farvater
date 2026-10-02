@@ -1,0 +1,28 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button,status with context %}
+{% block content %}
+<p>Роутеры вашей установки. Можно работать без них: туннели, DNS и клиенты VPN на сервере настраиваются независимо.</p>
+{% if selected is not none %}
+<form class="form" method="post" action="{{ url_for('routers_save') }}" data-router-editor>{{ hidden(revision) }}<input type="hidden" name="id" value="{{ selected.get('id','') }}">
+<label>Название<input name="name" required maxlength="120" value="{{ selected.get('name','') }}" placeholder="Например, квартира"></label>
+<label>Подключение к панели<select name="driver" data-router-driver><option value="web" {{ 'selected' if selected.get('driver','web')=='web' else '' }}>Веб-интерфейс · любой роутер</option><option value="keenetic" {{ 'selected' if selected.get('driver')=='keenetic' else '' }}>Keenetic / Netcraze · SSH и установленные компоненты</option></select></label>
+<label>Адрес веб-интерфейса<input type="url" name="web_url" value="{{ selected.get('web_url','') }}" placeholder="https://router.example.com"><span class="muted">Можно указать локальный адрес, отдельный HTTPS-порт или облачное имя роутера.</span></label>
+<label class="check"><input type="checkbox" name="enabled" {{ 'checked' if selected.get('enabled',true) else '' }}>Включить интеграцию и опрос</label>
+<fieldset data-router-ssh><legend>Доступ по SSH</legend>
+<div class="columns"><label>IP или имя роутера<input name="host" value="{{ selected.get('host','') }}" placeholder="router.example.com"></label><label>Порт SSH<input name="port" type="number" min="1" max="65535" value="{{ selected.get('port',22) }}"></label></div>
+<label>Пользователь<input name="username" value="{{ selected.get('username','') }}" autocomplete="off"></label><label>Пароль<input name="password" type="password" autocomplete="new-password"><span class="muted">{{ 'Пароль сохранён. Пустое поле оставит его прежним.' if selected.get('password_present') else 'Пароль пользователя SSH. Не выводится при повторном открытии.' }}</span></label>
+{% if selected.get('password_present') %}<label class="check"><input type="checkbox" name="clear_password">Удалить сохранённый пароль</label>{% endif %}
+<details><summary>Проверка подлинности SSH</summary><label>Открытый ключ роутера<textarea name="host_key" rows="3" placeholder="ssh-ed25519 AAAA…">{{ selected.get('host_key','') }}</textarea><span class="muted">Необязательно, если ключ уже находится в known_hosts пользователя панели. Иначе укажите проверенный открытый ключ роутера: тип и Base64. Неизвестные или изменившиеся ключи автоматически не принимаются.</span></label></details>
+<fieldset><legend>Установленные компоненты</legend><p class="muted">Включайте только функции, уже установленные на этом роутере. Флажки подключают управление из панели; сами службы на роутер не устанавливаются.</p>
+<label class="check"><input type="checkbox" name="capability_monitor" {{ 'checked' if 'monitor' in selected.get('capabilities',[]) else '' }}>Измерение DNS и HTTPS с роутера</label>
+<label class="check"><input type="checkbox" name="capability_ipv6" {{ 'checked' if 'ipv6' in selected.get('capabilities',[]) else '' }}>Управление аварийным путём IPv6</label></fieldset></fieldset>
+{{ button('Сохранить роутер') }}{{ button('К списку',url_for('routers_page'),True) }}</form>
+{% if selected.get('id') %}<details><summary>Удалить из панели</summary><form class="form" method="post" action="{{ url_for('routers_remove',router_id=selected.id) }}">{{ hidden(revision) }}<p>Удаляется запись доступа и прекращается опрос из панели. Работающая конфигурация самого роутера не меняется.</p><label class="check"><input type="checkbox" name="confirm" required>Удалить запись «{{ selected.name }}»</label>{{ button('Удалить запись',secondary=True) }}</form></details>{% endif %}
+{% else %}
+{{ button('Добавить роутер',url_for('routers_page',router_id='new')) }}
+{% for router in routers %}<article class="card"><h2>{{ router.name }}</h2><p class="muted">{{ 'Keenetic / Netcraze · SSH' if router.driver=='keenetic' else 'Веб-интерфейс' }} · {{ 'Интеграция включена' if router.enabled else 'Интеграция выключена' }}</p>
+<div class="actions">{{ button('Настроить',url_for('routers_page',router_id=router.id),True) }}{% if router.web_url %}<a class="button secondary" href="{{ router.web_url }}" target="_blank" rel="noopener noreferrer">Открыть роутер</a>{% endif %}
+{% if router.enabled and 'monitor' in router.capabilities %}<a href="{{ url_for('monitor_settings',identifier='router:'+router.id) }}">Измерения DNS и HTTPS</a><a href="{{ url_for('router_fallback',router_id=router.id) }}">Состояние прямого выхода</a>{% endif %}
+{% if router.enabled and 'ipv6' in router.capabilities %}<a href="{{ url_for('router_ipv6_page',router_id=router.id) }}">Аварийный путь IPv6</a>{% endif %}</div></article>
+{% else %}<p class="empty-state">Роутеры пока не добавлены. Для управления VPN-сервером это не требуется.</p>{% endfor %}
+{% endif %}
+{% endblock %}

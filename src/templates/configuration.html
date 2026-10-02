@@ -1,0 +1,16 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button with context %}
+{% block content %}
+<p>Файл JSON переносит черновик целиком: правила, DNS, выходы, резервы, AdGuard и входы. Учётные записи панели, отдельные службы VPN и ключи клиентов сохраняются в <a href="{{ url_for('page',name='backups') }}">полной резервной копии</a>. Их этот файл не заменяет.</p>
+{% if preview %}
+<h2>Будет заменён текущий черновик</h2>
+<p>В файле: {{ preview.summary.profiles }} правил, {{ preview.summary.dns }} DNS-профилей, {{ preview.summary.exits }} выходов.</p>
+<p>Ссылки и конфликты проверены. Для применения на другой установке нужны указанные в файле интерфейсы и отдельные службы VPN. Работающая сеть изменится только после отдельного применения.</p>
+{% for issue in preview.warnings %}<p class="notice">{{ issue.profile }}: {{ issue.message }}</p>{% endfor %}
+<form class="form" method="post" action="{{ url_for('policy_import_confirm') }}">{{ hidden(revision) }}<input type="hidden" name="token" value="{{ preview.token }}"><label class="check"><input type="checkbox" name="confirm" required>Заменить черновик настройками из файла</label>{{ button('Импортировать в черновик') }}{{ button('Отмена',url_for('policy_configuration'),True) }}</form>
+{% else %}
+<h2>Экспорт</h2><p>Включает сохранённые параметры подключения и секреты. Храните файл в закрытом месте.</p>
+<form class="form" method="post" action="{{ url_for('policy_export') }}">{{ hidden(revision) }}{{ button('Скачать настройки .json') }}</form>
+<h2>Импорт</h2><p>Сначала будет показан состав файла. Импорт не запускает VPN и не применяет сетевые правила автоматически.</p>
+<form class="form" method="post" enctype="multipart/form-data" action="{{ url_for('policy_import') }}">{{ hidden(revision) }}<label>Файл настроек панели, до 2 МиБ<input type="file" name="configuration" accept=".json" required></label>{{ button('Проверить файл') }}</form>
+{% endif %}
+{% endblock %}

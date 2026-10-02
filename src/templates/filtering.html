@@ -1,0 +1,25 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button,status,draft_stages with context %}
+{% block content %}
+{{ draft_stages() }}
+{{ status('Фильтрация DNS','Сохраните настройки, затем примените их на странице «Изменения». Фильтрация обновляется вместе с сетевыми правилами; при откате возвращаются прежние настройки.') }}
+<form class="form" method="post" action="{{ url_for('filtering_save') }}">{{ hidden(revision) }}
+<label><input type="checkbox" name="default_enabled" {% if filtering.default_enabled %}checked{% endif %}> Фильтровать по умолчанию</label>
+<p>У каждого общего правила есть собственный режим AdGuard: наследовать, включить или выключить. Это единый механизм исключений для любых устройств и сервисов. Назначенный правилу DNS сохраняется.</p>
+{% for key,label in [('blocklists','Списки блокировки'),('allowlists','Списки разрешения')] %}
+<section class="form" data-filter-lists data-key="{{ key }}"><h2>{{ label }}</h2>
+<p class="muted">Добавляйте списки по URL. Каждый можно временно выключить или удалить.</p>
+{% macro row(item) %}<fieldset data-filter-row><legend data-filter-title>{{ label }}</legend>
+<label>Название<input name="{{ key }}_name" value="{{ item.name }}" maxlength="200"></label>
+<label>URL<input name="{{ key }}_url" type="url" value="{{ item.url }}" maxlength="2048" placeholder="https://example.com/filter.txt"></label>
+<label>Состояние<select name="{{ key }}_enabled"><option value="true" {% if item.enabled %}selected{% endif %}>Включён</option><option value="false" {% if not item.enabled %}selected{% endif %}>Выключен</option></select></label>
+<button type="button" class="secondary" data-filter-remove>Удалить список</button></fieldset>{% endmacro %}
+<div class="form" data-filter-list>{% for item in filtering[key] %}{{ row(item) }}{% endfor %}</div>
+<template data-filter-template>{{ row({'name':'','url':'','enabled':True}) }}</template>
+<button type="button" class="secondary" data-filter-add>Добавить список</button><p class="muted" role="status" aria-live="polite" data-filter-status></p>
+<noscript><p>Чтобы добавить список, заполните поля ниже. Для удаления существующего очистите URL.</p>{{ row({'name':'','url':'','enabled':True}) }}</noscript>
+</section>{% endfor %}
+<label>Дополнительные правила AdGuard<textarea name="rules" rows="8">{{ filtering.rules|join('\n') }}</textarea></label>
+<p>По одному правилу на строку. Область устройств задаётся в общем редакторе правил; модификаторы client и ctag здесь не используются.</p>
+{{ button('Сохранить настройки AdGuard') }}</form>
+<div class="actions">{{ button('Общие правила и исключения',url_for('page',name='rules'),True) }}{{ button('Проверить и применить',url_for('page',name='changes'),True) }}</div>
+{% endblock %}

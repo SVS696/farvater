@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+<nav class="protocol-tabs" aria-label="Протокол устройств"><a href="{{ url_for('clients_page') }}" aria-current="page">WireGuard</a><a href="{{ url_for('tt_clients_page') }}">TrustTunnel</a><a href="{{ url_for('incoming_page') }}">Другие протоколы</a></nav>
+<p>Устройства и сети, подключённые к VPN. Конфиг и QR-код содержат ключ доступа — передавайте их только владельцу устройства.</p>
+{% if error %}<p class="notice error" role="alert">{{ error }}</p>{% endif %}
+{% if state %}
+{% if state.operation and state.operation.status!='completed' %}
+<p class="notice error">Не завершено изменение клиента «{{ state.operation.name }}». Новые изменения приостановлены; сохранённую операцию можно завершить.</p>
+<form class="form" method="post" action="{{ url_for('clients_finish') }}"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="operation" value="{{ state.operation.id }}"><button>Завершить операцию</button></form>
+{% else %}
+<details class="primary-disclosure"><summary>Добавить устройство</summary>
+<form class="form" method="post" action="{{ url_for('clients_add') }}">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="file_revision" value="{{ state.file_revision }}">
+<label>Название устройства<input name="name" required maxlength="80" placeholder="Например, мой телефон"></label>
+<p>Свободные адреса и ключи выдаются автоматически. Настройки ниже уже подходят для подключения к VPN.</p>
+<details><summary>Параметры подключения</summary>
+<label class="check"><input name="ipv6" type="checkbox" {% if state.defaults.ipv6 %}checked{% endif %}>Подключать IPv6</label>
+<label>DNS-серверы<textarea name="dns" rows="2" required>{{ state.defaults.dns }}</textarea></label>
+<p>Обычно оставьте адрес сетевого ядра: он знает рабочие и специальные домены.</p>
+<label>Трафик через VPN — сети по одной в строке<textarea name="routes" rows="3" required>{{ state.defaults.routes }}</textarea></label>
+<p>0.0.0.0/0 и ::/0 направляют весь IPv4 и IPv6 в общие правила. Для отдельных сетей укажите их вместо маршрутов по умолчанию. Если выключаете IPv6, уберите и ::/0.</p>
+<label>MTU<input name="mtu" type="number" min="576" max="9000" value="{{ state.defaults.mtu }}" placeholder="Автоматически"></label>
+<p>Оставьте пустым для автоматического выбора. Для IPv6 — не меньше 1280.</p>
+<label>Keepalive, секунд<input name="keepalive" type="number" min="0" max="65535" required value="{{ state.defaults.keepalive }}"></label>
+<p>25 секунд помогают поддерживать подключение за NAT. 0 отключает keepalive.</p>
+</details><button>Создать устройство</button>
+</form></details>
+{% endif %}
+{% if state.runtime_error %}<p class="notice error">{{ state.runtime_error }}. Время соединения не подтверждено.</p>{% endif %}
+{% if state.invalid_files %}<p class="notice error">Не удалось проверить файлов конфигурации: {{ state.invalid_files }}. Непроверенные конфиги не выдаются.</p>{% endif %}
+<p class="muted">У каждого устройства два варианта подключения. Выбирайте один: локальный адрес внутри сети или внешний адрес из интернета. Время соединения показывает обмен ключами WireGuard, а не доступность интернета.</p>
+{% for device in state.clients %}
+<section class="card" id="client-{{ device.id }}">
+<div class="client-heading"><h2>{{ device.name }}</h2><p class="muted"><code>{{ device.addresses|join(' · ') }}</code></p></div>
+<details><summary>Переименовать</summary>
+<form class="form" method="post" action="{{ url_for('clients_rename',client_id=device.id) }}">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="file_revision" value="{{ state.file_revision }}"><input type="hidden" name="previous_name" value="{{ device.name }}">
+<label>Название устройства<input name="name" value="{{ device.name }}" maxlength="80" required></label><button>Сохранить название</button>
+</form></details>
+<p class="muted">{% if device.in_runtime is none %}Состояние WireGuard неизвестно{% elif not device.in_runtime %}Нет в работающем туннеле{% elif device.handshake %}Последнее соединение: {{ device.handshake|utc_time }}{% else %}Ещё не подключалось{% endif %}</p>
+{% if device.downloadable %}
+<div class="client-paths">
+{% for mode,label,profile,explanation in [('local','Локальный адрес','Локальная сеть','Подключение по локальному адресу.'),('external','Внешний адрес','Внешняя сеть','Подключение из интернета или другой сети.')] %}
+<section class="client-path"><h3>{{ label }} <code>{{ profile }}</code></h3><p class="muted">{{ explanation }}</p>
+<form class="form" method="post" action="{{ url_for('clients_export',client_id=device.id) }}" data-client-export="{{ device.name }} · {{ profile }}">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="file_revision" value="{{ state.file_revision }}"><input type="hidden" name="mode" value="{{ mode }}">
+<div class="actions"><button name="format" value="config">Скачать .conf</button><button name="format" value="qr" class="secondary" aria-expanded="false" aria-controls="qr-{{ device.id }}-{{ mode }}">Показать QR</button></div>
+<div class="qr-output" id="qr-{{ device.id }}-{{ mode }}" data-qr-output role="status" aria-live="polite"></div>
+</form></section>
+{% endfor %}
+</div>
+<details><summary>Отключить доступ</summary>
+<p>Прервёт VPN именно этого устройства. Если вы открыли панель через его VPN, соединение с панелью тоже может оборваться. Позже доступ можно включить с тем же конфигом. После включения может понадобиться выключить и снова включить WireGuard на устройстве.</p>
+<form class="form" method="post" action="{{ url_for('clients_toggle',client_id=device.id,action='disable') }}">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="file_revision" value="{{ state.file_revision }}">
+<label class="check"><input name="confirm" type="checkbox" required>Отключить «{{ device.name }}»</label><button class="secondary">Отключить устройство</button></form>
+</details>
+{% else %}<p>{{ device.reason }}</p>
+<details><summary>Импортировать клиентский конфиг</summary><p>Загрузите действующий .conf этого устройства. Панель проверит ключи и адреса, затем предложит локальный и внешний конфиги и QR. Работающее подключение не изменится.</p>
+<form class="form" method="post" enctype="multipart/form-data" action="{{ url_for('clients_import',client_id=device.id) }}">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="file_revision" value="{{ state.file_revision }}"><label>Клиентский файл .conf<input type="file" name="connection_file" accept=".conf,text/plain" required></label><button>Импортировать конфиг</button></form></details><p class="muted">Запись прочитана из профиля WireGuard{% if state.interface %} «{{ state.interface }}»{% endif %}. Адреса, сети и параметры соединения задаются в редакторе профиля.</p><a class="button secondary" href="{{ url_for('wireguard_page',profile=state.interface) if state.interface else url_for('wireguard_page') }}">Настроить в профиле WireGuard</a>{% endif %}
+</section>
+{% else %}<p class="empty-state">Устройств пока нет. Добавьте первое — адреса и ключи создадутся автоматически.</p>{% endfor %}
+{% if state.disabled %}<h2>Отключённые устройства</h2>
+{% for device in state.disabled %}<section class="card"><h3>{{ device.name }}</h3><p>{{ device.addresses|join(' · ') }}</p>
+<form class="form" method="post" action="{{ url_for('clients_toggle',client_id=device.id,action='enable') }}"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="file_revision" value="{{ state.file_revision }}"><button>Включить доступ</button></form></section>{% endfor %}
+{% endif %}
+<p class="muted"><a href="{{ url_for('page',name='lan') }}">Настройки подключения локальной сети и клиентов к серверу</a></p>
+<details><summary>Адреса сервера для подключения</summary>
+<p>Эти адреса используются при следующей загрузке конфигов и QR-кодов. Чтобы изменить уже установленное подключение, загрузите новый конфиг на устройство.</p>
+<form class="form" method="post" action="{{ url_for('clients_settings') }}">
+<input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="settings_revision" value="{{ state.settings_revision }}">
+<label>Внешний адрес: имя или IP и порт<input name="external_endpoint" value="{{ state.external_endpoint }}" required placeholder="vpn.example.org:51820"></label>
+<label>Локальный адрес: локальный IP и порт<input name="local_endpoint" value="{{ state.local_endpoint }}" required placeholder="192.168.1.10:51820"></label>
+<button>Сохранить адреса</button></form>
+</details>
+<p>Создание, включение и отключение меняют только выбранного клиента. Общий интерфейс WireGuard и сетевое ядро не перезапускаются.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button,status with context %}
+{% block content %}
+{% if error %}{{ status('Не удалось загрузить датчики',error,'blocked') }}{% endif %}
+{% if settings and settings.selected %}
+<p><a href="{{ url_for('monitor_settings') }}">← Все датчики</a></p>
+<h2>{{ 'Новый датчик' if creating else 'Настройки датчика' }}</h2>
+<p>Изменения вступят в силу со следующего измерения.</p>
+<form class="form" method="post" data-monitor-editor action="{{ url_for('monitor_add') if creating else url_for('monitor_save',identifier=settings.selected.settings_id|default(settings.selected.id)) }}">{{ hidden(settings.revision) }}
+{% if creating or settings.selected.removable %}
+<label>Тип датчика<select name="kind" data-monitor-kind>{% for kind,label in custom_kinds.items() %}<option value="{{ kind }}" {% if kind==settings.selected.kind %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+{% else %}<p>Тип: <strong>{{ kind_labels.get(settings.selected.kind,settings.selected.kind) }}</strong></p>{% endif %}
+{% for kind,fields in editor_fields.items() %}
+<fieldset data-monitor-fields="{{ kind }}" {% if kind!=settings.selected.kind %}hidden disabled{% endif %}>
+{% for field in fields %}
+{% if field.type=='bool' %}<label class="check"><input type="checkbox" name="{{ field.key }}" {% if field.value %}checked{% endif %}> {{ field.label }}</label>
+{% else %}<label>{{ field.label }}<input name="{{ field.key }}" value="{{ field.value }}" {% if field.type=='int' %}type="number" min="{{ field.minimum }}" max="{{ field.maximum }}"{% else %}type="text" maxlength="2000"{% endif %}></label>{% endif %}
+{% endfor %}
+</fieldset>
+{% endfor %}
+{{ button('Добавить датчик' if creating else 'Сохранить настройки') }} {{ button('Отмена',url_for('monitor_settings'),True) }}
+</form>
+{% if settings.selected.removable %}<details class="danger-zone"><summary>Удалить датчик</summary><p>Измерения прекратятся. Старые события останутся в журнале.</p><form class="form" method="post" action="{{ url_for('monitor_remove',identifier=settings.selected.settings_id) }}">{{ hidden(settings.revision) }}<label class="check"><input type="checkbox" name="confirm" required>Удалить этот датчик</label>{{ button('Удалить') }}</form></details>{% endif %}
+{% elif settings %}
+<div class="actions">{{ button('Добавить датчик',url_for('monitor_new')) }}{{ button('Открыть дашборд',url_for('page',name='health'),True) }}</div>
+<p>Перетащите датчики в нужном порядке. Выключите «На дашборде», чтобы скрыть карточку. Скрытые датчики продолжают измерения и учитываются в общем состоянии.</p>
+<form class="form monitor-layout" method="post" action="{{ url_for('monitor_dashboard') }}" data-monitor-layout>{{ hidden() }}<input type="hidden" name="view_revision" value="{{ settings.view_revision }}">
+<div class="monitor-list" data-monitor-order>
+{% for check in settings.checks %}<article class="monitor-row" data-monitor-row>
+<input type="hidden" name="order" value="{{ check.id }}">
+<button type="button" class="drag-handle secondary small" draggable="true" data-drag-handle aria-label="Перетащить {{ check.name }}">⠿</button>
+<div class="monitor-name"><strong>{{ check.name }}</strong><p class="muted">{{ kind_labels.get(check.kind,check.kind) }}</p></div>
+<label class="check"><input type="checkbox" name="visible" value="{{ check.id }}" {% if check.visible %}checked{% endif %}>На дашборде</label>
+<div class="actions"><button type="button" class="secondary small" data-monitor-move="up" aria-label="Поднять {{ check.name }}">↑</button><button type="button" class="secondary small" data-monitor-move="down" aria-label="Опустить {{ check.name }}">↓</button><a class="button secondary small" href="{{ url_for('monitor_settings',identifier=check.settings_id) }}">{{ 'Изменить или удалить' if check.removable else 'Изменить' }}</a>{% if not check.removable %}<span class="muted">Системный</span>{% endif %}</div>
+</article>{% endfor %}</div>
+<p data-monitor-layout-status role="status" class="muted"></p>{{ button('Сохранить дашборд') }}</form>
+{% endif %}
+{% endblock %}

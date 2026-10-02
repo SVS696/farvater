@@ -1,0 +1,83 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button,status with context %}
+{% block content %}
+{% if name=='overview' %}
+<p>Настройте подключения, правила маршрутизации и DNS. Сохранённые изменения правил применяются отдельно на странице «Изменения».</p>
+<div class="actions">{{ button('Состояние сети',url_for('page',name='health')) }}{{ button('Подключить устройство',url_for('clients_page'),True) }}{{ button('Проверить домен',url_for('page',name='rules'),True) }}{{ button('Помощь',url_for('page',name='help'),True) }}</div>
+{% elif name=='rules' %}
+<div class="actions">{{ button('Добавить правило',url_for('rule_form')) }}{{ button('Проверить конфликты',url_for('page',name='changes'),True) }}</div>
+<p>Правила проверяются сверху вниз. Если ни одно не выбрало выход, используется <a href="#default-route">маршрут для всего остального трафика</a> в конце списка.</p>
+<form class="inline" method="get"><label>Расчёт по черновику<input name="domain" placeholder="Домен или IP" value="{{ request.args.get('domain','') }}" required></label><label>IP устройства<input name="source" placeholder="Необязательно" value="{{ request.args.get('source','') }}"></label><label>Протокол<select name="network"><option value="">Не указан</option>{% for key in ['tcp','udp'] %}<option value="{{ key }}" {% if request.args.get('network')==key %}selected{% endif %}>{{ key|upper }}</option>{% endfor %}</select></label><label>Порт назначения<input name="port" type="number" min="1" max="65535" placeholder="Например, 443" value="{{ request.args.get('port','') }}"></label>{{ button('Объяснить маршрут') }}</form>
+{% if answer %}{{ status(answer.name,'Подключение: '+policy.exits.get(answer.exit,{}).get('name',answer.exit)+' · DNS: '+(policy.dns.get(answer.dns,{}).get('name',answer.dns) or 'не используется для указанного IP')+(' · правило №'+answer.order|string if answer.matched else ' · правило по умолчанию')) }}{% endif %}
+<form id="rule-order-form" method="post" action="{{ url_for('rule_reorder') }}">{{ hidden(revision) }}</form>
+<div class="rule-list" data-rule-order>{% for p in policy.profiles %}<article class="rule" data-rule-id="{{ p.id }}"><span class="order"><button type="button" class="drag-handle secondary small" draggable="true" data-drag-handle aria-label="Перетащить правило {{ p.name }}" title="Перетащить правило">⠿</button>{{ '%02d'|format(loop.index) }}</span><div><a class="record-title" href="{{ url_for('rule_form',identifier=p.id) }}">{{ p.name }}</a><p class="muted">{{ 'Выключено' if not p.get('enabled',True) else {'public':'Обычный интернет','work':'Рабочие ресурсы','special':'Специальные ресурсы'}.get(p.kind,p.kind) }}</p></div><div class="conditions"><details class="rule-conditions"><summary>Домены: {{ p.get('domains',[])|length }} · сети: {{ p.get('networks',[])|length }}</summary>{% for group in p|domain_groups %}<details class="domain-group"><summary>{{ group.title or 'Домены' }} · {{ group.domains|length }}</summary><ul>{% for domain in group.domains %}<li>{{ domain }}</li>{% endfor %}</ul></details>{% endfor %}{% if p.get('networks') %}<p>{{ p.networks|join(', ') }}</p>{% endif %}{% if p.get('source_networks') %}<p>Устройства: {{ p.source_networks|join(', ') }}</p>{% endif %}</details></div><div><p>{{ policy.exits.get(p.exit,{}).get('name',p.exit) }}</p><p class="muted">DNS: {{ policy.dns.get(p.dns,{}).get('name',p.dns) }}</p></div><div class="row-actions"><a href="{{ url_for('rule_form',identifier=p.id) }}">Изменить</a><form class="form" method="post" action="{{ url_for('rule_move',identifier=p.id) }}">{{ hidden(revision) }}<button class="secondary small" name="direction" value="up" {% if loop.first %}disabled{% endif %}>Выше</button><button class="secondary small" name="direction" value="down" {% if loop.last %}disabled{% endif %}>Ниже</button></form></div></article>{% endfor %}
+{% set fo=policy.get('failover',{}) %}{% set priority=fo.get('priority',[]) %}{% set main=priority[0] if priority else policy.default_exit %}{% set resolver=fo.get('dns_by_exit',{}).get(main,policy.default_dns) %}
+<article id="default-route" class="rule" aria-label="Последнее правило">
+<span class="order">{{ '%02d'|format(policy.profiles|length+1) }}</span>
+<div><strong>Весь остальной трафик</strong><p class="muted">Всегда последнее · включено</p></div>
+<div class="conditions">Всё, что не совпало с правилами выше</div>
+<div><p>{{ policy.exits.get(main,{}).get('name',main) }}</p><p class="muted">DNS: {{ policy.dns.get(resolver,{}).get('name',resolver) }}</p><p class="muted">Резервов: {{ [priority|length-1,0]|max }}</p></div>
+<div class="row-actions"><a href="{{ url_for('default_rule_form') }}">Изменить</a></div>
+</article></div>
+<p class="muted">Выход и резерв последнего правила настраиваются так же, как у остальных правил. Правило только для DNS может выбрать другой DNS, сохранив этот маршрут.</p>
+<details id="rule-automation"><summary>Автоматическое переключение · общие настройки</summary>
+<div class="form">{% include 'rules_automation.html' %}</div></details>
+<p><a href="{{ url_for('routing_history') }}">Журнал переключений в мониторинге</a></p>
+{% elif name=='tunnels' %}
+<p class="page-description">Подключения определяют путь трафика. Выберите их для сайтов и устройств в <a href="{{ url_for('page',name='rules') }}">правилах</a>.</p>
+<div class="list-toolbar"><div class="actions">{{ button('Добавить подключение',url_for('connection_new')) }}{{ button('Профили WireGuard',url_for('wireguard_page'),True) }}</div><label class="search-field"><span class="sr-only">Поиск подключений</span><input type="search" data-list-search="connections-list" placeholder="Найти подключение…"></label></div>
+<div id="connections-list" class="collection">
+{% for key,value in policy.exits.items() %}<article class="collection-row" data-search-row>
+<div class="record-main"><a class="record-title" href="{{ url_for('tunnel_form',identifier=key) }}">{{ value.name }}</a><p class="muted">{{ value|protocol_label }} · {{ scope_labels.get(value.scope,value.scope) }}</p></div>
+<details class="record-details"><summary>Сведения</summary><p>Идентификатор: <code>{{ key }}</code></p>{% if value.get('description') %}<p>{{ value.description }}</p>{% endif %}</details>
+<div class="row-actions"><a class="button secondary small" href="{{ url_for('tunnel_form',identifier=key) }}">Настроить</a><a class="quiet-action" href="{{ url_for('entity_delete_preview',group='exits',identifier=key) }}">Удалить</a></div></article>
+{% else %}<p class="empty-state">Подключений пока нет. Добавьте VPN или прямое подключение, чтобы выбрать его в правилах.</p>{% endfor %}
+<p class="empty-state" data-search-empty hidden>Подключения не найдены. Измените поисковый запрос.</p></div>
+{% elif name=='dns' %}
+<p class="page-description">DNS преобразует имена сайтов в IP-адреса. В каждом правиле можно выбрать свой профиль.</p>
+<div class="list-toolbar">{{ button('Добавить DNS',url_for('dns_form')) }}<label class="search-field"><span class="sr-only">Поиск DNS</span><input type="search" data-list-search="dns-list" placeholder="Найти DNS…"></label></div>
+<div id="dns-list" class="collection">
+{% for key,value in policy.dns.items() %}<article class="collection-row" data-search-row><div class="record-main"><a class="record-title" href="{{ url_for('dns_form',identifier=key) }}">{{ value.name }}</a><p class="muted">{{ value|dns_summary }}</p></div><span class="tag">{{ scope_labels.get(value.scope,value.scope) }}</span><div class="row-actions"><a class="button secondary small" href="{{ url_for('dns_form',identifier=key) }}">Настроить</a><a class="quiet-action" href="{{ url_for('entity_delete_preview',group='dns',identifier=key) }}">Удалить</a></div></article>{% else %}<p class="empty-state">Добавьте DNS-профиль, чтобы использовать его в правилах.</p>{% endfor %}<p class="empty-state" data-search-empty hidden>DNS-профили не найдены. Измените поисковый запрос.</p></div>
+{% elif name=='changes' %}
+{% set errors=issues|selectattr('severity','equalto','error')|list %}
+<div class="validation-summary {{ 'has-errors' if errors else '' }}"><strong>{{ 'Нужно исправить ошибки: '+errors|length|string if errors else 'Настройки проверены' }}</strong><span>{{ 'Применение заблокировано до исправления.' if errors else 'Ошибок, блокирующих применение, нет.' }}</span></div>
+{% if issues %}<details class="validation-details" {% if errors %}open{% endif %}><summary>Замечания к правилам · {{ issues|length }}</summary><ul class="issue-list">{% for issue in issues %}<li><strong>{{ issue.profile }}</strong><p>{{ issue.message }}</p></li>{% endfor %}</ul><p class="muted">Порядок правил может создавать намеренные исключения. Проверьте замечания перед применением.</p></details>{% endif %}
+{% if candidate_enabled %}
+<h2>Применение настроек</h2>
+<p>Применение обновляет правила, DNS и фильтрацию для подключённых устройств. Соединения могут кратковременно прерваться. Если не подтвердить результат, прежние настройки восстановятся автоматически.</p>
+{% if candidate_error %}{{ status('Нет достоверного состояния',candidate_error,'blocked') }}
+{% elif candidate %}
+{% set tx=candidate.transaction %}
+{% if candidate.get('journal_ok',True)==False %}{{ status('Журнал операции отсутствует или повреждён','Автоматический выбор резервной ревизии недоступен. Используйте проверенную копию и инструкцию восстановления, раздел 16.','blocked') }}{% endif %}
+{% set labels={'pending':'Ожидает подтверждения','prepared':'Подготовка не завершена','confirmed':'Подтверждено','rolled_back':'Прежний пакет восстановлен','rollback_failed':'Откат требует восстановления','schedule_failed':'Применение не началось: таймер не установлен'} %}
+{{ status(labels.get(tx.status,'Состояние требует проверки'),'Состояние на '+candidate.observed_at|utc_time,'ready' if candidate.integrity and tx.status in ['confirmed','rolled_back'] else 'fallback') }}
+{% if not candidate.integrity %}{{ status('Файлы ревизии не согласованы','Новое применение заблокировано. Для незавершённой операции доступен возврат сохранённого пакета.','blocked') }}{% endif %}
+{% if section_delta == [] %}{% if tx.status=='pending' %}<p>Черновик совпадает с временно применённым пакетом; результат ещё требует подтверждения.</p>{% elif tx.status=='confirmed' %}<p>Изменений нет: сохранённый черновик совпадает с подтверждённой действующей политикой.</p>{% else %}<p>Черновик совпадает с текущим пакетом. Состояние операции показано выше.</p>{% endif %}
+{% elif section_delta is none %}<p class="notice">Состав изменений не подтверждён. Обновите состояние сетевого ядра перед применением; неизвестное не считается отсутствием изменений.</p>
+{% else %}<p>Черновик отличается от действующей политики. Применение передаст текущий черновик целиком. Изменены разделы:</p><ul>{% for label in section_delta %}<li>{{ label }}</li>{% endfor %}</ul>{% endif %}
+{% if candidate.adguard_adapter %}<p>Адаптер AdGuard подключён. Общий режим фильтрации: {{ 'включён' if candidate.default_filtering else 'выключен' }}; отдельные правила могут его переопределять.</p>{% elif candidate.default_filtering==False %}<p>Фильтрация AdGuard не подключена. Правила с обязательной фильтрацией без проверенного адаптера не пройдут сборку.</p>{% endif %}
+{% if tx.status=='pending' %}<p><strong>Срок подтверждения: <time>{{ tx.deadline|utc_time }}</time>.</strong> Если не подтвердить, автоматически восстановится прежний пакет, даже после закрытия панели.</p>
+<p>Подтверждение повторно проверит обычный DNS по UDP/TCP и HTTPS. Это не проверка всех правил, устройств и рабочих сетей.</p>{% endif %}
+<div class="actions">
+{% if candidate.integrity and section_delta and tx.status not in ['prepared','pending','rollback_failed'] %}
+<form class="form" method="post" action="{{ url_for('candidate_action',action='apply') }}">{{ hidden(revision) }}<input type="hidden" name="candidate_revision" value="{{ candidate.config_sha256 or 'missing' }}">{{ button('Применить настройки',disabled=issues|selectattr('severity','equalto','error')|list|length>0) }}</form>
+{% endif %}
+{% if candidate.integrity and section_delta == [] and tx.status not in ['prepared','pending','rollback_failed'] %}<details><summary>Повторное применение без изменений</summary><p>Политика уже совпадает с действующей. Повторное применение может кратко прервать соединения и снова потребует проверки и подтверждения.</p><form class="form" method="post" action="{{ url_for('candidate_action',action='apply') }}">{{ hidden(revision) }}<input type="hidden" name="candidate_revision" value="{{ candidate.config_sha256 or 'missing' }}">{{ button('Повторно применить тот же черновик',disabled=errors|length>0) }}</form></details>{% endif %}
+{% if candidate.integrity and tx.status=='pending' and tx.runtime_ready %}
+<form class="form" method="post" action="{{ url_for('candidate_action',action='confirm') }}">{{ hidden() }}<input type="hidden" name="candidate_revision" value="{{ candidate.config_sha256 }}"><input type="hidden" name="transaction" value="{{ tx.id }}">{{ button('Проверить и подтвердить') }}</form>
+{% endif %}
+{% if tx.status in ['prepared','pending','rollback_failed'] %}
+<form class="form" method="post" action="{{ url_for('candidate_action',action='rollback') }}">{{ hidden() }}<input type="hidden" name="candidate_revision" value="{{ candidate.config_sha256 or 'missing' }}"><input type="hidden" name="transaction" value="{{ tx.id }}">{{ button('Вернуть прежний пакет',secondary=True) }}</form>
+{% endif %}
+{{ button('Обновить состояние',url_for('page',name='changes'),True) }}{{ button('Мониторинг',url_for('page',name='health'),True) }}
+</div>
+<details><summary>Технические сведения</summary>{% if candidate.lan_ingress and candidate.lan_ingress.enabled %}<p>LAN-вход включён на {{ candidate.lan_ingress.listen }}: DNS 15454, прокси 15458. Допущены: {{ candidate.lan_ingress.clients|join(', ') }}.</p>{% else %}<p>LAN-вход выключен.</p>{% endif %}
+<p>Конфиг: <code>{{ candidate.config_sha256 or 'файл отсутствует' }}</code></p><p>Операция: <code>{{ tx.id }}</code></p></details>
+{% endif %}
+{% else %}{{ status('Сетевое ядро не подключено','Подключите сетевое ядро при установке. Черновик сохранён, сеть не изменена.') }}{% endif %}
+<div class="actions">{{ button('Вернуться к правилам',url_for('page',name='rules'),True) }}</div>
+{% elif name=='help' %}
+<p>Управляйте подключениями, DNS и клиентами из панели.</p>
+<ol><li>В разделе «Туннели» добавьте подключение. Выберите протокол, заполните параметры или импортируйте стандартный файл.</li><li>В разделе «DNS» добавьте нужные резолверы. В «Правилах» задайте, какой трафик через них проходит, и расставьте резервы.</li><li>Сохраните черновик, затем откройте «Изменения»: проверьте и примените настройки. Подтвердите доступ в указанное время.</li><li>В «Устройствах» создайте клиента и получите конфигурацию, ссылку или QR-код.</li><li>В «Мониторинге» добавьте свои проверки и настройте порядок карточек. Ошибки показываются возле соответствующих датчиков.</li></ol>
+<p><a href="{{ url_for('server_access') }}">Подключение к сетевому ядру</a> · <a href="{{ url_for('page',name='backups') }}">Экспорт и резервные копии</a></p>
+{% endif %}
+{% endblock %}

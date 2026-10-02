@@ -1,0 +1,15 @@
+Farvater
+Copyright 2026 Farvater contributors.
+Project source is licensed under Apache License 2.0; see LICENSE.
+
+The TrustTunnel deeplink codec in src/trusttunnel_deeplink_encode.py and
+src/trusttunnel_deeplink_decode.py was adapted from TrustTunnel v1.0.33.
+Copyright 2020 Adguard Software Ltd. Apache License 2.0.
+Upstream: https://github.com/TrustTunnel/TrustTunnel
+The original license is retained at src/LICENSE-TrustTunnel.
+
+Runtime engines are separate upstream projects, acquired from pinned official
+releases and not included in this source repository. The staged engine LICENSE
+files are retained by the builder. See docs/dependencies.md for their origins,
+versions and license notices. The Farvater project license does not relicense
+those third-party engines or Python dependencies.

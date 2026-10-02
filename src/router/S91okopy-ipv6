@@ -1,0 +1,2 @@
+#!/bin/sh
+/opt/bin/sh /opt/okopy-router-ipv6/ipv6-bootstrap.sh "$1"

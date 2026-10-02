@@ -1,0 +1,18 @@
+[Unit]
+Description=Managed AmneziaWG connection %i
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=/etc/amnezia/amneziawg/%i.conf
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+UMask=0077
+TimeoutStartSec=30s
+TimeoutStopSec=15s
+ExecStartPre=/usr/bin/python3 -E -s -B /var/lib/okopy-candidate/amnezia_apply.py recover-before-start %i
+ExecStart=/usr/bin/python3 -E -s -B /var/lib/okopy-candidate/amnezia_service.py up %i
+ExecStop=/usr/bin/python3 -E -s -B /var/lib/okopy-candidate/amnezia_service.py down %i
+
+[Install]
+WantedBy=multi-user.target

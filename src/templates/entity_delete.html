@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% from 'components.html' import hidden,button with context %}
+{% block content %}
+<h2>{{ entity.name }}</h2>
+{% if used %}<p>Эта запись используется. Сначала выберите замену в указанных настройках:</p><ul>{% for label in used %}<li>{{ label }}</li>{% endfor %}</ul>
+{% else %}<p>Запись будет удалена из черновика. Действующие правила изменятся после применения.</p>
+{% if group=='exits' and entity.get('protocol') in ['WireGuard','AmneziaWG','TrustTunnel','OpenConnect'] %}<p>Отдельный профиль VPN сохранится. Если подключение больше не нужно, сначала остановите его и отключите автозапуск в его настройках. Удаление ссылки из правил не останавливает службу.</p>{% endif %}
+<form class="form" method="post">{{ hidden(revision) }}<label class="check"><input type="checkbox" name="confirm" required>Удалить «{{ entity.name }}» из черновика</label>{{ button('Удалить запись') }}</form>{% endif %}
+{{ button('Вернуться к списку',url_for('page',name='dns' if group=='dns' else 'tunnels'),True) }}
+{% endblock %}
