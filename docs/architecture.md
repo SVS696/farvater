@@ -20,9 +20,14 @@ flowchart LR
 5. `src/safe_apply.py`, recovery modules и `install/`: Linux/systemd backend,
    privileged coordinator, защищённый rescue и проверяемая установка.
 
-[Полная статическая карта файлов](code-map.svg) · [Файлы/строки/SHA и все отношения](code-map.json) · [Graphify symbols](graphify-code.json).
-Карта строится из публичного source, install и tools. Semantic document extraction
-не выполнялась. EXTRACTED/AMBIGUOUS различаются; статические отношения не являются
-доказательством runtime behavior. Graphify сворачивает параллельные связи между
-одинаковыми endpoints, полный file graph сохраняет отдельные line-bound отношения.
-Пути относительные; приватные состояния и topology snapshots не входят в карту.
+## Навигация по исходникам
+
+[Карта файлов](code-map.svg) · [Связи с файлами, строками и SHA](code-map.json) ·
+[Символы Graphify](graphify-code.json).
+
+Карта охватывает публичные `src/`, `install/` и `tools/`. Это статический снимок:
+он помогает искать определения и зависимости, но выполнение, права и поведение
+при отказе проверяются по текущему коду и тестам. После изменения исходников
+номера строк и хеши карты могут устареть.
+
+Правила разработки и проверки: [CONTRIBUTING.md](../CONTRIBUTING.md).

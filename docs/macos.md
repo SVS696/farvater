@@ -6,7 +6,7 @@ Farvater можно установить на Mac mini как самостоят
 
 ```sh
 python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m pip install --require-hashes -r requirements.txt
 .venv/bin/python tools/download_core.py --destination "$HOME/Library/Application Support/Farvater/core"
 .venv/bin/python tools/local_node.py init --core "$HOME/Library/Application Support/Farvater/core/sing-box" \
   --probe-domain example.com --probe-url https://example.com/
